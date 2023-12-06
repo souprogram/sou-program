@@ -1,4 +1,4 @@
-const backendUrl = process.env.VUE_APP_URL;
+const backendUrl = process.env.VUE_APP_API_URL;
 
 const trimUrl = (url) => (url[0] === '/' ? url.slice(1) : url);
 

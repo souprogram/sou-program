@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { useStoreProfilePost } from '@/stores/profilepost.store';
+import { useProfilePostStore } from '@/stores/profilepost.store';
 
 import editProfilePost from '@/components/app/editProfilePost.vue';
 import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
@@ -88,6 +88,7 @@ export default {
     },
     data() {
         return {
+            profilePostStore: useProfilePostStore(),
             isConfirming: false,
             isEditing: false,
         };
@@ -97,8 +98,7 @@ export default {
             this.isConfirming = true;
         },
         async confirmDeleteProfilePost() {
-            const storeProfilePost = useStoreProfilePost();
-            await storeProfilePost.deleteProfilePost(this.profilePost.id);
+            await this.profilePostStore.deleteProfilePost(this.profilePost.id);
             this.isConfirming = false;
         },
         cancelDeleteProfilePost() {

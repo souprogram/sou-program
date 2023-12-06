@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { useStoreAnnouncement } from '@/stores/announcement.store';
+import { useAnnouncementStore } from '@/stores/announcement.store';
 
 import { isAuthUserDemos } from '@/services/authService';
 
@@ -97,7 +97,7 @@ export default {
     },
     data: () => ({
         isAuthUserDemos: isAuthUserDemos(),
-        storeAnnouncement: useStoreAnnouncement(),
+        announcementStore: useAnnouncementStore(),
         isConfirming: false,
         isEditing: false,
     }),
@@ -131,7 +131,7 @@ export default {
             this.isConfirming = true;
         },
         async confirmDeleteAnnouncement() {
-            await this.storeAnnouncement.deleteAnnouncement(
+            await this.announcementStore.deleteAnnouncement(
                 this.announcement.id
             );
 

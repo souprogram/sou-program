@@ -52,7 +52,7 @@ export default {
     --primary-color: #66ccff;
     --primary-color-light: #88ddff;
     --primary-bg-color: #f5f5f5;
-    --white-color: #f5f5f5;
+    --white-color: #ffffff;
     --black-color: #212529;
     --black-outline-color: #515a66;
     --red-color: #dc3545;
@@ -62,73 +62,69 @@ export default {
 
 html,
 body {
-    background-color: var(--white-color);
+    background-color: var(--primary-bg-color);
 }
 
 .btn-primary {
     background-color: var(--primary-color);
-    border: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    color: var(--white-color);
+
+    &:focus,
+    &:hover {
+        background-color: var(--primary-color-light);
+        border-color: var(--primary-color-light);
+    }
+
+    &:active {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
 }
 
-.btn-primary:focus,
-.form-control:focus {
-    box-shadow: 0 0 0 4px var(--primary-color-light) !important;
+.btn-secondary {
+    background-color: var(--black-color);
+    border: 1px solid var(--black-color);
+    color: var(--white-color);
+
+    &:focus,
+    &:hover,
+    &:active {
+        background-color: var(--black-color);
+        border-color: var(--black-color);
+    }
 }
 
-.btn-primary:hover {
-    background-color: var(--primary-color);
+.btn-delete {
+    color: var(--red-color);
+
+    &:focus {
+        border: 1px solid var(--red-color);
+    }
+
+    &:hover {
+        opacity: 1;
+    }
 }
 
-.btn-primary:active {
-    background-color: var(--primary-color) !important;
-}
+.btn-edit {
+    &:focus {
+        border: 1px solid var(--black-color);
+    }
 
-.btn-primary:focus {
-    background-color: var(--primary-color);
-}
-
-.btn-primary:disabled {
-    opacity: 70%;
-    background-color: var(--primary-color);
-}
-
-.btn-secondary,
-.btn-secondary:focus,
-.btn-secondary:active {
-    background-color: var(--black-color) !important;
-}
-
-.btn-secondary:focus {
-    box-shadow: 0 0 0 4px var(--black-outline-color) !important;
+    &:hover {
+        opacity: 1;
+    }
 }
 
 .h-full {
     min-height: 100vh;
-}
-
-.btn-delete,
-.btn-delete:focus,
-.btn-delete:hover,
-.btn-delete:active {
-    color: var(--red-color) !important;
-}
-
-.btn-delete:focus {
-    border: 1px solid var(--red-color);
-}
-
-.btn-edit:focus {
-    border: 1px solid var(--black-color);
-}
-
-.btn-delete,
-.btn-edit {
-    opacity: 70%;
-}
-
-.btn-edit:hover,
-.btn-delete:hover {
-    opacity: 100%;
 }
 
 .h-fit {
@@ -141,7 +137,7 @@ body {
 }
 
 .menu-footer {
-    background-color: white;
+    background-color: var(--white-color);
     top: 0;
     display: none;
     z-index: 3;

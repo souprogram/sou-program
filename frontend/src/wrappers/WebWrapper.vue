@@ -10,16 +10,16 @@
 </template>
 
 <script>
-import Navigation from "@/components/web/Navigation.vue";
-import SouFooter from "@/components/web/SouFooter.vue";
+import Navigation from '@/components/web/Navigation.vue';
+import SouFooter from '@/components/web/SouFooter.vue';
 
 export default {
-    name: "WebWrapper",
+    name: 'WebWrapper',
     created() {
         const bodyStyles = window.getComputedStyle(document.body);
         if (
-            bodyStyles.overflowX === "scroll" ||
-            bodyStyles.overflowX === "visible"
+            bodyStyles.overflowX === 'scroll' ||
+            bodyStyles.overflowX === 'visible'
         ) {
         }
     },
@@ -32,13 +32,7 @@ export default {
 
 <style lang="scss">
 :root {
-    --primary-color: black;
-}
-body {
-    background-color: var(--primary-color);
-}
-a {
-    color: black;
+    --web-primary-color: black;
 }
 #web-wrapper {
     background-color: white;
@@ -49,7 +43,7 @@ a {
     position: absolute;
     height: 80px;
     width: 100%;
-    background-color: var(--primary-color);
+    background-color: var(--web-primary-color);
     z-index: 1;
 }
 

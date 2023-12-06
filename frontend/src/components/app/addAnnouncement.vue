@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { useStoreAnnouncement } from '@/stores/announcement.store';
+import { useAnnouncementStore } from '@/stores/announcement.store';
 
 const props = {
     userProfilePictureSrc: {
@@ -48,14 +48,14 @@ export default {
     name: 'addAnnouncement',
     props,
     data: () => ({
-        storeAnnouncement: useStoreAnnouncement(),
+        announcementStore: useAnnouncementStore(),
         announcement: {
             text: '',
         },
     }),
     methods: {
         async postAnnouncement() {
-            await this.storeAnnouncement.createAnnouncement(this.announcement);
+            await this.announcementStore.createAnnouncement(this.announcement);
         },
     },
 };

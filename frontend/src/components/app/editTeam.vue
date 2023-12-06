@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import { useStoreCompetition } from '@/stores/competition.store'
-import { useStoreUser } from '@/stores/user.store'
+import { useStoreCompetition } from '@/stores/competition.store';
+import { useUserStore } from '@/stores/user.store';
 
 export default {
     name: 'EditTeam',
@@ -85,27 +85,27 @@ export default {
     data() {
         return {
             storeCompetition: useStoreCompetition(),
-            storeUser: useStoreUser(),
+            userStore: useUserStore(),
             teamName: this.teamData.name,
             selectedUserId: '', // To store the selected user's ID
             allUsers: [], // To store all the users
-        }
+        };
     },
     async mounted() {
-        this.allUsers = await this.storeUser.fetchUser()
+        this.allUsers = await this.userStore.fetchUser();
     },
     methods: {
         closeEdit() {
-            this.closeEdit()
+            this.closeEdit();
         },
         async updateTeam() {
             const updateData = {
                 id: this.teamData.id,
                 name: this.teamName,
-            }
+            };
 
             if (this.teamName.trim() !== '') {
-                await this.storeCompetition.updateTeam(updateData)
+                await this.storeCompetition.updateTeam(updateData);
             }
         },
         async addMember() {
@@ -114,18 +114,18 @@ export default {
                     await this.storeCompetition.createMember({
                         team_id: this.teamData.id,
                         member_id: this.selectedUserId,
-                    })
+                    });
                 } catch (error) {
-                    console.error('Failed to create member:', error)
+                    console.error('Failed to create member:', error);
                 }
-                this.selectedUserId = ''
+                this.selectedUserId = '';
             }
         },
         async removeMember(memberId) {
-            await this.storeCompetition.deleteMember(memberId)
+            await this.storeCompetition.deleteMember(memberId);
         },
     },
-}
+};
 </script>
 
 <!-- Add your styles here -->

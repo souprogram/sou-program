@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import socialUrls from "@/utils/socialUrls.js";
+import socialUrls from '@/utils/socialUrls.js';
 
 export default {
-    name: "EmailLink",
+    name: 'EmailLink',
     data() {
         return {
             mailTo: socialUrls.mail.mailTo,
@@ -16,4 +16,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+body {
+    background-color: black;
+}
+a {
+    color: black;
+}
+</style>

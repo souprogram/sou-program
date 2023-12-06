@@ -48,7 +48,7 @@ import Search from '@/components/app/Search.vue';
 import addUser from '@/components/app/addUser.vue';
 import showUser from '@/components/app/showUser.vue';
 import { isAuthUserDemos } from '@/services/authService';
-import { useStoreUser } from '@/stores/user.store';
+import { useUserStore } from '@/stores/user.store';
 
 export default {
     name: 'SearchView',
@@ -62,13 +62,13 @@ export default {
         isLoading: false,
         users: [],
         isAddingUser: false,
-        storeUser: useStoreUser(),
+        userStore: useUserStore(),
         isAuthUserDemos: isAuthUserDemos(),
     }),
     async created() {
         this.isLoading = true;
 
-        this.users = await this.storeUser.fetchUsers();
+        this.users = await this.userStore.fetchUsers();
         this.searchedUsersByUsername('');
 
         this.isLoading = false;
@@ -82,7 +82,7 @@ export default {
         },
         searchedUsersByUsername(searchedUsername) {
             this.users =
-                this.storeUser.getSearchedUsersByUsername(searchedUsername);
+                this.userStore.getSearchedUsersByUsername(searchedUsername);
         },
     },
 };

@@ -151,11 +151,11 @@
 </template>
 
 <script>
-import EducatorCalendar from "@/components/web/EducatorCalendar.vue";
-import EmailLink from "@/components/web/EmailLink.vue";
+import EducatorCalendar from '@/components/web/EducatorCalendar.vue';
+import EmailLink from '@/components/web/EmailLink.vue';
 
 export default {
-    name: "Educators",
+    name: 'Educators',
     components: {
         EducatorCalendar,
         EmailLink,
@@ -164,6 +164,12 @@ export default {
 </script>
 
 <style scoped>
+body {
+    background-color: black;
+}
+a {
+    color: black;
+}
 .join-container {
     margin: 128px 32px 0px 32px;
 }

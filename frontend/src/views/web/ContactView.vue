@@ -9,15 +9,21 @@
 </template>
 
 <script>
-import EmailLink from "@/components/web/EmailLink.vue";
+import EmailLink from '@/components/web/EmailLink.vue';
 
 export default {
-    name: "Contact",
+    name: 'Contact',
     components: { EmailLink },
 };
 </script>
 
 <style scoped>
+body {
+    background-color: black;
+}
+a {
+    color: black;
+}
 h1#contact {
     font-size: 5rem;
     line-height: 1.5;

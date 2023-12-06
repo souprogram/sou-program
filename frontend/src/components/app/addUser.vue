@@ -71,8 +71,8 @@
 </template>
 
 <script>
-import { useStoreGallery } from '@/stores/gallery.store';
-import { useStoreUser } from '@/stores/user.store';
+import { useGalleryStore } from '@/stores/gallery.store';
+import { useUserStore } from '@/stores/user.store';
 
 import FormModal from '@/components/app/FormModal.vue';
 import Input from '@/components/app/Input.vue';
@@ -101,8 +101,8 @@ export default {
     },
     data: function () {
         return {
-            storeGallery: useStoreGallery(),
-            storeUser: useStoreUser(),
+            galleryStore: useGalleryStore(),
+            userStore: useUserStore(),
             user: {
                 name: '',
                 surname: '',
@@ -143,14 +143,14 @@ export default {
 
             this.user.profile_picture_key = null;
             if (this.selectedImage) {
-                const images = await this.storeGallery.googleUploadImages({
+                const images = await this.galleryStore.googleUploadImages({
                     images: [this.selectedImage],
                     folderName: 'user',
                 });
                 this.user.profile_picture_key = images[0];
             }
 
-            await this.storeUser.createUser(this.user);
+            await this.userStore.createUser(this.user);
 
             this.onClose();
         },

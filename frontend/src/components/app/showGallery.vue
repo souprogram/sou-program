@@ -68,13 +68,13 @@
 </template>
 
 <script>
-import { useStoreGallery } from '@/stores/gallery.store'
-import { useStoreUser } from '@/stores/user.store'
-import eventBus from '@/eventBus'
+import { useGalleryStore } from '@/stores/gallery.store';
+import { useUserStore } from '@/stores/user.store';
+import eventBus from '@/eventBus';
 
-import dateService from '@/services/dateService'
+import dateService from '@/services/dateService';
 
-import userTypeEnum from '@/enums/userTypeEnum'
+import userTypeEnum from '@/enums/userTypeEnum';
 
 export default {
     name: 'showGallery',
@@ -83,7 +83,7 @@ export default {
             isDemos: userTypeEnum.DEMOS === localStorage.getItem('type'),
             image: '',
             authorUsername: null,
-        }
+        };
     },
     props: {
         galleryData: {
@@ -92,54 +92,54 @@ export default {
         },
     },
     setup() {
-        const storeGallery = useStoreGallery()
-        const storeUser = useStoreUser()
+        const galleryStore = useGalleryStore();
+        const userStore = useUserStore();
 
-        return { storeGallery, storeUser }
+        return { galleryStore, userStore };
     },
     async created() {
-        await this.displayImage(this.galleryData.images[0])
-        await this.getAuthorUsername(this.galleryData.author_id)
+        await this.displayImage(this.galleryData.images[0]);
+        await this.getAuthorUsername(this.galleryData.author_id);
     },
     methods: {
         async deleteGallery(idGallery) {
             const isConfirmed = window.confirm(
                 'Jeste li sigurni da želite izbrisati galeriju?'
-            )
+            );
 
             if (isConfirmed) {
-                await this.storeGallery.deleteGallery(idGallery)
+                await this.galleryStore.deleteGallery(idGallery);
             }
         },
         async displayImage(imageID) {
-            const image = await this.storeGallery.googleDisplayImage(imageID)
-            this.image = `data:image/jpeg;base64,${image}`
+            const image = await this.galleryStore.googleDisplayImage(imageID);
+            this.image = `data:image/jpeg;base64,${image}`;
         },
         async getAuthorUsername(userID) {
-            await this.storeUser.fetchUser()
-            const user = await this.storeUser.getUserById(userID)
-            this.authorUsername = user.username
+            await this.userStore.fetchUser();
+            const user = await this.userStore.getUserById(userID);
+            this.authorUsername = user.username;
         },
         openEditGallery() {
-            const editGallery = true
-            const editGalleryID = this.galleryData.id
+            const editGallery = true;
+            const editGalleryID = this.galleryData.id;
             const editObj = {
                 editGallery,
                 editGalleryID,
-            }
-            eventBus.emit('editGallery', editObj)
+            };
+            eventBus.emit('editGallery', editObj);
         },
         openShowFullGallery() {
-            const showFullGallery = true
-            const showFullGalleryID = this.galleryData.id
+            const showFullGallery = true;
+            const showFullGalleryID = this.galleryData.id;
             const editObj = {
                 showFullGallery,
                 showFullGalleryID,
-            }
-            eventBus.emit('showFullGallery', editObj)
+            };
+            eventBus.emit('showFullGallery', editObj);
         },
     },
-}
+};
 </script>
 
 <style scoped>

@@ -1,14 +1,14 @@
 const mailTo = process.env.VUE_APP_CONTACT_EMAIL;
 const subject = 'Email from site';
-const subjcetURIEncoded = encodeURIComponent(subject);
+const subjectURIEncoded = encodeURIComponent(subject);
 
-const mailHref = `mailto:${mailTo}?subject=${subjcetURIEncoded}`;
+const mailHref = `mailto:${mailTo}?subject=${subjectURIEncoded}`;
 
 export default {
     mail: { mailHref, mailTo },
-    discord: process.env.VUE_APP_URL_DISCORD,
-    instagram: process.env.VUE_APP_URL_INSTAGRAM,
-    linkedin: process.env.VUE_APP_URL_LINKEDIN,
-    youtube: process.env.VUE_APP_URL_YOUTUBE,
-    github: process.env.VUE_APP_URL_GITHUB,
+    discord: process.env.VUE_APP_DISCORD_URL,
+    instagram: process.env.VUE_APP_INSTAGRAM_URL,
+    linkedin: process.env.VUE_APP_LINKEDIN_URL,
+    youtube: process.env.VUE_APP_YOUTUBE_URL,
+    github: process.env.VUE_APP_GITHUB_URL,
 };

@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import { useStoreUser } from '@/stores/user.store';
-import { useStoreProfilePost } from '@/stores/profilepost.store';
+import { useUserStore } from '@/stores/user.store';
+import { useProfilePostStore } from '@/stores/profilepost.store';
 
 import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
 
@@ -47,16 +47,16 @@ export default {
         userID: 0,
         user: {},
         profilePosts: [],
-        storeUser: useStoreUser(),
-        storeProfilePost: useStoreProfilePost(),
+        userStore: useUserStore(),
+        profilePostStore: useProfilePostStore(),
     }),
     async created() {
         this.isLoading = true;
 
-        await this.storeUser.fetchUsers();
+        await this.userStore.fetchUsers();
 
         this.userID = this.$route.params.id;
-        this.user = this.storeUser.getUserByID(this.userID);
+        this.user = this.userStore.getUserByID(this.userID);
 
         await this.loadMoreProfilePosts();
 
@@ -74,7 +74,7 @@ export default {
                     document.documentElement.offsetHeight - OFFSET;
 
                 const isOverFinalPage =
-                    this.pageCount > this.storeProfilePost.totalPages;
+                    this.pageCount > this.profilePostStore.totalPages;
 
                 if (bottomOfWindow && !this.isLoading && !isOverFinalPage) {
                     this.isLoading = true;
@@ -87,7 +87,7 @@ export default {
             this.pageCount++;
 
             const moreProfilePosts =
-                await this.storeProfilePost.fetchProfilePosts(
+                await this.profilePostStore.fetchProfilePosts(
                     this.userID,
                     this.pageCount
                 );

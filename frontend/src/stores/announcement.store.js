@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import backendApiService from '@/services/backendApiService';
 import dateService from '@/services/dateService';
 
-export const useStoreAnnouncement = defineStore('storeAnnouncement', {
+export const useAnnouncementStore = defineStore('announcement', {
     state: () => ({
         announcements: [],
         totalPages: 0,

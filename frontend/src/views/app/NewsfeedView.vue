@@ -38,8 +38,8 @@ import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
 import addAnnouncement from '@/components/app/addAnnouncement.vue';
 import showAnnouncement from '@/components/app/showAnnouncement.vue';
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
-import { useStoreAnnouncement } from '@/stores/announcement.store';
-import { useStoreUser } from '@/stores/user.store';
+import { useAnnouncementStore } from '@/stores/announcement.store';
+import { useUserStore } from '@/stores/user.store';
 
 export default {
     name: 'NewsfeedView',
@@ -54,14 +54,14 @@ export default {
         currentUser: {},
         isAuthUserDemos: isAuthUserDemos(),
         announcements: [],
-        storeAnnouncement: useStoreAnnouncement(),
-        storeUser: useStoreUser(),
+        announcementStore: useAnnouncementStore(),
+        userStore: useUserStore(),
     }),
     async created() {
         this.isLoading = true;
 
-        await this.storeUser.fetchUsers();
-        this.currentUser = this.storeUser.getUserByID(getAuthData().id);
+        await this.userStore.fetchUsers();
+        this.currentUser = this.userStore.getUserByID(getAuthData().id);
         await this.loadMoreAnnouncements();
 
         this.isLoading = false;
@@ -78,7 +78,7 @@ export default {
                     document.documentElement.offsetHeight - OFFSET;
 
                 const isOverFinalPage =
-                    this.pageCount > this.storeAnnouncement.totalPages;
+                    this.pageCount > this.announcementStore.totalPages;
 
                 if (bottomOfWindow && !this.isLoading && !isOverFinalPage) {
                     this.isLoading = true;
@@ -91,7 +91,7 @@ export default {
             return await Promise.all(
                 announcements.map(async (announcement) => ({
                     ...announcement,
-                    author: await this.storeUser.getUserByID(
+                    author: await this.userStore.getUserByID(
                         announcement.author_id
                     ),
                 }))
@@ -101,7 +101,7 @@ export default {
             this.pageCount++;
 
             const moreAnnouncements =
-                await this.storeAnnouncement.fetchAnnouncements(this.pageCount);
+                await this.announcementStore.fetchAnnouncements(this.pageCount);
 
             const moreAnnouncementsWithAuthor =
                 await this.getAnnouncementsWithAuthor(moreAnnouncements);

@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { useStoreUser } from '@/stores/user.store';
+import { useUserStore } from '@/stores/user.store';
 
 import FormModal from '@/components/app/FormModal.vue';
 import Input from '@/components/app/Input.vue';
@@ -73,6 +73,7 @@ export default {
     },
     data() {
         return {
+            userStore: useUserStore(),
             updatedUser: {
                 id: this.user.id,
                 name: this.user.name,
@@ -105,8 +106,7 @@ export default {
                 return;
             }
 
-            const storeUser = useStoreUser();
-            await storeUser.updateUser(this.updatedUser);
+            await this.userStore.updateUser(this.updatedUser);
         },
     },
 };

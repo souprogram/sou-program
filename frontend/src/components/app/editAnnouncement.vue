@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { useStoreAnnouncement } from '@/stores/announcement.store';
+import { useAnnouncementStore } from '@/stores/announcement.store';
 
 import FormModal from '@/components/app/FormModal.vue';
 
@@ -45,18 +45,15 @@ export default {
     data() {
         return {
             announcementText: this.announcement.text,
-            storeAnnouncement: useStoreAnnouncement(),
+            announcementStore: useAnnouncementStore(),
         };
     },
     methods: {
         async updateAnnouncement() {
-            const updatedAnnouncement = {
+            await this.announcementStore.updateAnnouncement({
                 id: this.announcement.id,
                 text: this.announcementText,
-            };
-            await this.storeAnnouncement.updateAnnouncement(
-                updatedAnnouncement
-            );
+            });
         },
     },
 };

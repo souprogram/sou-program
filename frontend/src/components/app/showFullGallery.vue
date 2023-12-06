@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import { useStoreGallery } from '@/stores/gallery.store'
-import { useStoreUser } from '@/stores/user.store'
+import { useGalleryStore } from '@/stores/gallery.store';
+import { useUserStore } from '@/stores/user.store';
 
-import dateService from '@/services/dateService'
+import dateService from '@/services/dateService';
 //import VueMasonry from "vue-masonry";
 
 export default {
@@ -41,7 +41,7 @@ export default {
         return {
             authorUsername: null,
             images: [],
-        }
+        };
     },
     props: {
         galleryID: {
@@ -54,46 +54,46 @@ export default {
         },
     },
     setup(props) {
-        const storeGallery = useStoreGallery()
-        storeGallery.fetchGallery()
-        const storeUser = useStoreUser()
+        const galleryStore = useGalleryStore();
+        galleryStore.fetchGallery();
+        const userStore = useUserStore();
 
-        const galleryID = props.galleryID
-        const galleryData = storeGallery.getGalleryById(galleryID)
+        const galleryID = props.galleryID;
+        const galleryData = galleryStore.getGalleryById(galleryID);
 
-        return { storeGallery, storeUser, galleryData }
+        return { galleryStore, userStore, galleryData };
     },
     async created() {
-        await this.getAuthorUsername(this.galleryData.author_id)
-        await this.displayImages()
+        await this.getAuthorUsername(this.galleryData.author_id);
+        await this.displayImages();
     },
     methods: {
         async getAuthorUsername(userID) {
-            await this.storeUser.fetchUser()
-            const user = await this.storeUser.getUserById(userID)
-            this.authorUsername = user.username
+            await this.userStore.fetchUser();
+            const user = await this.userStore.getUserById(userID);
+            this.authorUsername = user.username;
         },
         async displayImages() {
-            const imageKeys = this.galleryData.images
+            const imageKeys = this.galleryData.images;
 
-            let imagesData = []
+            let imagesData = [];
             for (const key of imageKeys) {
-                const imageData = await this.storeGallery.googleDisplayImage(
+                const imageData = await this.galleryStore.googleDisplayImage(
                     key
-                )
-                imagesData.push(imageData)
+                );
+                imagesData.push(imageData);
             }
 
             const images = imagesData.map(
                 (imageData) => 'data:image/jpeg;base64,' + imageData
-            )
-            this.images = images
+            );
+            this.images = images;
         },
         closeShow() {
-            this.closeShow()
+            this.closeShow();
         },
     },
-}
+};
 </script>
 
 <style scoped>

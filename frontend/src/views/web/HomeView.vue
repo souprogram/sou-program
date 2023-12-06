@@ -187,6 +187,12 @@ export default {
 </script>
 
 <style scoped>
+body {
+    background-color: black;
+}
+a {
+    color: black;
+}
 img {
     width: 100%;
 }

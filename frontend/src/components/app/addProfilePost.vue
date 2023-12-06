@@ -25,7 +25,7 @@
     </div>
 </template>
 <script>
-import { useStoreProfilePost } from '@/stores/profilepost.store';
+import { useProfilePostStore } from '@/stores/profilepost.store';
 
 const props = {
     profilePictureSrc: {
@@ -38,14 +38,14 @@ export default {
     name: 'addProfilePost',
     props,
     data: () => ({
-        storeProfilePost: useStoreProfilePost(),
+        profilePostStore: useProfilePostStore(),
         profilePost: {
             text: '',
         },
     }),
     methods: {
         async postProfilePost() {
-            await this.storeProfilePost.createProfilePost(this.profilePost);
+            await this.profilePostStore.createProfilePost(this.profilePost);
         },
     },
 };

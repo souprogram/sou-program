@@ -8,11 +8,17 @@
 
 <script>
 export default {
-    name: "EducatorCalendar",
+    name: 'EducatorCalendar',
 };
 </script>
 
 <style scoped>
+body {
+    background-color: black;
+}
+a {
+    color: black;
+}
 .calendar {
     margin: auto;
     width: 30%;

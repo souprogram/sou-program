@@ -15,17 +15,17 @@
 </template>
 
 <script>
-import socialUrls from "@/utils/socialUrls.js";
+import socialUrls from '@/utils/socialUrls.js';
 
 export default {
     data() {
         const icons = [
-            "fa-solid fa-envelope",
-            "fa-brands fa-discord",
-            "fa-brands fa-instagram",
-            "fa-brands fa-linkedin",
-            "fa-brands fa-youtube",
-            "fa-brands fa-github",
+            'fa-solid fa-envelope',
+            'fa-brands fa-discord',
+            'fa-brands fa-instagram',
+            'fa-brands fa-linkedin',
+            'fa-brands fa-youtube',
+            'fa-brands fa-github',
         ];
 
         const hrefs = [
@@ -49,13 +49,19 @@ export default {
             socials,
         };
     },
-    name: "SouFooter",
+    name: 'SouFooter',
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+body {
+    background-color: black;
+}
+a {
+    color: black;
+}
 footer {
-    background-color: var(--primary-color);
+    background-color: var(--web-primary-color);
 }
 .footer-item {
     padding: 0.5em;

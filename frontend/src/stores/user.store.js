@@ -18,7 +18,7 @@ const formatUserData = async (user) => {
     };
 };
 
-export const useStoreUser = defineStore('storeUser', {
+export const useUserStore = defineStore('user', {
     state: () => ({
         users: [],
     }),

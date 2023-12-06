@@ -19,35 +19,30 @@ const routes = [
                 path: '',
                 name: 'HomeView',
                 meta: { title: 'Početna' },
-
                 component: () => import('@/views/web/HomeView.vue'),
             },
             {
                 path: 'login',
                 name: 'LoginView',
                 meta: { title: 'Prijava' },
-
                 component: () => import('@/views/web/LoginView.vue'),
             },
             {
                 path: 'contact',
                 name: 'ContactView',
                 meta: { title: 'Kontakt' },
-
                 component: () => import('@/views/web/ContactView'),
             },
             {
                 path: 'educators',
                 name: 'EducatorsView',
                 meta: { title: 'Šou lab' },
-
                 component: () => import('@/views/web/EducatorsView'),
             },
             {
                 path: 'podcast',
                 name: 'PodcastView',
                 meta: { title: 'Šou podkast' },
-
                 component: () => import('@/views/web/PodcastView'),
             },
         ],
@@ -102,11 +97,6 @@ const routes = [
         name: 'MsgWrapper',
         component: () => import('@/wrappers/MsgWrapper.vue'),
         children: [
-            // {
-            //     path: "login",
-            //     name: "LoginView",
-            //     component: () => import("@/views/LoginView.vue"),
-            // },
             {
                 path: 'error',
                 name: 'Error',
@@ -120,11 +110,9 @@ const routes = [
         ],
     },
     {
-        path: '/',
-        name: 'WebWrapper all routes',
         path: '/:catchAll(.*)',
+        name: 'WebWrapper all routes',
         redirect: '/',
-
         meta: {
             authRequired: false,
         },

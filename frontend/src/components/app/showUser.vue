@@ -61,7 +61,7 @@
 import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
 import editUser from '@/components/app/editUser.vue';
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
-import { useStoreUser } from '@/stores/user.store';
+import { useUserStore } from '@/stores/user.store';
 
 const props = {
     user: {
@@ -79,6 +79,7 @@ export default {
     },
     data() {
         return {
+            userStore: useUserStore(),
             currentUserID: getAuthData().id,
             isConfirming: false,
             isEditing: false,
@@ -90,8 +91,7 @@ export default {
             this.isConfirming = true;
         },
         async confirmDeleteUser() {
-            const storeUser = useStoreUser();
-            await storeUser.deleteUser(this.user.id);
+            await this.userStore.deleteUser(this.user.id);
 
             this.isConfirming = false;
         },

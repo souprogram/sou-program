@@ -65,8 +65,8 @@
 
 <script>
 import { getAuthData } from '@/services/authService';
-import { useStoreGallery } from '@/stores/gallery.store';
-import { useStoreUser } from '@/stores/user.store';
+import { useGalleryStore } from '@/stores/gallery.store';
+import { useUserStore } from '@/stores/user.store';
 
 export default {
     name: 'addGallery',
@@ -78,8 +78,8 @@ export default {
     },
     data() {
         return {
-            storeGallery: useStoreGallery(),
-            storeUser: useStoreUser(),
+            galleryStore: useGalleryStore(),
+            userStore: useUserStore(),
             currentUserUsername: getAuthData().username,
             newGalleryTitle: '',
             newGalleryText: '',
@@ -92,8 +92,8 @@ export default {
     },
     methods: {
         async getCurrentUser() {
-            await this.storeUser.fetchUser();
-            const currentUserData = await this.storeUser.getCurrentUser(
+            await this.userStore.fetchUser();
+            const currentUserData = await this.userStore.getCurrentUser(
                 this.currentUserUsername
             );
             this.currentUserID = currentUserData.id;
@@ -116,7 +116,7 @@ export default {
                     folderName: 'gallery',
                 },
             };
-            await this.storeGallery.createGallery(newGalleryData);
+            await this.galleryStore.createGallery(newGalleryData);
         },
     },
 };

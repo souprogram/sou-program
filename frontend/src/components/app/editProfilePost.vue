@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { useStoreProfilePost } from '@/stores/profilepost.store';
+import { useProfilePostStore } from '@/stores/profilepost.store';
 
 import FormModal from '@/components/app/FormModal.vue';
 
@@ -45,16 +45,15 @@ export default {
     data() {
         return {
             profilePostText: this.profilePost.text,
-            storeProfilePost: useStoreProfilePost(),
+            profilePostStore: useProfilePostStore(),
         };
     },
     methods: {
         async updateProfilePost() {
-            const updatedProfilePost = {
+            await this.profilePostStore.updateProfilePost({
                 id: this.profilePost.id,
                 text: this.profilePostText,
-            };
-            await this.storeProfilePost.updateProfilePost(updatedProfilePost);
+            });
         },
     },
 };

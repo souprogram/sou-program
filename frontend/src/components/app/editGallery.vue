@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { useStoreGallery } from '@/stores/gallery.store'
+import { useGalleryStore } from '@/stores/gallery.store';
 
 export default {
     name: 'editGallery',
@@ -53,30 +53,30 @@ export default {
         },
     },
     async data() {
-        const storeGallery = useStoreGallery()
-        await storeGallery.fetchGallery()
-        const galleryData = storeGallery.getGalleryById(this.galleryID)
+        const galleryStore = useGalleryStore();
+        await galleryStore.fetchGallery();
+        const galleryData = galleryStore.getGalleryById(this.galleryID);
 
         return {
-            storeGallery,
+            galleryStore,
             newGalleryTitle: galleryData.title,
             newGalleryText: galleryData.text,
-        }
+        };
     },
     methods: {
         closeEdit() {
-            this.closeEdit()
+            this.closeEdit();
         },
         async editGallery() {
             const updateData = {
                 id: this.galleryID,
                 title: this.newGalleryTitle,
                 text: this.newGalleryText,
-            }
-            await this.storeGallery.updateGallery(updateData)
+            };
+            await this.galleryStore.updateGallery(updateData);
         },
     },
-}
+};
 </script>
 
 <style scoped>

@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import { useStoreUser } from '@/stores/user.store';
-import { useStoreProfilePost } from '@/stores/profilepost.store';
+import { useUserStore } from '@/stores/user.store';
+import { useProfilePostStore } from '@/stores/profilepost.store';
 
 import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
 
-import authService, { getAuthData } from '@/services/authService';
+import { getAuthData } from '@/services/authService';
 
 import showProfile from '@/components/app/showProfile.vue';
 import addProfilePost from '@/components/app/addProfilePost.vue';
@@ -45,19 +45,21 @@ export default {
         showProfilePost,
         LoadingSpinner,
     },
-    data: () => ({
-        pageCount: 0,
-        isLoading: false,
-        currentUser: {},
-        profilePosts: [],
-        storeUser: useStoreUser(),
-        storeProfilePost: useStoreProfilePost(),
-    }),
+    data: function () {
+        return {
+            pageCount: 0,
+            isLoading: false,
+            currentUser: {},
+            profilePosts: [],
+            userStore: useUserStore(),
+            profilePostStore: useProfilePostStore(),
+        };
+    },
     async created() {
         this.isLoading = true;
 
-        await this.storeUser.fetchUsers();
-        this.currentUser = this.storeUser.getUserByID(getAuthData().id);
+        await this.userStore.fetchUsers();
+        this.currentUser = this.userStore.getUserByID(getAuthData().id);
 
         await this.loadMoreProfilePosts();
 
@@ -75,7 +77,7 @@ export default {
                     document.documentElement.offsetHeight - OFFSET;
 
                 const isOverFinalPage =
-                    this.pageCount > this.storeProfilePost.totalPages;
+                    this.pageCount > this.profilePostStore.totalPages;
 
                 if (bottomOfWindow && !this.isLoading && !isOverFinalPage) {
                     this.isLoading = true;
@@ -88,7 +90,7 @@ export default {
             this.pageCount++;
 
             const moreProfilePosts =
-                await this.storeProfilePost.fetchProfilePosts(
+                await this.profilePostStore.fetchProfilePosts(
                     this.currentUser.id,
                     this.pageCount
                 );

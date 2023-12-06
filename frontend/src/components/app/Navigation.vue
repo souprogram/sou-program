@@ -56,7 +56,7 @@
                 <button
                     class="btn btn-link nav-link px-3 py-2 text-danger"
                     data-text="Odjavi me"
-                    @click="logout"
+                    @click="handleLogout"
                 >
                     <i class="material-icons">logout</i>
                 </button>
@@ -66,9 +66,8 @@
 </template>
 
 <script>
-import { useStoreUser } from '@/stores/user.store';
-import backendApiService from '@/services/backendApiService';
-import { deleteAuthData, getAuthData } from '@/services/authService';
+import { useUserStore } from '@/stores/user.store';
+import { logout, getAuthData } from '@/services/authService';
 
 const props = {
     toggleNav: {
@@ -80,13 +79,15 @@ const props = {
 export default {
     name: 'Navigation',
     props,
-    data: () => ({
-        username: '',
-        storeUser: useStoreUser(),
-    }),
+    data: function () {
+        return {
+            username: '',
+        };
+    },
     async created() {
-        await this.storeUser.fetchUsers();
-        const currentUser = this.storeUser.getUserByID(getAuthData().id);
+        const userStore = useUserStore();
+        await userStore.fetchUsers();
+        const currentUser = userStore.getUserByID(getAuthData().id);
 
         this.username = currentUser.username;
     },
@@ -94,15 +95,14 @@ export default {
         isRouteActive(routeName) {
             return this.$route.path.startsWith(routeName);
         },
-        async logout() {
-            const res = await backendApiService.post({ url: '/logout' });
+        async handleLogout() {
+            const loggedOut = await logout();
 
-            if (!res.ok) {
+            if (!loggedOut) {
                 this.$router.push('/error');
                 return;
             }
 
-            deleteAuthData();
             this.$router.push('/login');
         },
     },
@@ -120,7 +120,7 @@ export default {
     overflow-y: auto;
     margin-left: 0;
     z-index: 1;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.175);
 }
 
 .nav-heading {

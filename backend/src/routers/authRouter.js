@@ -4,8 +4,8 @@ import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 export const authRouter = () => {
     return Router()
-        .post('/login', login)
+        .post('/auth/login', login)
         .use(authMiddleware)
-        .post('/logout', logout)
-        .post('/auth/me', me); // TODO: Staviti prefix na sve rute /auth/...
+        .post('/auth/logout', logout)
+        .post('/auth/me', me);
 };

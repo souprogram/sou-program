@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <form @submit.prevent="login">
+        <form @submit.prevent="handleLogin">
             <div class="card">
                 <h1>Tko si?</h1>
                 <div class="row">
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { saveAuthData } from '@/services/authService';
+import { login } from '@/services/authService';
 
 export default {
     name: 'LoginView',
@@ -47,37 +47,30 @@ export default {
         };
     },
     methods: {
-        async login() {
-            const credentials = {
+        async handleLogin() {
+            const loggedIn = await login({
                 username: this.username,
                 password: this.password,
-            };
-
-            const response = await fetch(`${process.env.VUE_APP_URL}/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(credentials),
-                credentials: 'include',
             });
 
-            if (!response.ok) {
-                window.location.href = '/error';
+            if (!loggedIn) {
+                this.$router.push('/error');
                 return;
             }
 
-            const resObj = await response.json();
-
-            saveAuthData(resObj.data);
-
-            window.location.href = '/newsfeed';
+            this.$router.push('/newsfeed');
         },
     },
 };
 </script>
 
 <style scoped>
+body {
+    background-color: black;
+}
+a {
+    color: black;
+}
 .container {
     display: flex;
     justify-content: center;

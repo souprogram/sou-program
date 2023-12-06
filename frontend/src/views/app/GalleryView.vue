@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { useStoreGallery } from '@/stores/gallery.store';
+import { useGalleryStore } from '@/stores/gallery.store';
 import eventBus from '@/eventBus';
 
 import showGallery from '@/components/app/showGallery.vue';
@@ -55,7 +55,7 @@ export default {
     name: 'GalleryView',
     data() {
         return {
-            storeGallery: useStoreGallery(),
+            galleryStore: useGalleryStore(),
             galleries: [],
             addGallery: false,
             editGallery: false,
@@ -71,7 +71,7 @@ export default {
         showFullGallery,
     },
     async created() {
-        this.galleries = await this.storeGallery.fetchGallery();
+        this.galleries = await this.galleryStore.fetchGallery();
 
         this.openEditGallery();
         this.openShowFullGallery();

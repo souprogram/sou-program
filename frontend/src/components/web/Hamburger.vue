@@ -34,10 +34,10 @@ export const HamburgerType = {
 };
 
 export default {
-    name: "Hamburger",
+    name: 'Hamburger',
     data() {
-        document.addEventListener("toggleNav", () => {
-            $(".nav-burger").toggleClass("open");
+        document.addEventListener('toggleNav', () => {
+            $('.nav-burger').toggleClass('open');
         });
     },
     props: {
@@ -47,6 +47,12 @@ export default {
 </script>
 
 <style scoped>
+body {
+    background-color: black;
+}
+a {
+    color: black;
+}
 * {
     margin: 0;
     padding: 0;
