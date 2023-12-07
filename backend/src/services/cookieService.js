@@ -14,8 +14,6 @@ export const getCookieTokenFromReq = (req) => {
 export const addAuthCookieToRes = (res, accessToken) => {
     res.cookie(COOKIE_NAME, accessToken, {
         expires: now().add(1, 'year').toDate(),
-        domain: process.env.FRONTEND_DOMAIN,
-        path: '/',
         httpOnly: true,
         secure: true,
         sameSite: 'none',
