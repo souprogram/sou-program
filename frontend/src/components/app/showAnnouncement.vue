@@ -45,15 +45,15 @@
                 v-if="isAuthUserDemos"
                 class="h-fit d-flex justify-content-end gap-1"
             >
-                <button class="btn btn-edit" @click="openEditingAnnouncement">
-                    <i class="fa-solid fa-pen"></i>
-                </button>
-                <button
-                    class="btn btn-delete"
-                    @click="openDeletingAnnouncement"
-                >
-                    <i class="fa-solid fa-trash"></i>
-                </button>
+                <IconButton
+                    actionType="edit"
+                    :onClick="openEditingAnnouncement"
+                />
+                <IconButton
+                    v-if="isAuthUserDemos"
+                    actionType="delete"
+                    :onClick="openDeletingAnnouncement"
+                />
             </div>
         </div>
 
@@ -80,6 +80,7 @@ import { isAuthUserDemos } from '@/services/authService';
 
 import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
 import editAnnouncement from '@/components/app/editAnnouncement.vue';
+import IconButton from '@/components/app/IconButton.vue';
 
 const props = {
     announcement: {
@@ -94,6 +95,7 @@ export default {
     components: {
         editAnnouncement,
         ConfirmationModal,
+        IconButton,
     },
     data: () => ({
         isAuthUserDemos: isAuthUserDemos(),

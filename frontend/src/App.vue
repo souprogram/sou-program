@@ -1,9 +1,9 @@
 <template>
     <div>
         <router-view v-if="isConnected" />
-        <div id="loading-container-in-app" v-else>
+        <div id="loading-container" v-else>
             <p>Molim pričekaj minutu da se aplikacija učita!</p>
-            <div id="loader-in-app"></div>
+            <div id="loader"></div>
         </div>
     </div>
 </template>
@@ -17,12 +17,6 @@ export default {
             return socketState.isConnected;
         },
     },
-    mounted() {
-        const loadingContainer = document.getElementById('loading-container');
-        if (loadingContainer) {
-            loadingContainer.style.display = 'none';
-        }
-    },
 };
 </script>
 
@@ -31,7 +25,7 @@ export default {
     font-family: 'Poppins', sans-serif;
 }
 
-#loading-container-in-app {
+#loading-container {
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -39,11 +33,11 @@ export default {
     align-items: center;
 }
 
-#loading-container-in-app p {
+#loading-container p {
     font-size: 1.5rem;
 }
 
-#loader-in-app {
+#loader {
     border: 8px solid #f3f3f3;
     border-top: 8px solid #3498db;
     border-radius: 50%;

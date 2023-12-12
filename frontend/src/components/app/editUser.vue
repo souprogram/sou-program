@@ -30,7 +30,7 @@
                     id="bio"
                 ></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group" v-if="!isAuthUserDemos">
                 <label for="type">Tip korisnika</label>
                 <select
                     v-model="updatedUser.type"
@@ -50,6 +50,8 @@ import { useUserStore } from '@/stores/user.store';
 
 import FormModal from '@/components/app/FormModal.vue';
 import Input from '@/components/app/Input.vue';
+
+import { isAuthUserDemos } from '@/services/authService';
 
 import { required, email, maxLength } from '@/utils/validations.js';
 
@@ -92,6 +94,9 @@ export default {
         };
     },
     computed: {
+        isAuthUserDemos() {
+            return isAuthUserDemos();
+        },
         isFormValid() {
             return Object.keys(this.validationRules).every((key) =>
                 this.validationRules[key].every(

@@ -23,21 +23,17 @@
                 </div>
 
                 <div
-                    v-if="canEdit"
+                    v-if="isCurrentUser"
                     class="h-fit d-flex justify-content-end gap-1"
                 >
-                    <button
-                        class="btn btn-edit"
-                        @click="openEditingProfilePost"
-                    >
-                        <i class="fa-solid fa-pen"></i>
-                    </button>
-                    <button
-                        class="btn btn-delete"
-                        @click="openDeletingProfilePost"
-                    >
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+                    <IconButton
+                        actionType="edit"
+                        :onClick="openEditingProfilePost"
+                    />
+                    <IconButton
+                        actionType="delete"
+                        :onClick="openDeletingProfilePost"
+                    />
                 </div>
             </div>
         </div>
@@ -63,6 +59,7 @@ import { useProfilePostStore } from '@/stores/profilepost.store';
 
 import editProfilePost from '@/components/app/editProfilePost.vue';
 import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
+import IconButton from '@/components/app/IconButton.vue';
 
 const props = {
     user: {
@@ -73,7 +70,7 @@ const props = {
         type: Object,
         required: true,
     },
-    canEdit: {
+    isCurrentUser: {
         type: Boolean,
         default: true,
     },
@@ -85,6 +82,7 @@ export default {
     components: {
         editProfilePost,
         ConfirmationModal,
+        IconButton,
     },
     data() {
         return {

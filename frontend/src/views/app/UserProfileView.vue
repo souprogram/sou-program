@@ -13,7 +13,7 @@
             :key="profilePost.id"
             :user="user"
             :profilePost="profilePost"
-            :canEdit="false"
+            :isCurrentUser="false"
         />
 
         <div
@@ -29,10 +29,9 @@
 import { useUserStore } from '@/stores/user.store';
 import { useProfilePostStore } from '@/stores/profilepost.store';
 
-import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
-
 import showProfile from '@/components/app/showProfile.vue';
 import showProfilePost from '@/components/app/showProfilePost.vue';
+import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
 
 export default {
     name: 'UserProfileView',

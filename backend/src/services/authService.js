@@ -10,12 +10,12 @@ export const hashPassword = async (passwordInput) => {
 export const getAuthUserData = async (username, password) => {
     const user = await Users().where({ username }).first();
     if (!user) {
-        throw new Error('No user');
+        throw new Error(`No user found for username ${username}`);
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
-        throw new Error('Password fail');
+        throw new Error('Password failed to match');
     }
 
     return user;

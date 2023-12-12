@@ -1,6 +1,7 @@
 <template>
     <div class="card">
         <input
+            name="search"
             type="text"
             class="form-control"
             :placeholder="placeholder"

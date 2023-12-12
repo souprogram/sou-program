@@ -4,7 +4,7 @@
             <div class="card-body d-flex gap-3">
                 <div>
                     <router-link
-                        :to="'/user-profile/' + user.id"
+                        :to="userProfilePath"
                         class="text-dark d-block icon rounded-circle"
                     >
                         <img
@@ -17,10 +17,7 @@
                     </router-link>
                 </div>
                 <div class="flex-grow-1">
-                    <router-link
-                        :to="'/user-profile/' + user.id"
-                        class="text-dark"
-                    >
+                    <router-link :to="userProfilePath" class="text-dark">
                         {{ user.fullName }}
                     </router-link>
                     <div class="text-muted">
@@ -28,19 +25,15 @@
                     </div>
                 </div>
                 <div
-                    v-if="isAuthUserDemos"
+                    v-if="user.id == currentUserID || isAuthUserDemos"
                     class="h-fit d-flex justify-content-end gap-1"
                 >
-                    <button class="btn btn-edit" @click="openEditingUser">
-                        <i class="fa-solid fa-pen"></i>
-                    </button>
-                    <button
+                    <IconButton actionType="edit" :onClick="openEditingUser" />
+                    <IconButton
                         v-if="user.id != currentUserID"
-                        class="btn btn-delete"
-                        @click="openDeletingUser"
-                    >
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+                        actionType="delete"
+                        :onClick="openDeletingUser"
+                    />
                 </div>
             </div>
         </div>
@@ -62,6 +55,7 @@ import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
 import editUser from '@/components/app/editUser.vue';
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
 import { useUserStore } from '@/stores/user.store';
+import IconButton from '@/components/app/IconButton.vue';
 
 const props = {
     user: {
@@ -76,6 +70,7 @@ export default {
     components: {
         ConfirmationModal,
         editUser,
+        IconButton,
     },
     data() {
         return {
@@ -85,6 +80,11 @@ export default {
             isEditing: false,
             isAuthUserDemos: isAuthUserDemos(),
         };
+    },
+    computed: {
+        userProfilePath() {
+            return `/user-profile/${this.user.id}`;
+        },
     },
     methods: {
         openDeletingUser() {
