@@ -76,6 +76,11 @@ const routes = [
                 component: () => import('@/views/app/UserProfileView.vue'),
             },
             {
+                path: 'todo',
+                name: 'TodoListView',
+                component: () => import('@/views/app/TodoListView.vue'),
+            },
+            {
                 path: 'gallery',
                 name: 'GalleryView',
                 component: () => import('@/views/app/GalleryView.vue'),
