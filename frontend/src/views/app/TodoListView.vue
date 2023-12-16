@@ -5,29 +5,9 @@
                 <h1>Todo liste</h1>
             </div>
         </div>
-        <div class="card">
-            <form
-                class="card-body d-flex flex-column align-items-center gap-2 mx-auto"
-                @submit.prevent="createTodoList"
-            >
-                <input
-                    type="text"
-                    class="form-control"
-                    v-model.trim="todoListTitle"
-                />
-                <textarea
-                    class="form-control"
-                    v-model.trim="todoListText"
-                ></textarea>
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                    :disabled="!todoListTitle"
-                >
-                    Dodaj todo listu
-                </button>
-            </form>
-        </div>
+
+        <addTodoList :createTodoList="createTodoList" />
+
         <div class="card" v-for="todoList in todoLists" :key="todoList">
             <div class="card-body">
                 <h5>{{ todoList.title }}</h5>
@@ -38,12 +18,15 @@
 </template>
 
 <script>
+import addTodoList from '@/components/app/addTodoList.vue';
+
 export default {
     name: 'TodoListView',
+    components: {
+        addTodoList,
+    },
     data: function () {
         return {
-            todoListTitle: '',
-            todoListText: '',
             todoLists: [
                 {
                     title: 'Todo List Title',
@@ -53,14 +36,8 @@ export default {
         };
     },
     methods: {
-        createTodoList() {
-            this.todoLists.push({
-                title: this.todoListTitle,
-                text: this.todoListText,
-            });
-
-            this.todoListTitle = '';
-            this.todoListText = '';
+        createTodoList(todoList) {
+            this.todoLists.push(todoList);
         },
     },
 };
