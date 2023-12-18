@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { useProfilePostStore } from '@/stores/profilepost.store';
+import { useProfilePostStore } from '@/stores/profilePostStore';
 
 import FormModal from '@/components/app/FormModal.vue';
 

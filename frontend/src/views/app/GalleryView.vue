@@ -10,7 +10,7 @@
         </div>
         <div class="row" v-if="!showFullGallery">
             <div class="col">
-                <show-gallery
+                <ShowGallery
                     v-for="gallery in galleries"
                     :key="gallery.id"
                     :galleryData="gallery"
@@ -23,8 +23,8 @@
                 </div>
             </div>
             <div class="col" v-if="addGallery || editGallery">
-                <add-gallery :closeAdd="closeAdd" v-if="addGallery" />
-                <edit-gallery
+                <AddGallery :closeAdd="closeAdd" v-if="addGallery" />
+                <EditGallery
                     :galleryID="editGalleryID"
                     :closeEdit="closeEdit"
                     v-if="editGallery"
@@ -33,7 +33,7 @@
         </div>
         <div class="row" v-if="showFullGallery">
             <div class="col">
-                <show-full-gallery
+                <ShowFullGallery
                     :galleryID="showFullGalleryID"
                     :closeShow="closeShow"
                 />
@@ -43,13 +43,13 @@
 </template>
 
 <script>
-import { useGalleryStore } from '@/stores/gallery.store';
+import { useGalleryStore } from '@/stores/galleryStore';
 import eventBus from '@/eventBus';
 
-import showGallery from '@/components/app/ShowGallery.vue';
-import addGallery from '@/components/app/AddGallery.vue';
-import editGallery from '@/components/app/EditGallery.vue';
-import showFullGallery from '@/components/app/ShowFullGallery.vue';
+import ShowGallery from '@/components/app/ShowGallery.vue';
+import AddGallery from '@/components/app/AddGallery.vue';
+import EditGallery from '@/components/app/EditGallery.vue';
+import ShowFullGallery from '@/components/app/ShowFullGallery.vue';
 
 export default {
     name: 'GalleryView',
@@ -65,10 +65,10 @@ export default {
         };
     },
     components: {
-        showGallery,
-        addGallery,
-        editGallery,
-        showFullGallery,
+        ShowGallery,
+        AddGallery,
+        EditGallery,
+        ShowFullGallery,
     },
     async created() {
         this.galleries = await this.galleryStore.fetchGallery();

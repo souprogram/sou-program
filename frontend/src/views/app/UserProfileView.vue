@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex flex-column gap-2 h-100">
-        <show-profile :user="user" v-if="!isLoading" />
+        <ShowProfile :user="user" v-if="!isLoading" />
 
         <div class="card" v-if="!profilePosts.length && !isLoading">
             <div class="card-body text-center">
@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <show-profile-post
+        <ShowProfilePost
             v-for="profilePost in profilePosts"
             :key="profilePost.id"
             :user="user"
@@ -21,18 +21,18 @@
 </template>
 
 <script>
-import { useUserStore } from '@/stores/user.store';
-import { useProfilePostStore } from '@/stores/profilepost.store';
+import { useUserStore } from '@/stores/userStore';
+import { useProfilePostStore } from '@/stores/profilePostStore';
 
-import showProfile from '@/components/app/ShowProfile.vue';
-import showProfilePost from '@/components/app/ShowProfilePost.vue';
+import ShowProfile from '@/components/app/ShowProfile.vue';
+import ShowProfilePost from '@/components/app/ShowProfilePost.vue';
 import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
 
 export default {
     name: 'UserProfileView',
     components: {
-        showProfile,
-        showProfilePost,
+        ShowProfile,
+        ShowProfilePost,
         LoadingSpinner,
     },
     data: () => ({

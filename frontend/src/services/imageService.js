@@ -1,4 +1,4 @@
-import { useGalleryStore } from '@/stores/gallery.store';
+import { useGalleryStore } from '@/stores/galleryStore';
 
 export default {
     async getImageSrc(imageID) {

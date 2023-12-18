@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { useStoreCompetition } from '@/stores/competition.store'
+import { useStoreCompetition } from '@/stores/competitionStore';
 
 export default {
     name: 'addTeam',
@@ -28,24 +28,24 @@ export default {
         },
     },
     setup(props) {
-        const storeCompetition = useStoreCompetition()
+        const storeCompetition = useStoreCompetition();
 
         return {
             competitionId: props.competitionId,
             newTeamName: '',
             storeCompetition,
-        }
+        };
     },
     methods: {
         async createTeam(competitionId) {
             const teamData = {
                 name: this.newTeamName,
                 competition_id: competitionId,
-            }
+            };
 
-            await this.storeCompetition.createTeam(teamData)
-            this.newTeamName = ''
+            await this.storeCompetition.createTeam(teamData);
+            this.newTeamName = '';
         },
     },
-}
+};
 </script>

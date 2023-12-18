@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { useAnnouncementStore } from '@/stores/announcement.store';
+import { useAnnouncementStore } from '@/stores/announcementStore';
 
 import FormModal from '@/components/app/FormModal.vue';
 

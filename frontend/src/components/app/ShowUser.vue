@@ -59,7 +59,7 @@ import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
 import EditUser from '@/components/app/EditUser.vue';
 import IconButton from '@/components/app/IconButton.vue';
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
-import { useUserStore } from '@/stores/user.store';
+import { useUserStore } from '@/stores/userStore';
 
 const props = {
     user: {

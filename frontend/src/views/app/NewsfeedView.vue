@@ -18,7 +18,7 @@
             Nema obavijesti...
         </h1>
 
-        <show-announcement
+        <ShowAnnouncement
             v-for="announcement in announcements"
             :key="announcement.id"
             :announcement="announcement"
@@ -31,16 +31,16 @@
 <script>
 import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
 import AddAnnouncement from '@/components/app/AddAnnouncement.vue';
-import showAnnouncement from '@/components/app/ShowAnnouncement.vue';
+import ShowAnnouncement from '@/components/app/ShowAnnouncement.vue';
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
-import { useAnnouncementStore } from '@/stores/announcement.store';
-import { useUserStore } from '@/stores/user.store';
+import { useAnnouncementStore } from '@/stores/announcementStore';
+import { useUserStore } from '@/stores/userStore';
 
 export default {
     name: 'NewsfeedView',
     components: {
         AddAnnouncement,
-        showAnnouncement,
+        ShowAnnouncement,
         LoadingSpinner,
     },
     data: () => ({

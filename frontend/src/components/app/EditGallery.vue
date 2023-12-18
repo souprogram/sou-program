@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { useGalleryStore } from '@/stores/gallery.store';
+import { useGalleryStore } from '@/stores/galleryStore';
 
 export default {
     name: 'editGallery',

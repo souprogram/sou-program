@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import { useStoreCompetition } from '@/stores/competition.store';
-import { useUserStore } from '@/stores/user.store';
+import { useStoreCompetition } from '@/stores/competitionStore';
+import { useUserStore } from '@/stores/userStore';
 
 export default {
     name: 'EditTeam',

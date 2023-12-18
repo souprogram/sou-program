@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import { useGalleryStore } from '@/stores/gallery.store';
-import { useUserStore } from '@/stores/user.store';
+import { useGalleryStore } from '@/stores/galleryStore';
+import { useUserStore } from '@/stores/userStore';
 
 import dateService from '@/services/dateService';
 //import VueMasonry from "vue-masonry";

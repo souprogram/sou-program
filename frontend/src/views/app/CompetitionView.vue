@@ -16,7 +16,7 @@
             <div
                 :class="'col' + (addCompetition || editCompetition ? '-6' : '')"
             >
-                <show-competition
+                <ShowCompetition
                     v-for="competition in competitions"
                     :key="competition.id"
                     :competitionData="competition"
@@ -29,8 +29,8 @@
                 </div>
             </div>
             <div class="col-6" v-if="addCompetition || editCompetition">
-                <add-competition :closeAdd="closeAdd" v-if="addCompetition" />
-                <edit-competition
+                <AddCompetition :closeAdd="closeAdd" v-if="addCompetition" />
+                <EditCompetition
                     :competitionID="editCompetitionID"
                     :closeEdit="closeEdit"
                     v-if="editCompetition"
@@ -41,10 +41,10 @@
 </template>
 
 <script>
-import { useStoreCompetition } from '@/stores/competition.store';
+import { useStoreCompetition } from '@/stores/competitionStore';
 import eventBus from '@/eventBus';
 
-import showCompetition from '@/components/app/ShowCompetition.vue';
+import ShowCompetition from '@/components/app/ShowCompetition.vue';
 import AddCompetition from '@/components/app/AddCompetition.vue';
 import EditCompetition from '@/components/app/EditCompetition.vue';
 
@@ -63,7 +63,7 @@ export default {
         };
     },
     components: {
-        showCompetition,
+        ShowCompetition,
         AddCompetition,
         EditCompetition,
     },

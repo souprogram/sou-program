@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import { useStoreCompetition } from '@/stores/competition.store'
-import { ref } from 'vue'
+import { useStoreCompetition } from '@/stores/competitionStore';
+import { ref } from 'vue';
 
 export default {
     name: 'addCompetition',
@@ -58,20 +58,20 @@ export default {
         },
     },
     setup() {
-        const storeCompetition = useStoreCompetition()
+        const storeCompetition = useStoreCompetition();
 
-        const newCompetitionName = ref('')
-        const newCompetitionStartDate = ref('')
-        const newCompetitionDescription = ref('')
+        const newCompetitionName = ref('');
+        const newCompetitionStartDate = ref('');
+        const newCompetitionDescription = ref('');
 
         const postCompetition = async () => {
             const newCompetitionData = {
                 name: newCompetitionName.value,
                 start_date: newCompetitionStartDate.value,
                 description: newCompetitionDescription.value,
-            }
-            await storeCompetition.createCompetition(newCompetitionData)
-        }
+            };
+            await storeCompetition.createCompetition(newCompetitionData);
+        };
 
         return {
             storeCompetition,
@@ -79,14 +79,14 @@ export default {
             newCompetitionName,
             newCompetitionStartDate,
             newCompetitionDescription,
-        }
+        };
     },
     methods: {
         closeAdd() {
-            this.closeAdd()
+            this.closeAdd();
         },
     },
-}
+};
 </script>
 
 <style scoped>

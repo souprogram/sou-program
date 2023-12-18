@@ -25,7 +25,7 @@
     </div>
 </template>
 <script>
-import { useProfilePostStore } from '@/stores/profilepost.store';
+import { useProfilePostStore } from '@/stores/profilePostStore';
 
 const props = {
     profilePictureSrc: {

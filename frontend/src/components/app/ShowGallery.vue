@@ -68,8 +68,8 @@
 </template>
 
 <script>
-import { useGalleryStore } from '@/stores/gallery.store';
-import { useUserStore } from '@/stores/user.store';
+import { useGalleryStore } from '@/stores/galleryStore';
+import { useUserStore } from '@/stores/userStore';
 import eventBus from '@/eventBus';
 
 import dateService from '@/services/dateService';

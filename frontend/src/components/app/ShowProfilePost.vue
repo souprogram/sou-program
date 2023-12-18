@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <edit-profile-post
+        <EditProfilePost
             v-if="isEditing"
             :profilePost="profilePost"
             :onClose="closeEditingProfilePost"
@@ -55,9 +55,9 @@
 </template>
 
 <script>
-import { useProfilePostStore } from '@/stores/profilepost.store';
+import { useProfilePostStore } from '@/stores/profilePostStore';
 
-import editProfilePost from '@/components/app/EditProfilePost.vue';
+import EditProfilePost from '@/components/app/EditProfilePost.vue';
 import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
 import IconButton from '@/components/app/IconButton.vue';
 
@@ -80,7 +80,7 @@ export default {
     name: 'showProfilePost',
     props,
     components: {
-        editProfilePost,
+        EditProfilePost,
         ConfirmationModal,
         IconButton,
     },

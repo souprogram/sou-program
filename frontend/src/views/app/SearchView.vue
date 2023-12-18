@@ -47,7 +47,7 @@ import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
 import AddUser from '@/components/app/AddUser.vue';
 import ShowUser from '@/components/app/ShowUser.vue';
 import { isAuthUserDemos } from '@/services/authService';
-import { useUserStore } from '@/stores/user.store';
+import { useUserStore } from '@/stores/userStore';
 
 export default {
     name: 'SearchView',

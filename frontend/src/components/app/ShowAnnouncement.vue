@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <edit-announcement
+        <EditAnnouncement
             v-if="isAuthUserDemos && isEditing"
             :announcement="announcement"
             :onClose="closeEditingAnnouncement"
@@ -74,12 +74,12 @@
 </template>
 
 <script>
-import { useAnnouncementStore } from '@/stores/announcement.store';
+import { useAnnouncementStore } from '@/stores/announcementStore';
 
 import { isAuthUserDemos } from '@/services/authService';
 
 import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
-import editAnnouncement from '@/components/app/EditAnnouncement.vue';
+import EditAnnouncement from '@/components/app/EditAnnouncement.vue';
 import IconButton from '@/components/app/IconButton.vue';
 
 const props = {
@@ -93,7 +93,7 @@ export default {
     name: 'showAnnouncement',
     props,
     components: {
-        editAnnouncement,
+        EditAnnouncement,
         ConfirmationModal,
         IconButton,
     },

@@ -71,8 +71,8 @@
 </template>
 
 <script>
-import { useGalleryStore } from '@/stores/gallery.store';
-import { useUserStore } from '@/stores/user.store';
+import { useGalleryStore } from '@/stores/galleryStore';
+import { useUserStore } from '@/stores/userStore';
 
 import FormModal from '@/components/app/FormModal.vue';
 import Input from '@/components/app/Input.vue';

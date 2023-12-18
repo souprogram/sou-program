@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { useUserStore } from '@/stores/user.store';
+import { useUserStore } from '@/stores/userStore';
 import { logout, getAuthData } from '@/services/authService';
 
 const props = {

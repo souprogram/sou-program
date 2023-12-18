@@ -34,10 +34,10 @@ div
                         ></textarea>
                     </div>
                     <div>
-                        <add-team :competitionId="competitionID" />
+                        <AddTeam :competitionId="competitionID" />
                     </div>
                     <div v-for="team in competitionData.teams" :key="team.id">
-                        <edit-team :teamData="team" />
+                        <EditTeam :teamData="team" />
                     </div>
                 </div>
                 <div class="card-footer text-end">
@@ -52,9 +52,9 @@ div
 </template>
 
 <script>
-import { useStoreCompetition } from '@/stores/competition.store';
-import addTeam from './AddTeam.vue';
-import editTeam from './EditTeam.vue';
+import { useStoreCompetition } from '@/stores/competitionStore';
+import AddTeam from './AddTeam.vue';
+import EditTeam from './EditTeam.vue';
 import { ref } from 'vue';
 
 export default {
@@ -70,8 +70,8 @@ export default {
         },
     },
     components: {
-        addTeam,
-        editTeam,
+        AddTeam,
+        EditTeam,
     },
     setup(props) {
         const storeCompetition = useStoreCompetition();

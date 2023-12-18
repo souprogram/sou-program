@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex flex-column gap-2 h-100">
-        <show-profile :user="currentUser" />
-        <add-profile-post :profilePictureSrc="currentUser.profilePictureSrc" />
+        <ShowProfile :user="currentUser" />
+        <AddProfilePost :profilePictureSrc="currentUser.profilePictureSrc" />
 
         <div class="card" v-if="!profilePosts.length && !isLoading">
             <div class="card-body text-center">
@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <show-profile-post
+        <ShowProfilePost
             v-for="profilePost in profilePosts"
             :key="profilePost.id"
             :user="currentUser"
@@ -21,23 +21,23 @@
 </template>
 
 <script>
-import { useUserStore } from '@/stores/user.store';
-import { useProfilePostStore } from '@/stores/profilepost.store';
+import { useUserStore } from '@/stores/userStore';
+import { useProfilePostStore } from '@/stores/profilePostStore';
 
 import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
 
 import { getAuthData } from '@/services/authService';
 
-import showProfile from '@/components/app/ShowProfile.vue';
-import addProfilePost from '@/components/app/AddProfilePost.vue';
-import showProfilePost from '@/components/app/ShowProfilePost.vue';
+import ShowProfile from '@/components/app/ShowProfile.vue';
+import AddProfilePost from '@/components/app/AddProfilePost.vue';
+import ShowProfilePost from '@/components/app/ShowProfilePost.vue';
 
 export default {
     name: 'MyProfileView',
     components: {
-        showProfile,
-        addProfilePost,
-        showProfilePost,
+        ShowProfile,
+        AddProfilePost,
+        ShowProfilePost,
         LoadingSpinner,
     },
     data: function () {

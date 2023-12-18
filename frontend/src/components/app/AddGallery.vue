@@ -65,8 +65,8 @@
 
 <script>
 import { getAuthData } from '@/services/authService';
-import { useGalleryStore } from '@/stores/gallery.store';
-import { useUserStore } from '@/stores/user.store';
+import { useGalleryStore } from '@/stores/galleryStore';
+import { useUserStore } from '@/stores/userStore';
 
 export default {
     name: 'addGallery',

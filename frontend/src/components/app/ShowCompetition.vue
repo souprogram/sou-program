@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { useStoreCompetition } from '@/stores/competition.store';
+import { useStoreCompetition } from '@/stores/competitionStore';
 import editCompetition from './EditCompetition.vue';
 import eventBus from '@/eventBus';
 
