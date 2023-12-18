@@ -6,7 +6,7 @@
             </div>
         </div>
 
-        <add-announcement
+        <AddAnnouncement
             v-if="isAuthUserDemos && currentUser"
             :userProfilePictureSrc="currentUser.profilePictureSrc"
         />
@@ -30,7 +30,7 @@
 
 <script>
 import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
-import addAnnouncement from '@/components/app/AddAnnouncement.vue';
+import AddAnnouncement from '@/components/app/AddAnnouncement.vue';
 import showAnnouncement from '@/components/app/ShowAnnouncement.vue';
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
 import { useAnnouncementStore } from '@/stores/announcement.store';
@@ -39,7 +39,7 @@ import { useUserStore } from '@/stores/user.store';
 export default {
     name: 'NewsfeedView',
     components: {
-        addAnnouncement,
+        AddAnnouncement,
         showAnnouncement,
         LoadingSpinner,
     },
