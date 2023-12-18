@@ -4,12 +4,11 @@ import imageService from '@/services/imageService';
 import { defineStore } from 'pinia';
 
 const formatUserData = async (user) => {
-    let profilePictureSrc = await imageService.getImageSrc(
+    const profilePictureSrc = (await imageService.getImageSrc(
         user.profile_picture_key
-    );
-    if (!profilePictureSrc) {
-        profilePictureSrc = require('@/assets/sp-icon.png');
-    }
+    ))
+        ? profilePictureSrc
+        : require('@/assets/sp-icon.png');
 
     return {
         ...user,
@@ -21,12 +20,13 @@ const formatUserData = async (user) => {
 export const useUserStore = defineStore('user', {
     state: () => ({
         users: [],
+        isLoading: false,
     }),
     getters: {
         getUserByID: (state) => (userID) => {
             return state.users.find((user) => user.id === userID);
         },
-        getSearchedUsersByUsername: (state) => (searchedUsername) => {
+        getSearchedUsersByFullName: (state) => (searchedUsername) => {
             const searchLowerCase = searchedUsername.toLowerCase();
             const currentUser = state.getUserByID(getAuthData().id);
 
@@ -45,11 +45,14 @@ export const useUserStore = defineStore('user', {
     },
     actions: {
         async fetchUsers() {
+            this.isLoading = true;
+
             const res = await backendApiService.get({
                 url: '/users',
             });
 
             if (!res.ok) {
+                this.isLoading = false;
                 this.$router.push('/error');
                 return;
             }
@@ -59,7 +62,7 @@ export const useUserStore = defineStore('user', {
                 resObj.data.users.map(formatUserData)
             );
 
-            return this.users;
+            this.isLoading = false;
         },
         async createUser(user) {
             const res = await backendApiService.post({

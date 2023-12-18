@@ -102,14 +102,14 @@ body {
 }
 
 .btn-delete {
-    color: var(--red-color);
+    color: var(--red-color) !important;
 
     &:focus {
         border: 1px solid var(--red-color);
     }
 
     &:hover {
-        opacity: 1;
+        opacity: 0.8;
     }
 }
 
@@ -119,7 +119,7 @@ body {
     }
 
     &:hover {
-        opacity: 1;
+        opacity: 0.8;
     }
 }
 

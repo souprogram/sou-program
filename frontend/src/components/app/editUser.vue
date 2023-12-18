@@ -75,7 +75,6 @@ export default {
     },
     data() {
         return {
-            userStore: useUserStore(),
             updatedUser: {
                 id: this.user.id,
                 name: this.user.name,
@@ -94,6 +93,9 @@ export default {
         };
     },
     computed: {
+        userStore() {
+            return useUserStore();
+        },
         isAuthUserDemos() {
             return isAuthUserDemos();
         },
@@ -107,10 +109,6 @@ export default {
     },
     methods: {
         async updateUser() {
-            if (!this.isFormValid) {
-                return;
-            }
-
             await this.userStore.updateUser(this.updatedUser);
         },
     },

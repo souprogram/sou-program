@@ -9,10 +9,7 @@
                     >
                         <img
                             class="icon rounded-circle"
-                            :src="
-                                user.profilePictureSrc ||
-                                require('@/assets/sp-icon.png')
-                            "
+                            :src="user.profilePictureSrc"
                         />
                     </router-link>
                 </div>
@@ -28,34 +25,41 @@
                     v-if="user.id == currentUserID || isAuthUserDemos"
                     class="h-fit d-flex justify-content-end gap-1"
                 >
-                    <IconButton actionType="edit" :onClick="openEditingUser" />
+                    <IconButton
+                        actionType="edit"
+                        :onClick="() => (isEditingUser = true)"
+                    />
                     <IconButton
                         v-if="user.id != currentUserID"
                         actionType="delete"
-                        :onClick="openDeletingUser"
+                        :onClick="() => (isDeletingUser = true)"
                     />
                 </div>
             </div>
         </div>
 
-        <edit-user v-if="isEditing" :user="user" :onClose="closeEditingUser" />
+        <EditUser
+            v-if="isEditingUser"
+            :user="user"
+            :onClose="() => (isEditingUser = false)"
+        />
 
         <ConfirmationModal
-            v-if="isConfirming"
+            v-if="isDeletingUser"
             title="Izbriši korisnika"
             message="Jesi li siguran/na da želiš izbrisati korisnika?"
-            :onConfirm="confirmDeleteUser"
-            :onCancel="cancelDeleteUser"
+            :onConfirm="deleteUser"
+            :onCancel="() => (isDeletingUser = false)"
         />
     </div>
 </template>
 
 <script>
 import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
-import editUser from '@/components/app/editUser.vue';
+import EditUser from '@/components/app/EditUser.vue';
+import IconButton from '@/components/app/IconButton.vue';
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
 import { useUserStore } from '@/stores/user.store';
-import IconButton from '@/components/app/IconButton.vue';
 
 const props = {
     user: {
@@ -69,40 +73,28 @@ export default {
     props,
     components: {
         ConfirmationModal,
-        editUser,
+        EditUser,
         IconButton,
     },
-    data() {
+    data: function () {
         return {
-            userStore: useUserStore(),
+            isEditingUser: false,
+            isDeletingUser: false,
             currentUserID: getAuthData().id,
-            isConfirming: false,
-            isEditing: false,
             isAuthUserDemos: isAuthUserDemos(),
         };
     },
     computed: {
+        userStore() {
+            return useUserStore();
+        },
         userProfilePath() {
             return `/user-profile/${this.user.id}`;
         },
     },
     methods: {
-        openDeletingUser() {
-            this.isConfirming = true;
-        },
-        async confirmDeleteUser() {
-            await this.userStore.deleteUser(this.user.id);
-
-            this.isConfirming = false;
-        },
-        cancelDeleteUser() {
-            this.isConfirming = false;
-        },
-        openEditingUser() {
-            this.isEditing = true;
-        },
-        closeEditingUser() {
-            this.isEditing = false;
+        deleteUser() {
+            this.userStore.deleteUser(user.id);
         },
     },
 };

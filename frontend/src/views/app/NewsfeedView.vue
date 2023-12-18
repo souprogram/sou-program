@@ -24,19 +24,14 @@
             :announcement="announcement"
         />
 
-        <div
-            class="d-flex align-items-center justify-content-center flex-grow-1"
-            v-if="isLoading"
-        >
-            <LoadingSpinner />
-        </div>
+        <LoadingSpinner v-if="isLoading" />
     </div>
 </template>
 
 <script>
 import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
-import addAnnouncement from '@/components/app/addAnnouncement.vue';
-import showAnnouncement from '@/components/app/showAnnouncement.vue';
+import addAnnouncement from '@/components/app/AddAnnouncement.vue';
+import showAnnouncement from '@/components/app/ShowAnnouncement.vue';
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
 import { useAnnouncementStore } from '@/stores/announcement.store';
 import { useUserStore } from '@/stores/user.store';

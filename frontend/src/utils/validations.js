@@ -27,10 +27,8 @@ export const password = (value) => {
     return required(value) !== true
         ? 'Lozinka je obavezna'
         : minLength(8)(value) !== true
-        ? 'Lozinka mora biti duža od 7 znakova'
+        ? 'Lozinka mora imati barem 8 znakova'
         : containsUppercase(value) !== true
         ? 'Lozinka mora imati barem jedno veliko slovo'
-        : containsSpecialCharacter(value) !== true
-        ? 'Lozinka mora imati barem jedan poseban znak'
         : true;
 };

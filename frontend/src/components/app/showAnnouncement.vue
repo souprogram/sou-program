@@ -79,7 +79,7 @@ import { useAnnouncementStore } from '@/stores/announcement.store';
 import { isAuthUserDemos } from '@/services/authService';
 
 import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
-import editAnnouncement from '@/components/app/editAnnouncement.vue';
+import editAnnouncement from '@/components/app/EditAnnouncement.vue';
 import IconButton from '@/components/app/IconButton.vue';
 
 const props = {

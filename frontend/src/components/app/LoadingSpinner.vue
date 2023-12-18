@@ -1,5 +1,7 @@
 <template>
-    <div class="spinner"></div>
+    <div class="d-flex align-items-center justify-content-center flex-grow-1">
+        <div class="spinner"></div>
+    </div>
 </template>
 
 <script>

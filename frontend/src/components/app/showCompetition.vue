@@ -68,7 +68,7 @@
 
 <script>
 import { useStoreCompetition } from '@/stores/competition.store';
-import editCompetition from './editCompetition.vue';
+import editCompetition from './EditCompetition.vue';
 import eventBus from '@/eventBus';
 
 import dateService from '@/services/dateService';

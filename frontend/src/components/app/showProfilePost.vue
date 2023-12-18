@@ -57,7 +57,7 @@
 <script>
 import { useProfilePostStore } from '@/stores/profilepost.store';
 
-import editProfilePost from '@/components/app/editProfilePost.vue';
+import editProfilePost from '@/components/app/EditProfilePost.vue';
 import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
 import IconButton from '@/components/app/IconButton.vue';
 

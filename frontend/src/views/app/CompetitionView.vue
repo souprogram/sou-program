@@ -44,9 +44,9 @@
 import { useStoreCompetition } from '@/stores/competition.store';
 import eventBus from '@/eventBus';
 
-import showCompetition from '@/components/app/showCompetition.vue';
-import addCompetition from '@/components/app/addCompetition.vue';
-import editCompetition from '@/components/app/editCompetition.vue';
+import showCompetition from '@/components/app/ShowCompetition.vue';
+import AddCompetition from '@/components/app/AddCompetition.vue';
+import EditCompetition from '@/components/app/EditCompetition.vue';
 
 import userTypeEnum from '@/enums/userTypeEnum';
 
@@ -64,8 +64,8 @@ export default {
     },
     components: {
         showCompetition,
-        addCompetition,
-        editCompetition,
+        AddCompetition,
+        EditCompetition,
     },
     async created() {
         this.competitions = await this.storeCompetition.fetchCompetition();

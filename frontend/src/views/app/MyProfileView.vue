@@ -16,12 +16,7 @@
             :profilePost="profilePost"
         />
 
-        <div
-            class="d-flex align-items-center justify-content-center flex-grow-1"
-            v-if="isLoading"
-        >
-            <LoadingSpinner />
-        </div>
+        <LoadingSpinner v-if="isLoading" />
     </div>
 </template>
 
@@ -33,9 +28,9 @@ import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
 
 import { getAuthData } from '@/services/authService';
 
-import showProfile from '@/components/app/showProfile.vue';
-import addProfilePost from '@/components/app/addProfilePost.vue';
-import showProfilePost from '@/components/app/showProfilePost.vue';
+import showProfile from '@/components/app/ShowProfile.vue';
+import addProfilePost from '@/components/app/AddProfilePost.vue';
+import showProfilePost from '@/components/app/ShowProfilePost.vue';
 
 export default {
     name: 'MyProfileView',

@@ -25,7 +25,15 @@
             </div>
         </div>
 
-        <Search :onSearch="searchedWorkshops" :placeholder="placeholder" />
+        <div class="card">
+            <input
+                name="search"
+                type="text"
+                class="form-control"
+                placeholder="Upiši naziv radionice..."
+                v-model="searchTerm"
+            />
+        </div>
 
         <div class="card" v-if="!filteredWorkshops.length">
             <div class="card-body text-center">
@@ -105,16 +113,14 @@ export default {
             socials,
             searchTerm: '',
             workshops,
-            filteredWorkshops: workshops,
-            placeholder: 'Upiši naziv radionice...',
         };
     },
-    methods: {
-        searchedWorkshops(searchTerm) {
-            this.filteredWorkshops = this.workshops.filter((workshop) => {
+    computed: {
+        filteredWorkshops() {
+            return this.workshops.filter((workshop) => {
                 return workshop.name
                     .toLowerCase()
-                    .includes(searchTerm.toLowerCase());
+                    .includes(this.searchTerm.toLowerCase());
             });
         },
     },

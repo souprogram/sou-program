@@ -16,12 +16,7 @@
             :isCurrentUser="false"
         />
 
-        <div
-            class="d-flex align-items-center justify-content-center flex-grow-1"
-            v-if="isLoading"
-        >
-            <LoadingSpinner />
-        </div>
+        <LoadingSpinner v-if="isLoading" />
     </div>
 </template>
 
@@ -29,8 +24,8 @@
 import { useUserStore } from '@/stores/user.store';
 import { useProfilePostStore } from '@/stores/profilepost.store';
 
-import showProfile from '@/components/app/showProfile.vue';
-import showProfilePost from '@/components/app/showProfilePost.vue';
+import showProfile from '@/components/app/ShowProfile.vue';
+import showProfilePost from '@/components/app/ShowProfilePost.vue';
 import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
 
 export default {

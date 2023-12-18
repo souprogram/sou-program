@@ -1,40 +1,33 @@
 <template>
     <div class="card">
         <input
-            name="search"
-            type="text"
             class="form-control"
+            type="text"
             :placeholder="placeholder"
-            v-model="searchTerm"
-            @input="search"
+            :value="searchTerm"
+            @input="updateValue"
         />
     </div>
 </template>
-
+  
 <script>
-const props = {
-    placeholder: {
-        type: String,
-        default: '',
-    },
-    onSearch: {
-        type: Function,
-        required: true,
-    },
-};
-
 export default {
-    name: 'Search',
-    props,
-    data() {
-        return {
-            searchTerm: '',
-        };
+    props: {
+        searchTerm: {
+            type: String,
+            required: true,
+        },
+        placeholder: {
+            type: String,
+            default: '',
+        },
     },
     methods: {
-        search() {
-            this.onSearch(this.searchTerm);
+        updateValue(event) {
+            const value = event.target.value;
+            this.$emit('update:searchTerm', value);
         },
     },
 };
 </script>
+  
