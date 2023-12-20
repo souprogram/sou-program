@@ -6,7 +6,7 @@
             </div>
         </div>
 
-        <AddAnnouncement
+        <AnnouncementAdd
             v-if="isAuthUserDemos && currentUser"
             :userProfilePictureSrc="currentUser.profilePictureSrc"
         />
@@ -18,7 +18,7 @@
             Nema obavijesti...
         </h1>
 
-        <ShowAnnouncement
+        <AnnouncementCard
             v-for="announcement in announcements"
             :key="announcement.id"
             :announcement="announcement"
@@ -30,8 +30,9 @@
 
 <script>
 import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
-import AddAnnouncement from '@/components/app/AddAnnouncement.vue';
-import ShowAnnouncement from '@/components/app/ShowAnnouncement.vue';
+import AnnouncementAdd from '@/components/app/AnnouncementAdd.vue';
+import AnnouncementCard from '@/components/app/AnnouncementCard.vue';
+
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
 import { useAnnouncementStore } from '@/stores/announcementStore';
 import { useUserStore } from '@/stores/userStore';
@@ -39,20 +40,28 @@ import { useUserStore } from '@/stores/userStore';
 export default {
     name: 'NewsfeedView',
     components: {
-        AddAnnouncement,
-        ShowAnnouncement,
+        AnnouncementAdd,
+        AnnouncementCard,
         LoadingSpinner,
     },
-    data: () => ({
-        pageCount: 0,
-        isLoading: false,
-        currentUser: {},
-        isAuthUserDemos: isAuthUserDemos(),
-        announcements: [],
-        announcementStore: useAnnouncementStore(),
-        userStore: useUserStore(),
-    }),
-    async created() {
+    data() {
+        return {
+            pageCount: 0,
+            isLoading: false,
+            currentUser: {},
+            isAuthUserDemos: isAuthUserDemos(),
+            announcements: [],
+        };
+    },
+    computed: {
+        announcementStore() {
+            return useAnnouncementStore();
+        },
+        userStore() {
+            return useUserStore();
+        },
+    },
+    async mounted() {
         this.isLoading = true;
 
         await this.userStore.fetchUsers();
@@ -60,8 +69,7 @@ export default {
         await this.loadMoreAnnouncements();
 
         this.isLoading = false;
-    },
-    mounted() {
+
         this.handleScroll();
     },
     methods: {

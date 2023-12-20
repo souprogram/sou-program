@@ -1,17 +1,20 @@
 <template>
     <div>
+        <IconButton actionType="edit" @click="openModal" />
+
         <FormModal
+            v-if="isModalActive"
             title="Uredi obavijest"
-            :onClose="onClose"
+            :onClose="closeModal"
             :onConfirm="updateAnnouncement"
-            :disabled="!announcementText"
+            :disabled="!isFormValid"
         >
             <div class="form-group">
                 <label for="text">Opis</label>
                 <textarea
                     id="text"
-                    v-model.trim="announcementText"
                     class="form-control"
+                    v-model.trim="announcementText"
                     rows="9"
                     required
                 ></textarea>
@@ -23,6 +26,7 @@
 <script>
 import { useAnnouncementStore } from '@/stores/announcementStore';
 
+import IconButton from '@/components/app/IconButton.vue';
 import FormModal from '@/components/app/FormModal.vue';
 
 const props = {
@@ -30,25 +34,36 @@ const props = {
         type: Object,
         required: true,
     },
-    onClose: {
-        type: Function,
-        required: true,
-    },
 };
 
 export default {
-    name: 'editAnnouncement',
+    name: 'AnnouncementEditButton',
     props,
     components: {
+        IconButton,
         FormModal,
     },
     data() {
         return {
+            isModalActive: false,
             announcementText: this.announcement.text,
-            announcementStore: useAnnouncementStore(),
         };
     },
+    computed: {
+        announcementStore() {
+            return useAnnouncementStore();
+        },
+        isFormValid() {
+            return !!this.announcementText;
+        },
+    },
     methods: {
+        openModal() {
+            this.isModalActive = true;
+        },
+        closeModal() {
+            this.isModalActive = false;
+        },
         async updateAnnouncement() {
             await this.announcementStore.updateAnnouncement({
                 id: this.announcement.id,

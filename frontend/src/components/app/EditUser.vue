@@ -1,22 +1,25 @@
 <template>
     <div>
+        <IconButton actionType="edit" @click="openModal" />
+
         <FormModal
+            v-if="isModalActive"
             title="Uredi korisnika"
-            :onClose="onClose"
+            :onClose="closeModal"
             :onConfirm="updateUser"
             :disabled="!isFormValid"
         >
-            <Input
+            <AppInput
                 label="Ime"
                 v-model="updatedUser.name"
                 :validations="validationRules.name"
             />
-            <Input
+            <AppInput
                 label="Prezime"
                 v-model="updatedUser.surname"
                 :validations="validationRules.surname"
             />
-            <Input
+            <AppInput
                 label="Email"
                 v-model="updatedUser.email"
                 :validations="validationRules.email"
@@ -48,8 +51,9 @@
 <script>
 import { useUserStore } from '@/stores/userStore';
 
+import IconButton from '@/components/app/IconButton.vue';
 import FormModal from '@/components/app/FormModal.vue';
-import Input from '@/components/app/Input.vue';
+import AppInput from '@/components/app/AppInput.vue';
 
 import { isAuthUserDemos } from '@/services/authService';
 
@@ -60,21 +64,19 @@ const props = {
         type: Object,
         required: true,
     },
-    onClose: {
-        type: Function,
-        required: true,
-    },
 };
 
 export default {
-    name: 'editUser',
+    name: 'EditUser',
     props,
     components: {
+        IconButton,
         FormModal,
-        Input,
+        AppInput,
     },
     data() {
         return {
+            isModalActive: false,
             updatedUser: {
                 id: this.user.id,
                 name: this.user.name,
@@ -108,6 +110,12 @@ export default {
         },
     },
     methods: {
+        openModal() {
+            this.isModalActive = true;
+        },
+        closeModal() {
+            this.isModalActive = false;
+        },
         async updateUser() {
             await this.userStore.updateUser(this.updatedUser);
         },

@@ -18,6 +18,7 @@
 
 <script>
 export default {
+    name: 'AppInput',
     props: {
         label: {
             type: String,
@@ -36,7 +37,6 @@ export default {
             default: 'text',
         },
     },
-    name: 'Input',
     data() {
         return {
             errorMessages: [],

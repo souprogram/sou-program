@@ -1,32 +1,30 @@
 <template>
-    <div class="modal d-block" tabindex="-1" role="dialog">
-        <div class="d-flex align-items-center h-full">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">{{ title }}</h5>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            @click="cancel"
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>{{ message }}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn" @click="cancel">
-                            Ne
-                        </button>
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            @click="confirm"
-                        >
-                            Da
-                        </button>
-                    </div>
+    <div class="modal d-block" tabindex="-1" role="dialog" @click="cancel">
+        <div class="modal-dialog modal-dialog-centered" @click.stop>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ title }}</h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        @click="cancel"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ message }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" @click="cancel">
+                        Ne
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click="confirm"
+                    >
+                        Da
+                    </button>
                 </div>
             </div>
         </div>
@@ -56,12 +54,17 @@ const props = {
 export default {
     name: 'ConfirmationModal',
     props,
+    created() {
+        document.body.style.overflow = 'hidden';
+    },
     methods: {
         confirm() {
             this.onConfirm();
+            document.body.style.overflow = '';
         },
         cancel() {
             this.onCancel();
+            document.body.style.overflow = '';
         },
     },
 };

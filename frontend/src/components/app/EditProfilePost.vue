@@ -1,8 +1,11 @@
 <template>
     <div>
+        <IconButton actionType="edit" @click="openModal" />
+
         <FormModal
+            v-if="isModalActive"
             title="Uredi profilnu objavu"
-            :onClose="onClose"
+            :onClose="closeModal"
             :onConfirm="updateProfilePost"
             :disabled="!profilePostText"
         >
@@ -23,6 +26,7 @@
 <script>
 import { useProfilePostStore } from '@/stores/profilePostStore';
 
+import IconButton from '@/components/app/IconButton.vue';
 import FormModal from '@/components/app/FormModal.vue';
 
 const props = {
@@ -30,25 +34,33 @@ const props = {
         type: Object,
         required: true,
     },
-    onClose: {
-        type: Function,
-        required: true,
-    },
 };
 
 export default {
-    name: 'editProfilePost',
+    name: 'EditProfilePost',
     props,
     components: {
+        IconButton,
         FormModal,
     },
     data() {
         return {
+            isModalActive: false,
             profilePostText: this.profilePost.text,
-            profilePostStore: useProfilePostStore(),
         };
     },
+    computed: {
+        profilePostStore() {
+            return useProfilePostStore();
+        },
+    },
     methods: {
+        openModal() {
+            this.isModalActive = true;
+        },
+        closeModal() {
+            this.isModalActive = false;
+        },
         async updateProfilePost() {
             await this.profilePostStore.updateProfilePost({
                 id: this.profilePost.id,

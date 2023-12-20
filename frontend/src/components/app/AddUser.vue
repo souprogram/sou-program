@@ -1,32 +1,42 @@
 <template>
     <div>
+        <button
+            class="btn btn-primary"
+            @click="openAddingForm"
+            data-toggle="modal"
+            data-target="#exampleModalCenter"
+        >
+            Dodaj korisnika
+        </button>
+
         <FormModal
+            v-if="isAddingUser"
             title="Dodaj korisnika"
-            :onClose="onClose"
+            :onClose="closeAddingForm"
             :onConfirm="createUser"
             :disabled="!isFormValid"
         >
-            <Input
+            <AppInput
                 label="Ime"
                 v-model="user.name"
                 :validations="validationRules.name"
             />
-            <Input
+            <AppInput
                 label="Prezime"
                 v-model="user.surname"
                 :validations="validationRules.surname"
             />
-            <Input
+            <AppInput
                 label="Email"
                 v-model="user.email"
                 :validations="validationRules.email"
             />
-            <Input
+            <AppInput
                 label="Korisničko ime"
                 v-model="user.username"
                 :validations="validationRules.username"
             />
-            <Input
+            <AppInput
                 label="Lozinka"
                 v-model="user.password"
                 :type="'password'"
@@ -59,11 +69,9 @@
                     id="type"
                     required
                 >
-                    <option value="" disabled selected>
-                        Odaberi tip korisnika
-                    </option>
+                    <option value="" disabled>Odaberi tip korisnika</option>
                     <option value="demonstrator">Demonstrator</option>
-                    <option value="student">Student</option>
+                    <option value="student" selected>Student</option>
                 </select>
             </div>
         </FormModal>
@@ -75,7 +83,7 @@ import { useGalleryStore } from '@/stores/galleryStore';
 import { useUserStore } from '@/stores/userStore';
 
 import FormModal from '@/components/app/FormModal.vue';
-import Input from '@/components/app/Input.vue';
+import AppInput from '@/components/app/AppInput.vue';
 
 import {
     required,
@@ -85,24 +93,15 @@ import {
     password,
 } from '@/utils/validations.js';
 
-const props = {
-    onClose: {
-        type: Function,
-        required: true,
-    },
-};
-
 export default {
-    name: 'addUser',
-    props,
+    name: 'AddUser',
     components: {
         FormModal,
-        Input,
+        AppInput,
     },
     data: function () {
         return {
-            galleryStore: useGalleryStore(),
-            userStore: useUserStore(),
+            isAddingUser: false,
             user: {
                 name: '',
                 surname: '',
@@ -124,6 +123,12 @@ export default {
         };
     },
     computed: {
+        userStore() {
+            return useUserStore();
+        },
+        galleryStore() {
+            return useGalleryStore();
+        },
         isFormValid() {
             return Object.keys(this.validationRules).every((key) =>
                 this.validationRules[key].every(
@@ -133,26 +138,33 @@ export default {
         },
     },
     methods: {
+        openAddingForm() {
+            this.isAddingUser = true;
+        },
+        closeAddingForm() {
+            this.isAddingUser = false;
+        },
         addFile(event) {
             this.selectedImage = event.target.files[0];
         },
+        async getUploadProfilePictureKey() {
+            const [imageKey] = await this.galleryStore.googleUploadImages({
+                images: [this.selectedImage],
+                folderName: 'user',
+            });
+            return imageKey;
+        },
         async createUser() {
-            if (!this.isFormValid) {
-                return;
-            }
+            const profile_picture_key = this.selectedImage
+                ? this.getUploadProfilePictureKey()
+                : null;
 
-            this.user.profile_picture_key = null;
-            if (this.selectedImage) {
-                const images = await this.galleryStore.googleUploadImages({
-                    images: [this.selectedImage],
-                    folderName: 'user',
-                });
-                this.user.profile_picture_key = images[0];
-            }
+            await this.userStore.createUser({
+                ...this.user,
+                profile_picture_key,
+            });
 
-            await this.userStore.createUser(this.user);
-
-            this.onClose();
+            this.isAddingUser = false;
         },
     },
 };

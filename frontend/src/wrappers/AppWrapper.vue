@@ -11,7 +11,7 @@
         </div>
         <div class="h-full d-flex">
             <div class="nav-wrapper">
-                <Navigation
+                <AppNavigation
                     class="position-fixed"
                     :class="{ 'slide-in': isNavOpened }"
                     :toggleNav="toggleNav"
@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import Navigation from '@/components/app/Navigation.vue';
+import AppNavigation from '@/components/app/AppNavigation.vue';
 
 export default {
     name: 'AppWrapper',
     components: {
-        Navigation,
+        AppNavigation,
     },
     data: () => ({
         isNavOpened: false,

@@ -77,19 +77,23 @@ const props = {
 };
 
 export default {
-    name: 'Navigation',
+    name: 'AppNavigation',
     props,
     data: function () {
         return {
             username: '',
         };
     },
-    async created() {
-        const userStore = useUserStore();
-        await userStore.fetchUsers();
-        const currentUser = userStore.getUserByID(getAuthData().id);
+    async mounted() {
+        await this.userStore.fetchUsers();
+        const currentUser = this.userStore.getUserByID(getAuthData().id);
 
         this.username = currentUser.username;
+    },
+    computed: {
+        userStore() {
+            return useUserStore();
+        },
     },
     methods: {
         isRouteActive(routeName) {

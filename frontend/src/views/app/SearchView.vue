@@ -5,13 +5,7 @@
                 class="card-body d-flex justify-content-between align-items-center"
             >
                 <h1>Stalkaonica</h1>
-                <button
-                    v-if="isAuthUserDemos"
-                    class="btn btn-primary"
-                    @click="() => (isAddingUser = true)"
-                >
-                    Dodaj korisnika
-                </button>
+                <AddUser v-if="isAuthUserDemos" />
             </div>
         </div>
 
@@ -34,11 +28,6 @@
         </div>
 
         <LoadingSpinner v-if="userStore.isLoading" />
-
-        <AddUser
-            v-if="isAuthUserDemos && isAddingUser"
-            :onClose="() => (isAddingUser = false)"
-        />
     </div>
 </template>
 
@@ -57,9 +46,7 @@ export default {
         LoadingSpinner,
     },
     data: () => ({
-        isAddingUser: false,
         searchTerm: '',
-        isAuthUserDemos: isAuthUserDemos(),
     }),
     async mounted() {
         await this.userStore.fetchUsers();
@@ -70,6 +57,9 @@ export default {
         },
         filteredUsers() {
             return this.userStore.getSearchedUsersByFullName(this.searchTerm);
+        },
+        isAuthUserDemos() {
+            return isAuthUserDemos();
         },
     },
 };

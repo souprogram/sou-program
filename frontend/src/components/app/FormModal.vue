@@ -1,35 +1,33 @@
 <template>
-    <div class="modal d-block" tabindex="-1" role="dialog">
-        <div class="d-flex align-items-center h-full">
-            <div class="modal-dialog">
-                <form
-                    class="modal-content"
-                    autocomplete="off"
-                    @submit.prevent="onConfirm"
-                >
-                    <div class="modal-header">
-                        <h5 class="modal-title">{{ title }}</h5>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            @click="close"
-                            aria-label="Close"
-                        ></button>
-                    </div>
-                    <div class="modal-body d-flex flex-column gap-3">
-                        <slot></slot>
-                    </div>
-                    <div class="modal-footer">
-                        <button
-                            type="submit"
-                            class="btn btn-primary"
-                            :disabled="disabled"
-                        >
-                            Potvrdi
-                        </button>
-                    </div>
-                </form>
-            </div>
+    <div class="modal d-block" tabindex="-1" role="dialog" @click="close">
+        <div class="modal-dialog modal-dialog-centered" @click.stop>
+            <form
+                class="modal-content"
+                autocomplete="off"
+                @submit.prevent="onConfirm"
+            >
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ title }}</h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        @click="close"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="modal-body d-flex flex-column gap-3">
+                    <slot></slot>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        :disabled="disabled"
+                    >
+                        Potvrdi
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </template>
@@ -71,10 +69,6 @@ export default {
 
 <style scoped>
 .modal {
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
-.modal-dialog {
-    width: 60ch !important;
+    background-color: rgba(0, 0, 0, 0.45);
 }
 </style>

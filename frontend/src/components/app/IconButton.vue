@@ -1,15 +1,11 @@
 <template>
-    <button :class="`btn btn-${actionType}`" @click="onClick">
+    <button :class="`btn btn-${actionType}`">
         <i :class="`fa-solid fa-${faIcon[actionType]}`"></i>
     </button>
 </template>
 
 <script>
 const props = {
-    onClick: {
-        type: Function,
-        default: () => {},
-    },
     actionType: {
         type: String,
         required: true,
@@ -17,7 +13,7 @@ const props = {
 };
 
 export default {
-    name: 'DeleteButton',
+    name: 'IconButton',
     props,
     data: function () {
         return {

@@ -26,40 +26,17 @@
                     v-if="isCurrentUser"
                     class="h-fit d-flex justify-content-end gap-1"
                 >
-                    <IconButton
-                        actionType="edit"
-                        :onClick="openEditingProfilePost"
-                    />
-                    <IconButton
-                        actionType="delete"
-                        :onClick="openDeletingProfilePost"
-                    />
+                    <EditProfilePost :profilePost="profilePost" />
+                    <DeleteProfilePost :profilePostID="profilePost.id" />
                 </div>
             </div>
         </div>
-
-        <EditProfilePost
-            v-if="isEditing"
-            :profilePost="profilePost"
-            :onClose="closeEditingProfilePost"
-        />
-
-        <ConfirmationModal
-            v-if="isConfirming"
-            title="Izbriši profilnu objavu"
-            message="Jesi li siguran/na da želiš izbrisati profilnu objavu?"
-            :onConfirm="confirmDeleteProfilePost"
-            :onCancel="cancelDeleteProfilePost"
-        />
     </div>
 </template>
 
 <script>
-import { useProfilePostStore } from '@/stores/profilePostStore';
-
 import EditProfilePost from '@/components/app/EditProfilePost.vue';
-import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
-import IconButton from '@/components/app/IconButton.vue';
+import DeleteProfilePost from '@/components/app/DeleteProfilePost.vue';
 
 const props = {
     user: {
@@ -77,37 +54,11 @@ const props = {
 };
 
 export default {
-    name: 'showProfilePost',
+    name: 'ShowProfilePost',
     props,
     components: {
         EditProfilePost,
-        ConfirmationModal,
-        IconButton,
-    },
-    data() {
-        return {
-            profilePostStore: useProfilePostStore(),
-            isConfirming: false,
-            isEditing: false,
-        };
-    },
-    methods: {
-        openDeletingProfilePost() {
-            this.isConfirming = true;
-        },
-        async confirmDeleteProfilePost() {
-            await this.profilePostStore.deleteProfilePost(this.profilePost.id);
-            this.isConfirming = false;
-        },
-        cancelDeleteProfilePost() {
-            this.isConfirming = false;
-        },
-        openEditingProfilePost() {
-            this.isEditing = true;
-        },
-        closeEditingProfilePost() {
-            this.isEditing = false;
-        },
+        DeleteProfilePost,
     },
 };
 </script>

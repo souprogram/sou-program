@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form @submit.prevent="postAnnouncement" class="card">
+        <form class="card" @submit.prevent="createAnnouncement">
             <div class="card-body d-flex gap-3">
                 <div>
                     <img
@@ -45,7 +45,7 @@ const props = {
 };
 
 export default {
-    name: 'addAnnouncement',
+    name: 'AnnouncementAdd',
     props,
     data: () => ({
         announcementStore: useAnnouncementStore(),
@@ -54,7 +54,7 @@ export default {
         },
     }),
     methods: {
-        async postAnnouncement() {
+        async createAnnouncement() {
             await this.announcementStore.createAnnouncement(this.announcement);
         },
     },

@@ -25,41 +25,21 @@
                     v-if="user.id == currentUserID || isAuthUserDemos"
                     class="h-fit d-flex justify-content-end gap-1"
                 >
-                    <IconButton
-                        actionType="edit"
-                        :onClick="() => (isEditingUser = true)"
-                    />
-                    <IconButton
+                    <EditUser :user="user" />
+                    <DeleteUser
                         v-if="user.id != currentUserID"
-                        actionType="delete"
-                        :onClick="() => (isDeletingUser = true)"
+                        :userID="user.id"
                     />
                 </div>
             </div>
         </div>
-
-        <EditUser
-            v-if="isEditingUser"
-            :user="user"
-            :onClose="() => (isEditingUser = false)"
-        />
-
-        <ConfirmationModal
-            v-if="isDeletingUser"
-            title="Izbriši korisnika"
-            message="Jesi li siguran/na da želiš izbrisati korisnika?"
-            :onConfirm="deleteUser"
-            :onCancel="() => (isDeletingUser = false)"
-        />
     </div>
 </template>
 
 <script>
-import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
 import EditUser from '@/components/app/EditUser.vue';
-import IconButton from '@/components/app/IconButton.vue';
+import DeleteUser from '@/components/app/DeleteUser.vue';
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
-import { useUserStore } from '@/stores/userStore';
 
 const props = {
     user: {
@@ -69,32 +49,21 @@ const props = {
 };
 
 export default {
-    name: 'showUser',
+    name: 'ShowUser',
     props,
     components: {
-        ConfirmationModal,
         EditUser,
-        IconButton,
+        DeleteUser,
     },
     data: function () {
         return {
-            isEditingUser: false,
-            isDeletingUser: false,
             currentUserID: getAuthData().id,
             isAuthUserDemos: isAuthUserDemos(),
         };
     },
     computed: {
-        userStore() {
-            return useUserStore();
-        },
         userProfilePath() {
             return `/user-profile/${this.user.id}`;
-        },
-    },
-    methods: {
-        deleteUser() {
-            this.userStore.deleteUser(user.id);
         },
     },
 };
