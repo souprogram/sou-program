@@ -20,8 +20,7 @@ export const userRouter = () => {
         .get('/users', index)
         .get('/users/ids', [getUsersByIDsValidation], getByIDs)
 
-        .use(demosMiddleware)
-        .post('/users', [createUserValidation], create)
-        .patch('/users/:id', [updateUserValidation], update)
-        .delete('/users/:id', destroy);
+        .post('/users', [demosMiddleware, createUserValidation], create)
+        .patch('/users/:id', [demosMiddleware, updateUserValidation], update)
+        .delete('/users/:id', [demosMiddleware], destroy);
 };

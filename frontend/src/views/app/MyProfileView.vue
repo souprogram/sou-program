@@ -94,7 +94,7 @@ export default {
                     this.currentUser.id,
                     this.pageCount
                 );
-
+            if (!moreProfilePosts) return;
             this.profilePosts.push(...moreProfilePosts);
         },
     },

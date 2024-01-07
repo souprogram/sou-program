@@ -89,7 +89,7 @@ export default {
         await userStore.fetchUsers();
         const currentUser = userStore.getUserByID(getAuthData().id);
 
-        this.username = currentUser.username;
+        this.username = currentUser?.username;
     },
     methods: {
         isRouteActive(routeName) {

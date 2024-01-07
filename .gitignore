@@ -33,3 +33,7 @@ frontend/node_modules/
 
 # Google creds
 backend/creds.json
+
+# Lock files
+backend/package-lock.json
+frontend/package-lock.json

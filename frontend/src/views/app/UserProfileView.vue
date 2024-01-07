@@ -90,6 +90,10 @@ export default {
                     this.userID,
                     this.pageCount
                 );
+            
+            if (!moreProfilePosts) {
+                return;
+            }
 
             this.profilePosts.push(...moreProfilePosts);
         },
