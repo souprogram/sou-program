@@ -15,6 +15,8 @@ export const up = function (knex) {
         table.string('password').notNullable();
         table.string('profile_picture_key');
         table.text('bio');
+        table.string('status').notNullable().defaultTo('pending');
+        table.boolean('email_verified').notNullable().defaultTo(false);
         table
             .enu('type', Object.values(userTypeEnum), {
                 useNative: true,

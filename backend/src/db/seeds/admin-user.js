@@ -17,6 +17,8 @@ export const seed = async function (knex) {
             profile_picture_key: null,
             bio: '',
             type: 'demonstrator',
+            status: 'approved',
+            email_verified: true,
         },
     ]);
 };

@@ -37,11 +37,13 @@ export const create = async (req, res) => {
             name: req.body.name.trim(),
             surname: req.body.surname.trim(),
             email: req.body.email.trim(),
+            email_verified: req.body.email_verified,
             username: req.body.username.trim(),
             password: await hashPassword(req.body.password),
             profile_picture_key: req.body.profile_picture_key,
             bio: req.body.bio.trim(),
             type: req.body.type,
+            status: req.body.status,
         });
 
         return res.status(201).json({
