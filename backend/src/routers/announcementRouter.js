@@ -17,8 +17,7 @@ export const announcementRouter = () => {
         .use(authMiddleware)
         .get('/announcements', index)
 
-        .use(demosMiddleware)
-        .post('/announcements', [createValidation], create)
-        .patch('/announcements/:id', [updateValidation], update)
-        .delete('/announcements/:id', destroy);
+        .post('/announcements', [demosMiddleware, createValidation], create)
+        .patch('/announcements/:id', [demosMiddleware, updateValidation], update)
+        .delete('/announcements/:id', [demosMiddleware], destroy);
 };
