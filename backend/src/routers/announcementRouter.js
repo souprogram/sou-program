@@ -15,10 +15,10 @@ import {
 export const announcementRouter = () => {
     return Router()
         .use(authMiddleware)
-        .get('/announcements', index)
+        .get('/', index)
 
         .use(demosMiddleware)
-        .post('/announcements', [createValidation], create)
-        .patch('/announcements/:id', [updateValidation], update)
-        .delete('/announcements/:id', destroy);
+        .post('/', [createValidation], create)
+        .patch('/:id', [updateValidation], update)
+        .delete('/:id', destroy);
 };

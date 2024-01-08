@@ -18,7 +18,7 @@ export const googleDriveRoutes = () => {
     router.use(raw({ limit: '30MB', type: 'text/plain' }));
 
     router.post(
-        '/upload-image/:folder_name/:image_name',
+        '/:folder_name/:image_name',
         authMiddleware,
         async (req, res) => {
             const folderName = req.params.folder_name;
@@ -54,7 +54,7 @@ export const googleDriveRoutes = () => {
         }
     );
 
-    router.get('/image/:image_id', async (req, res) => {
+    router.get('/:image_id', async (req, res) => {
         const imageID = req.params.image_id;
         if (!imageID) {
             return res.json({
