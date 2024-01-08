@@ -28,6 +28,26 @@ const routes = [
                 component: () => import('@/views/web/LoginView.vue'),
             },
             {
+                path: 'register',
+                name: 'RegisterView',
+                meta: { title: 'Registracija' },
+                component: () => import('@/views/web/RegisterView.vue'),
+            },
+            {
+                path: 'pending-registration/:username',
+                name: 'PendingRegistration',
+                meta: { title: 'Odobrenje registracije' },
+
+                component: () => import('@/views/web/PendingRegistration.vue'),
+            },
+            {
+                path: 'confirm/:token',
+                name: 'EmailConfirmed',
+                meta: { title: 'Email potvrđen' },
+
+                component: () => import('@/views/web/EmailConfirmed.vue'),
+            },
+            {
                 path: 'contact',
                 name: 'ContactView',
                 meta: { title: 'Kontakt' },
