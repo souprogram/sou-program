@@ -107,10 +107,12 @@ export default {
                 name: '',
                 surname: '',
                 email: '',
+                email_verified: false,
                 username: '',
                 password: '',
                 bio: '',
                 type: 'student',
+                status: 'active',
             },
             selectedImage: null,
             validationRules: {
