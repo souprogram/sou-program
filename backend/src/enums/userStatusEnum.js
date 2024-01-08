@@ -1,4 +1,4 @@
-export const userTypeEnum = {
+export const userStatusEnum = {
     ACTIVE: 'active',
     PENDING: 'pending',
     INACTIVE: 'inactive',

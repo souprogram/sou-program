@@ -1,5 +1,5 @@
 import { userTypeEnum } from '../../enums/userTypeEnum.js';
-import { userStausEnum } from '../../enums/userStatusEnum.js';
+import { userStatusEnum } from '../../enums/userStatusEnum.js';
 
 /**
  * @param { import("knex").Knex } knex
@@ -16,9 +16,9 @@ export const up = function (knex) {
         table.string('password').notNullable();
         table.string('profile_picture_key');
         table.text('bio');
-        table.enu('status', Object.values(userStausEnum), {
+        table.enu('status', Object.values(userStatusEnum), {
             useNative: true,
-            enumName: 'user_type',
+            enumName: 'status',
         }).notNullable().defaultTo('pending');
         table.boolean('email_verified').notNullable().defaultTo(false);
         table
