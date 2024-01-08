@@ -16,11 +16,10 @@ import {
 
 export const userRouter = () => {
     return Router()
-        .use(authMiddleware)
-        .get('/users', index)
-        .get('/users/ids', [getUsersByIDsValidation], getByIDs)
+        .get('/users',[authMiddleware], index)
+        .get('/users/ids', [authMiddleware, getUsersByIDsValidation], getByIDs)
 
-        .post('/users', [demosMiddleware, createUserValidation], create)
-        .patch('/users/:id', [demosMiddleware, updateUserValidation], update)
-        .delete('/users/:id', [demosMiddleware], destroy);
+        .post('/users', [authMiddleware, demosMiddleware, createUserValidation], create)
+        .patch('/users/:id', [authMiddleware, demosMiddleware, updateUserValidation], update)
+        .delete('/users/:id', [authMiddleware, demosMiddleware], destroy);
 };

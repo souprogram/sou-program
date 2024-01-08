@@ -12,7 +12,7 @@ import { announcementRouter } from './routers/announcementRouter.js';
 import { authRouter } from './routers/authRouter.js';
 import { profilePostRouter } from './routers/profilePostRouter.js';
 import { userRouter } from './routers/userRouter.js';
-import { registerRouter } from './routers/registerRouter.js';
+import { registrationRouter } from './routers/registrationRouter.js';
 // import { competitionRoutes } from './routes/competitionRoute';
 // import { galleryRoutes } from './routes/galleryRoute';
 import { googleCredsRoutes } from './routers/googleCredsRouter.js';
@@ -36,7 +36,7 @@ app.use(express.urlencoded({ limit: '5mb', extended: true }));
 
 app.use('/', authRouter());
 app.use('/', userRouter());
-app.use('/', registerRouter());
+app.use('/', registrationRouter());
 app.use('/', announcementRouter());
 app.use('/', profilePostRouter());
 // app.use('/', galleryRoutes());

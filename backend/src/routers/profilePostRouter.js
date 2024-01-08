@@ -13,9 +13,8 @@ import {
 
 export const profilePostRouter = () => {
     return Router()
-        .use(authMiddleware)
-        .get('/profile-posts', index)
-        .post('/profile-posts', [createProfilePostValidation], create)
-        .patch('/profile-posts/:id', [updateProfilePostValidation], update)
-        .delete('/profile-posts/:id', destroy);
+        .get('/profile-posts',[authMiddleware], index)
+        .post('/profile-posts', [authMiddleware, createProfilePostValidation], create)
+        .patch('/profile-posts/:id', [authMiddleware, updateProfilePostValidation], update)
+        .delete('/profile-posts/:id',[authMiddleware], destroy);
 };

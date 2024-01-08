@@ -1,9 +1,10 @@
-import { create } from '../models/RegisterModel.js';
+import { create } from './UserController.js';
 import { sendMail } from '../services/emailService.js';
 
 export const register = async (req, res) => {
    
     try {
+        // create user in db
         await create(req, res);
 
         // send email to user - dodati i jwt potvrdu emaila

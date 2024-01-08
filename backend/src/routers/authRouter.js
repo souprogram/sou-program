@@ -5,7 +5,6 @@ import { authMiddleware } from '../middlewares/authMiddleware.js';
 export const authRouter = () => {
     return Router()
         .post('/auth/login', login)
-        .use(authMiddleware)
-        .post('/auth/logout', logout)
-        .post('/auth/me', me);
+        .post('/auth/logout',[authMiddleware], logout)
+        .post('/auth/me',[authMiddleware], me);
 };
