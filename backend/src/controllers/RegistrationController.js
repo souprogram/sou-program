@@ -1,5 +1,6 @@
 import { create } from './UserController.js';
 import { sendMail } from '../services/emailService.js';
+import { Users } from '../models/models.js';
 
 export const register = async (req, res) => {
    
@@ -22,3 +23,45 @@ export const register = async (req, res) => {
         });
     }
 };
+
+export const checkUsernameAvailability = async (req, res) => {
+    try {
+        const { username } = req.params;
+        const available = await Users().where({ username }).first();
+
+   
+        return res.json({
+            message: 'Username check complete',
+            data: { available: !available },
+        });
+    
+        
+    } catch (error) {
+        console.error(`[POST] Username check error: ${error.message}`);
+        res.status(500).json({
+            message: 'Internal server error',
+            data: {},
+        });
+    } 
+};
+
+export const checkEmailAvailability = async (req, res) => {
+    try {
+        const { email } = req.params;
+        const available = await Users().where({ email }).first();
+
+   
+        return res.json({
+            message: 'Email check complete',
+            data: { available: !available },
+        });
+    
+        
+    } catch (error) {
+        console.error(`[POST] Email check error: ${error.message}`);
+        res.status(500).json({
+            message: 'Internal server error',
+            data: {},
+        });
+    } 
+}
