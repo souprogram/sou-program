@@ -2,16 +2,11 @@ import { Router } from 'express';
 import { login, logout, me } from '../controllers/AuthController.js';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
 
-const authRouter = () => {
-    const router = Router();
+export const authRouter = () => {
+    return Router()
+        .post('/login', login)
 
-    router.post('/login', login);
-
-    router.use(authMiddleware);
-    router.post('/logout', logout);
-    router.post('/me', me);
-
-    return router;
+        .use(authMiddleware)
+        .post('/logout', logout)
+        .post('/me', me);
 };
-
-export { authRouter };
