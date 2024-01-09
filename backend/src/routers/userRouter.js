@@ -17,11 +17,11 @@ import {
 export const userRouter = () => {
     return Router()
         .use(authMiddleware)
-        .get('/users', index)
-        .get('/users/ids', [getUsersByIDsValidation], getByIDs)
+        .get('/', index)
+        .get('/ids', [getUsersByIDsValidation], getByIDs)
 
         .use(demosMiddleware)
-        .post('/users', [createUserValidation], create)
-        .patch('/users/:id', [updateUserValidation], update)
-        .delete('/users/:id', destroy);
+        .post('/', [createUserValidation], create)
+        .patch('/:id', [updateUserValidation], update)
+        .delete('/:id', destroy);
 };

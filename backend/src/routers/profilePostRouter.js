@@ -14,8 +14,8 @@ import {
 export const profilePostRouter = () => {
     return Router()
         .use(authMiddleware)
-        .get('/profile-posts', index)
-        .post('/profile-posts', [createProfilePostValidation], create)
-        .patch('/profile-posts/:id', [updateProfilePostValidation], update)
-        .delete('/profile-posts/:id', destroy);
+        .get('/', index)
+        .post('/', [createProfilePostValidation], create)
+        .patch('/:id', [updateProfilePostValidation], update)
+        .delete('/:id', destroy);
 };

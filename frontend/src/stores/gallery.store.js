@@ -78,7 +78,7 @@ export const useGalleryStore = defineStore('gallery', {
                     Math.floor(Math.random() * 101);
 
                 const res = await backendApiService.post({
-                    url: `/upload-image/${folderName}/${imageName}`,
+                    url: `/images/${folderName}/${imageName}`,
                     headers: { 'Content-Type': 'text/plain' },
                     body: image,
                 });
@@ -135,7 +135,7 @@ export const useGalleryStore = defineStore('gallery', {
         },
         async getImage(imageID) {
             const res = await backendApiService.get({
-                url: `/image/${imageID}`,
+                url: `/images/${imageID}`,
             });
 
             if (!res.ok) {

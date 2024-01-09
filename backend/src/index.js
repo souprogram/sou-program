@@ -33,14 +33,14 @@ app.use(express.json());
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ limit: '5mb', extended: true }));
 
-app.use('/', authRouter());
-app.use('/', userRouter());
-app.use('/', announcementRouter());
-app.use('/', profilePostRouter());
+app.use('/auth', authRouter());
+app.use('/users', userRouter());
+app.use('/announcements', announcementRouter());
+app.use('/profile-posts', profilePostRouter());
 // app.use('/', galleryRoutes());
 // app.use('/', competitionRoutes());
-app.use('/', googleDriveRoutes());
-app.use('/', googleCredsRoutes());
+app.use('/images', googleDriveRoutes());
+app.use('/google', googleCredsRoutes());
 
 const server = http.createServer(app);
 

@@ -5,7 +5,7 @@ import { googleAuth } from '../services/googleAuthService.js';
 export const googleCredsRoutes = () => {
     const router = Router();
 
-    router.get('/google/auth', async (req, res) => {
+    router.get('/auth', async (req, res) => {
         const oauth2Client = googleAuth();
         const url = oauth2Client.generateAuthUrl({
             access_type: 'offline',
@@ -17,7 +17,7 @@ export const googleCredsRoutes = () => {
         return res.redirect(url);
     });
 
-    router.get('/google/redirect', async (req, res) => {
+    router.get('/redirect', async (req, res) => {
         const oauth2Client = googleAuth();
         const { code } = req.query;
         const { tokens } = await oauth2Client.getToken(code);
