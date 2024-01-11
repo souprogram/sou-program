@@ -16,6 +16,7 @@ import { userRouter } from './routers/userRouter.js';
 // import { galleryRoutes } from './routes/galleryRoute';
 import { googleCredsRoutes } from './routers/googleCredsRouter.js';
 import { googleDriveRoutes } from './routers/googleDriveRouter.js';
+import { errorMiddleware } from './middlewares/errorMiddleware.js';
 
 moment.defaultFormat = 'YYYY-MM-DD HH:mm:ss.SSSZ';
 
@@ -41,6 +42,8 @@ app.use('/profile-posts', profilePostRouter());
 // app.use('/', competitionRoutes());
 app.use('/images', googleDriveRoutes());
 app.use('/google', googleCredsRoutes());
+
+app.use(errorMiddleware);
 
 const server = http.createServer(app);
 
