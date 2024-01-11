@@ -28,7 +28,7 @@ const routes = [
                 component: () => import('@/views/web/LoginView.vue'),
             },
             {
-                path: 'register',
+                path: 'registration',
                 name: 'RegisterView',
                 meta: { title: 'Registracija' },
                 component: () => import('@/views/web/RegisterView.vue'),
