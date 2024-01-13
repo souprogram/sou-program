@@ -34,6 +34,7 @@
                         actionType="delete"
                         :onClick="openDeletingUser"
                     />
+                    <UserStatusIndicator :status="user.status" />
                 </div>
             </div>
         </div>
@@ -56,6 +57,7 @@ import editUser from '@/components/app/editUser.vue';
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
 import { useUserStore } from '@/stores/user.store';
 import IconButton from '@/components/app/IconButton.vue';
+import UserStatusIndicator from '@/components/app/userStatusIndicator.vue';
 
 const props = {
     user: {
@@ -71,6 +73,7 @@ export default {
         ConfirmationModal,
         editUser,
         IconButton,
+        UserStatusIndicator,
     },
     data() {
         return {

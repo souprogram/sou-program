@@ -41,6 +41,19 @@
                     <option value="student">Student</option>
                 </select>
             </div>
+            <div class="form-group" v-if="user.id !== currentUserID">
+                <label for="status">Status korisnika</label>
+                <select
+                    v-model="updatedUser.status"
+                    class="form-control"
+                    id="status"
+                >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="pending">Pending</option>
+                </select>
+            </div>
+
         </FormModal>
     </div>
 </template>
@@ -51,7 +64,7 @@ import { useUserStore } from '@/stores/user.store';
 import FormModal from '@/components/app/FormModal.vue';
 import Input from '@/components/app/Input.vue';
 
-import { isAuthUserDemos } from '@/services/authService';
+import { isAuthUserDemos, getAuthData } from '@/services/authService';
 
 import { required, email, maxLength } from '@/utils/validations.js';
 
@@ -76,6 +89,7 @@ export default {
     data() {
         return {
             userStore: useUserStore(),
+            currentUserID: getAuthData().id,
             updatedUser: {
                 id: this.user.id,
                 name: this.user.name,
@@ -84,6 +98,7 @@ export default {
                 bio: this.user.bio,
                 type: this.user.type,
                 profile_picture_key: this.user.profile_picture_key,
+                status: this.user.status,
             },
             validationRules: {
                 name: [required, maxLength(30)],

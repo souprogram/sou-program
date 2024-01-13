@@ -68,6 +68,8 @@ export const update = async (req, res) => {
             profile_picture_key: req.body.profile_picture_key,
             bio: req.body.bio.trim(),
             type: req.body.type,
+            email_verified: req.body.email_verified,
+            status: req.body.status,
         });
 
         return res.json({
