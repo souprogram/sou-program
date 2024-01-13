@@ -173,7 +173,7 @@ export default {
                 this.typeError = data?.errors?.type && data?.errors?.type[0]
                 console.error(data.errors)
             }else {
-                this.$router.push({ name: 'PendingRegistration', params: { username: this.username } })
+                this.$router.push({ name: 'PendingRegistration', query: { name: this.name } })
             }
         },
     },

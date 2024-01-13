@@ -34,14 +34,14 @@ const routes = [
                 component: () => import('@/views/web/RegisterView.vue'),
             },
             {
-                path: 'pending-registration/:username',
+                path: 'pending-registration',
                 name: 'PendingRegistration',
                 meta: { title: 'Odobrenje registracije' },
 
                 component: () => import('@/views/web/PendingRegistration.vue'),
             },
             {
-                path: 'confirm/:token',
+                path: 'confirm',
                 name: 'EmailConfirmed',
                 meta: { title: 'Email potvrđen' },
 

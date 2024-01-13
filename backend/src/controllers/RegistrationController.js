@@ -9,22 +9,26 @@ export const register = async (req, res) => {
     try {
         // create user in db
         await create(req, res);
-
+       
         // send email to user
-        
         const { email, name, surname } = req.body;
         let subject = 'Poslan zahtjev za registraciju na Šou program';
         let content = `Hej ${name} ${surname},\n\nUspješno si započeo proces registracije!\nKada demonstrator odobri tvoj zahtjev, dobiti ćeš potvrdu registracije na email!\n\nVidimo se uskoro,\nŠou program ekipa`;
+
+        // provjeri je li user vec registriran, ako jest, funkcija create ce sama vratiti response 500
+        const user = await Users().where({ email }).first();
+        if (user) {
+            return 
+        }
         sendMail({ mailTo: email, subject, content });
 
         // slanje emaila useru da potvrdi svoju email adresu
-        const user = await Users().where({ email }).first();
         const accessToken = generateTokenFromUser(user);
-        const link = `http://localhost:3000/registration/confirm?accessToken=${accessToken}`;
-        subject = 'Potvrdi emaila za Šou program';
+        const link = `${process.env.FRONTEND_URL}/confirm?accessToken=${accessToken}`;
+        subject = 'Potvrda emaila za Šou program';
         content = `Hej ${name} ${surname},\n\nKlikni na link ispod kako bi potvrdio svoj email.\n\n${link}\n\nVidimo se uskoro,\nŠou program ekipa`;
         sendMail({ mailTo: email, subject, content });
-        
+    
         // send email to admin - dodati link za odobravanje registracije
 
 
@@ -53,7 +57,7 @@ export const confirmEmail = async (req, res) => {
 
         // get user from db
         const { id } = tokenPayload;
-       
+
         const user = await Users().where({ id }).first();
         if (!user) {
             return res.status(404).json({
@@ -62,16 +66,27 @@ export const confirmEmail = async (req, res) => {
             });
         }
 
-        const { email, name, surname } = user;
+        const { email, name, username, email_verified, status } = user;
+
+        // check if email is already confirmed
+        if (email_verified) {
+            return res.status(400).json({
+                message: 'Email already confirmed',
+                data: { name, username, email},
+            });
+        }
         
-        // update user - tu je neki problem!
-        await Users().where({ id: user.id }).update({ email_verified: true });
+        await Users().where({ id }).update({ email_verified: true });
         
-        // stavi guard ako faila ana bazi da ne salje mail
         // send email to user
         let subject = `Potvrda emaila za Šou program`;
         let content = `Hej ${name} ${surname},\n\nUspješno si potvrdio svoj email!\nKada demonstrator odobri tvoj zahtjev, dobiti ćeš potvrdu registracije na email!\n\nVidimo se uskoro,\nŠou program ekipa`;
         sendMail({ mailTo: email, subject, content });
+
+        return res.status(200).json({
+            message: 'Email successfully confirmed',
+            data: { name, username, status, email },
+        });
 
     } catch (error) {
         console.error(`[POST] Confirm email error: ${error.message}`);
@@ -82,15 +97,6 @@ export const confirmEmail = async (req, res) => {
     }
 };
     
-export const testUpdate = async (req, res) => {
-    const id = "05e456e7-6755-4ee0-86da-7970891fe3b3";
-    await Users().where({ id }).update({ email_verified: true });
-
-    return res.json({
-        message: 'update complete',
-        data: { id },
-    });
-};
 export const checkUsernameAvailability = async (req, res) => {
     try {
         const { username } = req.params;
