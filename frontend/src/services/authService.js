@@ -6,7 +6,7 @@ const AUTH_USER_KEY = keys.AUTH_USER;
 const EXPIRES_AFTER = 1000 * 60 * 60; // 1 hour
 
 const saveAuthData = ({ authUser }) => {
-    const { id, name, surname, username, type, profile_picture_key } = authUser;
+    const { id, name, surname, username, type, profile_picture_key, status } = authUser;
 
     storage.set(
         AUTH_USER_KEY,
@@ -17,6 +17,7 @@ const saveAuthData = ({ authUser }) => {
             username,
             type,
             profile_picture_key,
+            status,
             expires: Date.now() + EXPIRES_AFTER,
         })
     );

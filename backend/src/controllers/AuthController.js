@@ -20,6 +20,8 @@ export const login = async (req, res) => {
         const token = generateTokenFromUser(authUser);
         addAuthCookieToRes(res, token);
 
+        if(authUser.status !== 'active') throw new Error('User is not active');
+
         return res.json({
             message: 'Login successful',
             data: { authUser },

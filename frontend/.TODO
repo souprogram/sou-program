@@ -1,7 +1,6 @@
 Feedback za korisnika - live provjera jedinstvenosti korisničkog imena i emaila prilikom dodavanja - debounce
 Validacija na frontu
 Error feedback kod registracije - ako user već postoji u bazi npr
-Demonstratoru u stalkaonici notifikacija ako postoji user sa statsom pending
-Demonstratori ne mogu editirati druge demonstratore samo admin to moze
-user se ne smije moci logirati ako mu status nije active
+Demonstratoru u stalkaonici notifikacija ako postoji user(i) sa statsom pending (plus filter za statuse)
+napraviti da Demonstratori ne mogu editirati druge demonstratore samo admin to moze
 send email demonstratorima kad se novi korisnik registrira
