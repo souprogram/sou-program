@@ -17,8 +17,8 @@
         v-else-if="username"
         class="w-full d-flex flex-column justify-content-center align-items-center"
     >
-        <h1 class="fs-2">Hej {{ user }}, tvoj email je potvrđen! &#128512;</h1>
-        <p v-if="status === 'pending'">
+        <h1 class="fs-2 text-center">Hej {{ name || username }}, tvoj email je potvrđen! &#128512;</h1>
+        <p class="text-center" v-if="status === 'pending'">
             Admin je obavješten o tvojoj registraciji. Javiti ćemo ti se na
             email sa statusom registracije u najkraćem mogućem roku!
         </p>

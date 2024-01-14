@@ -18,7 +18,7 @@ export const up = function (knex) {
         table.text('bio');
         table.enu('status', Object.values(userStatusEnum), {
             useNative: true,
-            enumName: 'status',
+            enumName: 'user_status',
         }).notNullable().defaultTo('pending');
         table.boolean('email_verified').notNullable().defaultTo(false);
         table

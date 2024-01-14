@@ -1,35 +1,36 @@
-import { create } from './UserController.js';
+
 import { sendMail } from '../services/emailService.js';
 import { Users } from '../models/models.js';
 import { generateTokenFromUser } from "../services/authService.js";
-import { verifyToken } from '../services/authService.js';
+import { verifyToken, hashPassword } from '../services/authService.js';
 
 export const register = async (req, res) => {
    
     try {
-        // create user in db
-        await create(req, res);
+        // // create user in db
+        await createUser(req);
        
         // send email to user
         const { email, name, surname } = req.body;
-        let subject = 'Poslan zahtjev za registraciju na Šou program';
-        let content = `Hej ${name} ${surname},\n\nUspješno si započeo proces registracije!\nKada demonstrator odobri tvoj zahtjev, dobiti ćeš potvrdu registracije na email!\n\nVidimo se uskoro,\nŠou program ekipa`;
-
-        // provjeri je li user vec registriran, ako jest, funkcija create ce sama vratiti response 500
-        const user = await Users().where({ email }).first();
-        if (user) {
-            return 
-        }
+        const subject = 'Poslan zahtjev za registraciju na Šou program';
+        const content = `Hej ${name} ${surname},\n\nUspješno si započeo proces registracije!\nKada demonstrator odobri tvoj zahtjev, dobiti ćeš potvrdu registracije na email!\n\nVidimo se uskoro,\nŠou program ekipa`;
         sendMail({ mailTo: email, subject, content });
 
         // slanje emaila useru da potvrdi svoju email adresu
+            
+        const user = await Users().where({ email }).first();
         const accessToken = generateTokenFromUser(user);
         const link = `${process.env.FRONTEND_URL}/confirm?accessToken=${accessToken}`;
-        subject = 'Potvrda emaila za Šou program';
-        content = `Hej ${name} ${surname},\n\nKlikni na link ispod kako bi potvrdio svoj email.\n\n${link}\n\nVidimo se uskoro,\nŠou program ekipa`;
-        sendMail({ mailTo: email, subject, content });
+        const anchorTag = `<a href="${link}">Potvrdi registraciju</a>`;
+        const subject2 = 'Potvrda emaila za Šou program';
+        const html = `Hej ${name} ${surname},<br><br>Klikni na link ispod kako bi potvrdio svoj email!<br>${anchorTag}<br>Vidimo se uskoro,<br>Šou program ekipa`;
+        sendMail({ mailTo: email, subject: subject2, html });
     
-        // send email to admin - dodati link za odobravanje registracije
+        // send email demonstratorima
+        return res.status(201).json({
+            message: 'Registration successful',
+            data: {},
+        });
 
 
     } catch (error) {
@@ -40,7 +41,25 @@ export const register = async (req, res) => {
         });
     }
 };
-
+const createUser = async (req) => {
+    try {
+        await Users().insert({
+            name: req.body.name.trim(),
+            surname: req.body.surname.trim(),
+            email: req.body.email.trim(),
+            email_verified: req.body.email_verified,
+            username: req.body.username.trim(),
+            password: await hashPassword(req.body.password),
+            profile_picture_key: req.body.profile_picture_key,
+            bio: req.body.bio.trim(),
+            type: req.body.type,
+            status: req.body.status,
+        });
+    
+    } catch (error) {
+        throw error;
+    }
+};
 export const confirmEmail = async (req, res) => {
     try {
         const { accessToken } = req.query;
@@ -66,7 +85,7 @@ export const confirmEmail = async (req, res) => {
             });
         }
 
-        const { email, name, username, email_verified, status } = user;
+        const { email, name, surname, username, email_verified, status } = user;
 
         // check if email is already confirmed
         if (email_verified) {

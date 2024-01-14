@@ -151,30 +151,24 @@ export default {
                 profile_picture_key: '',
                 bio: ''
             }
+            console.log('before fetch')
              const response = await backendApiService.post({
                 url: '/registration',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(credentials),
             });
+            console.log('after fetch')
 
             if (!response.ok) {
-                this.$router.push({ name: 'Error' })
+                alert('Registracija nije uspjela! Provjerite podatke i pokušajte ponovno.')
                 return
             }
+            console.log('after response')
 
-            const data = await response.json()
 
-            if('errors' in data){
-                this.nameError = data?.errors?.name && data?.errors?.name[0]
-                this.surnameError = data?.errors?.surname && data?.errors?.surname[0]
-                this.usernameError = data?.errors?.username && data?.errors?.username[0]
-                this.emailError = data?.errors?.email && data?.errors?.email[0]
-                this.passwordError = data?.errors?.password && data?.errors?.password[0]
-                this.typeError = data?.errors?.type && data?.errors?.type[0]
-                console.error(data.errors)
-            }else {
-                this.$router.push({ name: 'PendingRegistration', query: { name: this.name } })
-            }
+            this.$router.push({ name: 'PendingRegistration', query: { name: this.name } })
+            console.log('after push')
+            console.log(this.$router)
         },
     },
 }
