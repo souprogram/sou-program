@@ -11,14 +11,15 @@ import {
     createAnnouncementValidation as createValidation,
     updateAnnouncementValidation as updateValidation,
 } from '../validation/models/announcementValidation.js';
+import { tryCatch } from '../utils/tryCatch.js';
 
 export const announcementRouter = () => {
     return Router()
         .use(authMiddleware)
-        .get('/', index)
+        .get('/', tryCatch(index))
 
         .use(demosMiddleware)
-        .post('/', [createValidation], create)
-        .patch('/:id', [updateValidation], update)
-        .delete('/:id', destroy);
+        .post('/', [createValidation], tryCatch(create))
+        .patch('/:id', [updateValidation], tryCatch(update))
+        .delete('/:id', tryCatch(destroy));
 };

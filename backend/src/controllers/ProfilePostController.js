@@ -1,7 +1,6 @@
 import { ProfilePosts } from '../models/models.js';
-import { tryCatch } from '../utils/tryCatch.js';
 
-export const index = tryCatch(async (req, res) => {
+export const index = async (req, res) => {
     const authorID = req.query.author_id;
     const currentPage = parseInt(req.query.page) || 1;
     const perPage = parseInt(req.query.per_page) || 15;
@@ -25,9 +24,9 @@ export const index = tryCatch(async (req, res) => {
             totalPages,
         },
     });
-});
+};
 
-export const create = tryCatch(async (req, res) => {
+export const create = async (req, res) => {
     await ProfilePosts().insert({
         text: req.body.text.trim(),
         author_id: req.authUser.id,
@@ -37,9 +36,9 @@ export const create = tryCatch(async (req, res) => {
         message: 'Profile post created successfully',
         data: {},
     });
-});
+};
 
-export const update = tryCatch(async (req, res) => {
+export const update = async (req, res) => {
     await ProfilePosts()
         .where({
             id: req.params.id,
@@ -53,9 +52,9 @@ export const update = tryCatch(async (req, res) => {
         message: 'Profile post updated successfully',
         data: {},
     });
-});
+};
 
-export const destroy = tryCatch(async (req, res) => {
+export const destroy = async (req, res) => {
     await ProfilePosts()
         .where({
             id: req.params.id,
@@ -64,4 +63,4 @@ export const destroy = tryCatch(async (req, res) => {
         .del();
 
     return res.status(204).end();
-});
+};

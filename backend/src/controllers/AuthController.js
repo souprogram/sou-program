@@ -7,9 +7,8 @@ import {
     addAuthCookieToRes,
     removeAuthCookieFromRes,
 } from '../services/cookieService.js';
-import { tryCatch } from '../utils/tryCatch.js';
 
-export const login = tryCatch(async (req, res) => {
+export const login = async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
@@ -24,19 +23,19 @@ export const login = tryCatch(async (req, res) => {
         message: 'Login successful',
         data: { authUser },
     });
-});
+};
 
-export const logout = tryCatch(async (req, res) => {
+export const logout = async (req, res) => {
     removeAuthCookieFromRes(res);
     return res.json({
         message: 'Logout successful',
         data: {},
     });
-});
+};
 
-export const me = tryCatch(async (req, res) => {
+export const me = async (req, res) => {
     return res.json({
-        message: 'Logout successful',
+        message: ' Authenticated user retrieved successfully',
         data: await Users().where({ id: req.authUser.id }),
     });
-});
+};

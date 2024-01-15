@@ -1,22 +1,21 @@
 import { Users } from '../models/models.js';
 import { hashPassword } from '../services/authService.js';
-import { tryCatch } from '../utils/tryCatch.js';
 
-export const index = tryCatch(async (req, res) => {
+export const index = async (req, res) => {
     return res.json({
         message: 'User fetched successfully',
         data: { users: await Users() },
     });
-});
+};
 
-export const getByIDs = tryCatch(async (req, res) => {
+export const getByIDs = async (req, res) => {
     return res.json({
-        message: 'User fetched successfully',
+        message: 'Users fetched successfully',
         data: await Users().whereIn('id', req.body.ids),
     });
-});
+};
 
-export const create = tryCatch(async (req, res) => {
+export const create = async (req, res) => {
     await Users().insert({
         name: req.body.name.trim(),
         surname: req.body.surname.trim(),
@@ -32,9 +31,9 @@ export const create = tryCatch(async (req, res) => {
         message: 'User created successfully',
         data: {},
     });
-});
+};
 
-export const update = tryCatch(async (req, res) => {
+export const update = async (req, res) => {
     await Users().where({ id: req.params.id }).update({
         name: req.body.name.trim(),
         surname: req.body.surname.trim(),
@@ -48,9 +47,9 @@ export const update = tryCatch(async (req, res) => {
         message: 'User updated successfully',
         data: {},
     });
-});
+};
 
-export const destroy = tryCatch(async (req, res) => {
+export const destroy = async (req, res) => {
     await Users().where({ id: req.params.id }).del();
     return res.status(204).end();
-});
+};

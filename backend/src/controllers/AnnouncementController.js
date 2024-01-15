@@ -1,8 +1,7 @@
 import { Announcements } from '../models/models.js';
 import { sendAnnouncementToAllUsers } from '../services/sendAnnouncementEmailService.js';
-import { tryCatch } from '../utils/tryCatch.js';
 
-export const index = tryCatch(async (req, res) => {
+export const index = async (req, res) => {
     const currentPage = parseInt(req.query.page) || 1;
     const perPage = parseInt(req.query.per_page) || 15;
 
@@ -21,9 +20,9 @@ export const index = tryCatch(async (req, res) => {
             totalPages,
         },
     });
-});
+};
 
-export const create = tryCatch(async (req, res) => {
+export const create = async (req, res) => {
     const text = req.body.text.trim();
 
     await Announcements().insert({
@@ -37,9 +36,9 @@ export const create = tryCatch(async (req, res) => {
         message: 'Announcement created successfully',
         data: {},
     });
-});
+};
 
-export const update = tryCatch(async (req, res) => {
+export const update = async (req, res) => {
     await Announcements().where({ id: req.params.id }).update({
         text: req.body.text.trim(),
     });
@@ -48,9 +47,9 @@ export const update = tryCatch(async (req, res) => {
         message: 'Announcement updated successfully',
         data: {},
     });
-});
+};
 
-export const destroy = tryCatch(async (req, res) => {
+export const destroy = async (req, res) => {
     await Announcements().where({ id: req.params.id }).del();
     return res.status(204).end();
-});
+};
