@@ -31,6 +31,7 @@ export const deleteAuthData = () => storage.delete(AUTH_USER_KEY);
 export const getAuthData = () => JSON.parse(storage.get(AUTH_USER_KEY));
 
 export const isAuthUserDemos = () => getAuthData().type === userTypeEnum.DEMOS;
+export const isAuthUserAdmin = () => getAuthData().username === 'admin';
 
 export const fetchAuthData = async () =>
     await backendApiService.post({ url: '/auth/me' });

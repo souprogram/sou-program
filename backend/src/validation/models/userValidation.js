@@ -39,6 +39,7 @@ export const updateUserValidation = async (req, res, next) => {
             profile_picture_key: ['present', 'string'],
             bio: ['present', 'string'],
             type: ['required', 'string'],
+            status: ['required', 'string'],
         },
         errorMessage: '[PATCH] Update user validation failed',
         res,

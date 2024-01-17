@@ -26,11 +26,11 @@
                 </div>
                 <div
                     v-if="user.id == currentUserID || isAuthUserDemos"
-                    class="h-fit d-flex justify-content-end gap-1"
+                    class=" d-flex justify-content-end gap-1"
                 >
-                    <IconButton actionType="edit" :onClick="openEditingUser" />
+                    <IconButton v-if="isAuthUserAdmin || !isAuthUserAdmin && user.type !== 'demonstrator' || user.id === currentUserID" actionType="edit" :onClick="openEditingUser" />
                     <IconButton
-                        v-if="user.id != currentUserID"
+                        v-if="user.id != currentUserID && user.username !== 'admin'"
                         actionType="delete"
                         :onClick="openDeletingUser"
                     />
@@ -54,7 +54,7 @@
 <script>
 import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
 import editUser from '@/components/app/editUser.vue';
-import { getAuthData, isAuthUserDemos } from '@/services/authService';
+import { getAuthData, isAuthUserDemos, isAuthUserAdmin } from '@/services/authService';
 import { useUserStore } from '@/stores/user.store';
 import IconButton from '@/components/app/IconButton.vue';
 import UserStatusIndicator from '@/components/app/userStatusIndicator.vue';
@@ -82,6 +82,7 @@ export default {
             isConfirming: false,
             isEditing: false,
             isAuthUserDemos: isAuthUserDemos(),
+            isAuthUserAdmin: isAuthUserAdmin(),
         };
     },
     computed: {
