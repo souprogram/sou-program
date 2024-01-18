@@ -26,12 +26,27 @@
                 v-model="user.username"
                 :validations="validationRules.username"
             />
-            <Input
-                label="Lozinka"
-                v-model="user.password"
-                :type="'password'"
-                :validations="validationRules.password"
-            />
+            <div class="row gx-4">
+                <Input
+                    label="Lozinka"
+                    v-model="user.password"
+                    :type="'password'"
+                    :validations="validationRules.password"
+                    class="col"
+                />
+                <Input
+                    label="Potvrda lozinke"
+                    v-model="passwordRepeated"
+                    :type="'password'"
+                    :validations="validationRules.password"
+                    class="col"
+                />
+            </div>
+            <div class="error-msg" v-if="passwordRepeatedError">
+            <span >
+                {{ passwordRepeatedError }}
+            </span>
+        </div>
             <div class="form-group">
                 <label for="profilePicture">Slika profila</label>
                 <input
@@ -114,6 +129,8 @@ export default {
                 type: 'student',
                 status: 'active',
             },
+            passwordRepeated: '',
+            passwordRepeatedError: '',
             selectedImage: null,
             validationRules: {
                 name: [required, maxLength(30)],
@@ -135,12 +152,26 @@ export default {
         },
     },
     methods: {
+        checkPasswordMatch() {
+            if (this.password !== this.passwordRepeated) {
+                this.passwordRepeatedError = 'Lozinke nisu jednake!'
+                this.passwordRepeated = ''
+                this.user.password = ''
+                return false
+            } else {
+                this.passwordRepeatedError = ''
+                return true
+            }
+        },
         addFile(event) {
             this.selectedImage = event.target.files[0];
         },
         async createUser() {
             if (!this.isFormValid) {
                 return;
+            }
+            if(!this.checkPasswordMatch()){
+                return
             }
 
             this.user.profile_picture_key = null;
@@ -159,3 +190,14 @@ export default {
     },
 };
 </script>
+<style scoped>
+.error-msg {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--red-color);
+    transition: opacity 0.3s;
+}
+
+.error-msg span {
+    display: block;
+}</style>

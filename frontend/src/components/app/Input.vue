@@ -5,7 +5,9 @@
             class="form-control"
             :type="type"
             :value="modelValue"
+            :placeholder="placeholder"
             @input="updateValue"
+            :class="{'border border-danger' : errorMessages.length > 0}"
         />
 
         <div class="error-msg" v-if="errorMessages.length > 0">
@@ -34,6 +36,10 @@ export default {
         type: {
             type: String,
             default: 'text',
+        },
+        placeholder: {
+            type: String,
+            default: '',
         },
     },
     name: 'Input',
