@@ -141,13 +141,16 @@ export const checkUsernameAvailability = async (req, res) => {
 
 export const checkEmailAvailability = async (req, res) => {
     try {
-        const { email } = req.params;
-        const available = await Users().where({ email }).first();
+        const { email } = req.query;
+        const user = await Users().where({ email }).first();
 
    
         return res.json({
             message: 'Email check complete',
-            data: { available: !available },
+            data: { 
+                available: user === undefined ? true : false,
+                statusMessage: user === undefined ? '' : 'Email se već koristi.'
+            },
         });
     
         
