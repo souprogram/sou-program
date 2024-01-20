@@ -8,36 +8,36 @@
                         <div class="form-group mt-3">
                             <Input
                                 label="Ime"
-                                v-model="name"
+                                v-model="user.name"
                                 :validations="validationRules.name"
                                 type="text"
                                 placeholder="Upiši ime"
                             />
-                            
                         </div>
                         <div class="form-group mt-3">
                             <Input
                                 label="Prezime"
-                                v-model="surname"
+                                v-model="user.surname"
                                 :validations="validationRules.surname"
                                 type="text"
                                 placeholder="Upiši prezime"
                             />
-                            
                         </div>
                         <div class="form-group mt-3">
                             <Input
                                 label="Korisničko ime"
-                                v-model="username"
+                                v-model="user.username"
                                 :validations="validationRules.username"
                                 type="text"
                                 placeholder="Upiši korisničko ime"
+                                @input="checkUsernameAvailability"
+                                :externalMessage="usernameAvailability"
                             />
                         </div>
                         <div class="form-group mt-3">
-                           <Input
+                            <Input
                                 label="Email"
-                                v-model="email"
+                                v-model="user.email"
                                 :validations="validationRules.email"
                                 type="email"
                                 placeholder="Upiši svoj email"
@@ -46,13 +46,11 @@
                         <div class="form-group mt-3">
                             <Input
                                 label="Lozinka"
-                                v-model="password"
+                                v-model="user.password"
                                 :validations="validationRules.password"
                                 type="password"
                                 placeholder="Upiši lozinku"
-                                
                             />
-                            
                         </div>
                         <div class="form-group mt-3">
                             <Input
@@ -61,15 +59,19 @@
                                 :validations="validationRules.password"
                                 type="password"
                                 placeholder="Upiši lozinku"
-                                
                             />
-                            <p v-if="passwordRepeatedError" class="error fw-light">{{ passwordRepeatedError }}</p>
+                            <p
+                                v-if="passwordRepeatedError"
+                                class="error text-danger fw-light"
+                            >
+                                {{ passwordRepeatedError }}
+                            </p>
                         </div>
 
                         <div class="form-group">
                             <label for="type">Tip korisnika</label>
                             <select
-                                v-model="type"
+                                v-model="user.type"
                                 class="form-control"
                                 id="type"
                                 required
@@ -77,12 +79,16 @@
                                 <option value="" disabled selected>
                                     Odaberi tip korisnika
                                 </option>
-                                <option value="demonstrator">Demonstrator</option>
+                                <option value="demonstrator">
+                                    Demonstrator
+                                </option>
                                 <option value="student">Student</option>
                             </select>
-                            
                         </div>
-                        <button type="submit" class="submit-button btn btn-primary mt-3">
+                        <button
+                            type="submit"
+                            class="submit-button btn btn-primary mt-3"
+                        >
                             Do it!
                         </button>
                     </div>
@@ -110,94 +116,113 @@ export default {
     },
     data: function () {
         return {
-            name: '', 
-            surname: '',  
-            username: '', 
-            email: '',
-            password: '',
+            user: {
+                name: '',
+                surname: '',
+                email: '',
+                email_verified: false,
+                username: '',
+                password: '',
+                bio: '',
+                profile_picture_key: '',
+                type: 'student',
+                status: 'pending',
+            },
             passwordRepeated: '',
             passwordRepeatedError: '',
-            type: 'student',
+            timeout: null,
+            usernameAvailability: {
+                showMessage: false,
+                available: false,
+                statusMessage: '',
+            },
             validationRules: {
                 name: [required, maxLength(30)],
                 surname: [required, maxLength(30)],
                 email: [required, email],
                 username: [required, maxLength(30), noWhitespace],
                 password: [password],
-                // bio: [maxLength(250)],
             },
-        }
+        };
     },
-    
-    watch: {
-        password(value) {
-            if (value === this.passwordRepeated) {
-                this.passwordRepeatedError = '';
-            }
-        },
-        passwordRepeated(value) {
-            if (value === this.password) {
-                this.passwordRepeatedError = '';
-            }
-        }
-    },
-    
+
     methods: {
         isFormValid() {
-            return Object.keys(this.validationRules).every((key) =>
-                this.validationRules[key].every(
-                    (validation) => validation(this.user[key]) === true
-                )
+            const isSyntaxValid = Object.keys(this.validationRules).every(
+                (key) =>
+                    this.validationRules[key].every(
+                        (validation) => validation(this.user[key]) === true
+                    ) && this.checkPasswordMatch()
             );
+            const isUsernameAvailable = this.usernameAvailability.available;
+            const passwordsMatch = this.checkPasswordMatch();
+
+            return isSyntaxValid && isUsernameAvailable && passwordsMatch;
+        },
+        async checkUsernameAvailability() {
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+            }
+            this.timeout = setTimeout(async () => {
+                const response = await backendApiService.get({
+                    url: `/registration/availability/username?username=${this.user.username}`,
+                });
+                if (!response.ok) {
+                    this.usernameAvailability = {
+                        showMessage: true,
+                        available: false,
+                        statusMessage:
+                            'Greška prilikom provjere dostupnosti korisničkog imena.',
+                    };
+                } else {
+                    const { data } = await response.json();
+                    this.usernameAvailability = {
+                        showMessage: true,
+                        available: data.available,
+                        statusMessage: data.statusMessage,
+                    };
+                }
+            }, 1000);
         },
         checkPasswordMatch(e) {
-            if( e && e.target.type === 'password'){
-                return
+            if (e && e.target.type === 'password') {
+                return;
             }
-            if (this.password !== this.passwordRepeated) {
-                this.passwordRepeatedError = 'Lozinke se ne podudaraju!'
-                this.passwordRepeated = ''
-                return false
+            if (this.user.password !== this.passwordRepeated) {
+                this.passwordRepeatedError = 'Lozinke se ne podudaraju!';
+                this.passwordRepeated = '';
+                return false;
             } else {
-                this.passwordRepeatedError = ''
-                return true
+                this.passwordRepeatedError = '';
+                return true;
             }
         },
         async register() {
-            if (!this.isFormValid) {
+            if (!this.isFormValid()) {
+                console.error('Forma nije validna!');
                 return;
             }
-            if(!this.checkPasswordMatch()){
-                return
-            }
 
-            const credentials = {
-                name: this.name,
-                surname: this.surname,
-                username: this.username,
-                email: this.email,
-                password: this.password,
-                type: this.type,
-                profile_picture_key: '',
-                bio: ''
-            }
-            
-             const response = await backendApiService.post({
+            const response = await backendApiService.post({
                 url: '/registration',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(credentials),
+                body: JSON.stringify(this.user),
             });
-            
 
             if (!response.ok) {
-                alert('Registracija nije uspjela! Provjerite podatke i pokušajte ponovno.')
-                return
+                alert(
+                    'Registracija nije uspjela! Provjerite podatke i pokušajte ponovno.'
+                );
+                return;
             }
 
-            this.$router.push({ name: 'PendingRegistration', query: { name: this.name } })
+            this.$router.push({
+                name: 'PendingRegistration',
+                query: { name: this.name },
+            });
         },
     },
-}
+};
 </script>
 
 <style scoped>

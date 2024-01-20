@@ -118,13 +118,15 @@ export const confirmEmail = async (req, res) => {
     
 export const checkUsernameAvailability = async (req, res) => {
     try {
-        const { username } = req.params;
-        const available = await Users().where({ username }).first();
-
+        const { username } = req.query;
+        const user = await Users().where({ username }).first();
    
         return res.json({
             message: 'Username check complete',
-            data: { available: !available },
+            data: { 
+                available: user === undefined ? true : false,
+                statusMessage: user === undefined ? 'Korisničko ime je dostupno' : 'Korisničko ime je zauzeto'
+            },
         });
     
         
