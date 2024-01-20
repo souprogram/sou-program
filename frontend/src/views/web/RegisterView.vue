@@ -41,6 +41,8 @@
                                 :validations="validationRules.email"
                                 type="email"
                                 placeholder="Upiši svoj email"
+                                @input="checkEmailAvailability"
+                                :externalMessage="emailAvailability"
                             />
                         </div>
                         <div class="form-group mt-3">
@@ -130,8 +132,14 @@ export default {
             },
             passwordRepeated: '',
             passwordRepeatedError: '',
-            timeout: null,
+            timeoutUsername: null,
+            timeoutMail: null,
             usernameAvailability: {
+                showMessage: false,
+                available: false,
+                statusMessage: '',
+            },
+            emailAvailability: {
                 showMessage: false,
                 available: false,
                 statusMessage: '',
@@ -155,15 +163,21 @@ export default {
                     ) && this.checkPasswordMatch()
             );
             const isUsernameAvailable = this.usernameAvailability.available;
+            const isEmailAvailable = this.emailAvailability.available;
             const passwordsMatch = this.checkPasswordMatch();
 
-            return isSyntaxValid && isUsernameAvailable && passwordsMatch;
+            return (
+                isSyntaxValid &&
+                isUsernameAvailable &&
+                isEmailAvailable &&
+                passwordsMatch
+            );
         },
         async checkUsernameAvailability() {
-            if (this.timeout) {
-                clearTimeout(this.timeout);
+            if (this.timeoutUsername) {
+                clearTimeout(this.timeoutUsername);
             }
-            this.timeout = setTimeout(async () => {
+            this.timeoutUsername = setTimeout(async () => {
                 const response = await backendApiService.get({
                     url: `/registration/availability/username?username=${this.user.username}`,
                 });
@@ -177,6 +191,31 @@ export default {
                 } else {
                     const { data } = await response.json();
                     this.usernameAvailability = {
+                        showMessage: true,
+                        available: data.available,
+                        statusMessage: data.statusMessage,
+                    };
+                }
+            }, 1000);
+        },
+        async checkEmailAvailability() {
+            if (this.timeoutMail) {
+                clearTimeout(this.timeoutMail);
+            }
+            this.timeoutMail = setTimeout(async () => {
+                const response = await backendApiService.get({
+                    url: `/registration/availability/email?email=${this.user.email}`,
+                });
+                if (!response.ok) {
+                    this.emailAvailability = {
+                        showMessage: true,
+                        available: false,
+                        statusMessage:
+                            'Greška prilikom provjere dostupnosti emaila.',
+                    };
+                } else {
+                    const { data } = await response.json();
+                    this.emailAvailability = {
                         showMessage: true,
                         available: data.available,
                         statusMessage: data.statusMessage,
