@@ -1,5 +1,6 @@
-Feedback za korisnika - live provjera jedinstvenosti korisničkog imena i emaila prilikom dodavanja - debounce
+
 Dodati na korisničkom profilu ponovni zahtjev za potvrdu emaila
-Error feedback kod registracije - ako user već postoji implementacija u Input komponentu
+Dodati zaboravljenu lozinku i promjena lozinke
 Demonstratoru u stalkaonici notifikacija ako postoji user(i) sa statsom pending (plus filter za statuse)
 send email demonstratorima kad se novi korisnik registrira
+Email validation poruka na mail kad se user kreira od strane demonstratora kroz app
