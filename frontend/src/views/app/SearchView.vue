@@ -15,12 +15,16 @@
             </div>
         </div>
 
-        <Search
-            :onSearch="searchedUsersByUsername"
-            placeholder="Upiši ime || prezime korisnika..."
-        />
+        <div class="d-flex flex-wrap">
+            <Search
+                :onSearch="searchedUsersByUsername"
+                placeholder="Upiši ime || prezime korisnika..."
+                class="col-12 col-md-6 me-md-2"
+            />
+            <FilterUsers class="col-12 col-md-6" />
+        </div>
 
-        <show-user v-for="user in users" :key="user.id" :user="user" />
+        <showUser v-for="user in users" :key="user.id" :user="user" />
 
         <div class="card" v-if="!users.length && !isLoading">
             <div class="card-body text-center">
@@ -47,6 +51,7 @@ import LoadingSpinner from '@/components/app/LoadingSpinner.vue';
 import Search from '@/components/app/Search.vue';
 import addUser from '@/components/app/addUser.vue';
 import showUser from '@/components/app/showUser.vue';
+import FilterUsers from '@/components/app/FilterUsers.vue';
 import { isAuthUserDemos } from '@/services/authService';
 import { useUserStore } from '@/stores/user.store';
 
@@ -57,6 +62,7 @@ export default {
         showUser,
         addUser,
         LoadingSpinner,
+        FilterUsers,
     },
     data: () => ({
         isLoading: false,
