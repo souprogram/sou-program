@@ -9,7 +9,7 @@ export const register = async (req, res) => {
    
     try {
         // // create user in db
-        const { email, name, surname, status } = req.body;
+        const { email, name, surname, status, username } = req.body;
 
         // initial status must be pending!
         if (status !== userStatusEnum.PENDING) {
@@ -36,7 +36,13 @@ export const register = async (req, res) => {
         const html = `Hej ${name} ${surname},<br><br>Klikni na link ispod kako bi potvrdio svoj email!<br>${anchorTag}<br>Vidimo se uskoro,<br>Šou program ekipa`;
         sendMail({ mailTo: email, subject: subject2, html });
     
-        // send email demonstratorima
+        // send email adminu
+        const subject3 = 'Novi zahtjev za registraciju';
+        const anchorTag2 = `<a href="${process.env.FRONTEND_URL}/search?id=${user.id}">Pregledaj zahtjev</a>`;
+        const html2 = `Zaprimljen je novi zahtjev za registraciju korisnika ${name} ${surname}.<br>Klikni na link ispod kako bi odobrio/la zahtjev!<br>${anchorTag2}`;
+        sendMail({ mailTo: process.env.ADMIN_EMAIL, subject: subject3, html: html2 });
+        
+        
         return res.status(201).json({
             message: 'Registration successful',
             data: {},

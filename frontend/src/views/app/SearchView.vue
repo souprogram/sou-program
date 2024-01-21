@@ -76,6 +76,10 @@ export default {
 
         this.users = await this.userStore.fetchUsers();
         this.searchedUsersByUsername('');
+        const id = this.$route.query.id;
+        if (id) {
+            this.searchUserById(id);
+        }
 
         this.isLoading = false;
     },
@@ -85,6 +89,10 @@ export default {
         },
         closeAddingUser() {
             this.isAddingUser = false;
+        },
+        searchUserById(searchedId) {
+            const searchedUser = this.userStore.getUserByID(searchedId);
+            this.users = searchedUser ? [searchedUser] : [];
         },
         searchedUsersByUsername(searchedUsername) {
             this.users =

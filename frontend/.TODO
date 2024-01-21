@@ -1,8 +1,7 @@
 
 Dodati na korisničkom profilu ponovni zahtjev za potvrdu emaila
 Dodati zaboravljenu lozinku i promjena lozinke
-Demonstratoru u stalkaonici notifikacija ako postoji user(i) sa statsom pending (plus filter za statuse)
-send email demonstratorima kad se novi korisnik registrira
+Demonstratoru u stalkaonici notifikacija ako postoji user(i) sa statsom pending (plus filter za statuse) -> IN PROGRESS
 Email validation poruka na mail kad se user kreira od strane demonstratora kroz app
 
 
@@ -16,3 +15,4 @@ Izrada pageva za registraciju, pending registration, i email confirmed/not confi
 Proces registracije i potvrđivanja emaila putem JWT tokena
 Prikaz statusa korisnika (active/pending/inactive) na profilu demonstratora/admina
 Izmjene u bazi podataka na tablici users (dodan status i email_verified)
+Slanje emaila adminu kada se novi korisnik registrira, sa linkom koji vodi na promjenu statusa tog usera

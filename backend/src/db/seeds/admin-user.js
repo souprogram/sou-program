@@ -11,7 +11,7 @@ export const seed = async function (knex) {
         {
             name: 'Admin',
             surname: 'Admin',
-            email: 'admin@gmail.com',
+            email: process.env.ADMIN_EMAIL,
             username: 'admin',
             password: await hashPassword('admin'),
             profile_picture_key: null,
