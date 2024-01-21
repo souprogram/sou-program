@@ -3,15 +3,25 @@ import { sendMail } from '../services/emailService.js';
 import { Users } from '../models/models.js';
 import { generateTokenFromUser } from "../services/authService.js";
 import { verifyToken, hashPassword } from '../services/authService.js';
+import { userStatusEnum } from '../enums/userStatusEnum.js';
 
 export const register = async (req, res) => {
    
     try {
         // // create user in db
+        const { email, name, surname, status } = req.body;
+
+        // initial status must be pending!
+        if (status !== userStatusEnum.PENDING) {
+            return res.status(400).json({
+                message: 'Invalid user status',
+                data: {},
+            });
+        }
+
         await createUser(req);
        
         // send email to user
-        const { email, name, surname } = req.body;
         const subject = 'Poslan zahtjev za registraciju na Šou program';
         const content = `Hej ${name} ${surname},\n\nUspješno si započeo proces registracije!\nKada demonstrator odobri tvoj zahtjev, dobiti ćeš potvrdu registracije na email!\n\nVidimo se uskoro,\nŠou program ekipa`;
         sendMail({ mailTo: email, subject, content });

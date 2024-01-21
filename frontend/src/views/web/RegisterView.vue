@@ -3,7 +3,7 @@
         <form @submit.prevent="register">
             <div class="card">
                 <h1>Želiš se pridružiti?</h1>
-                <div @click="checkPasswordMatch" class="row">
+                <div class="row">
                     <div class="col form-elements">
                         <div class="form-group mt-3">
                             <Input
@@ -12,6 +12,7 @@
                                 :validations="validationRules.name"
                                 type="text"
                                 placeholder="Upiši ime"
+                                :required="true"
                             />
                         </div>
                         <div class="form-group mt-3">
@@ -21,6 +22,7 @@
                                 :validations="validationRules.surname"
                                 type="text"
                                 placeholder="Upiši prezime"
+                                :required="true"
                             />
                         </div>
                         <div class="form-group mt-3">
@@ -32,6 +34,7 @@
                                 placeholder="Upiši korisničko ime"
                                 @input="checkUsernameAvailability"
                                 :externalMessage="usernameAvailability"
+                                :required="true"
                             />
                         </div>
                         <div class="form-group mt-3">
@@ -43,6 +46,7 @@
                                 placeholder="Upiši svoj email"
                                 @input="checkEmailAvailability"
                                 :externalMessage="emailAvailability"
+                                :required="true"
                             />
                         </div>
                         <div class="form-group mt-3">
@@ -52,6 +56,7 @@
                                 :validations="validationRules.password"
                                 type="password"
                                 placeholder="Upiši lozinku"
+                                :required="true"
                             />
                         </div>
                         <div class="form-group mt-3">
@@ -61,13 +66,9 @@
                                 :validations="validationRules.password"
                                 type="password"
                                 placeholder="Upiši lozinku"
+                                :externalMessage="passwordRepeatedError"
+                                :required="true"
                             />
-                            <p
-                                v-if="passwordRepeatedError"
-                                class="error text-danger fw-light"
-                            >
-                                {{ passwordRepeatedError }}
-                            </p>
                         </div>
 
                         <div class="form-group">
@@ -131,7 +132,11 @@ export default {
                 status: 'pending',
             },
             passwordRepeated: '',
-            passwordRepeatedError: '',
+            passwordRepeatedError: {
+                showMessage: false,
+                available: false,
+                statusMessage: 'Lozinke se ne podudaraju!',
+            },
             timeoutUsername: null,
             timeoutMail: null,
             usernameAvailability: {
@@ -152,6 +157,15 @@ export default {
                 password: [password],
             },
         };
+    },
+    watch: {
+        passwordRepeated(val) {
+            if (this.user.password.includes(val)) {
+                this.passwordRepeatedError.showMessage = false;
+            } else {
+                this.passwordRepeatedError.showMessage = true;
+            }
+        },
     },
 
     methods: {
@@ -223,16 +237,12 @@ export default {
                 }
             }, 1000);
         },
-        checkPasswordMatch(e) {
-            if (e && e.target.type === 'password') {
-                return;
-            }
+        checkPasswordMatch() {
             if (this.user.password !== this.passwordRepeated) {
-                this.passwordRepeatedError = 'Lozinke se ne podudaraju!';
-                this.passwordRepeated = '';
+                this.passwordRepeatedError.showMessage = true;
                 return false;
             } else {
-                this.passwordRepeatedError = '';
+                this.passwordRepeatedError.showMessage = false;
                 return true;
             }
         },

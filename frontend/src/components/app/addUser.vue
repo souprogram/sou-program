@@ -1,5 +1,5 @@
 <template>
-    <div @click="checkPasswordMatch">
+    <div>
         <FormModal
             title="Dodaj korisnika"
             :onClose="onClose"
@@ -160,6 +160,15 @@ export default {
             },
         };
     },
+    watch: {
+        passwordRepeated(val) {
+            if (this.user.password.includes(val)) {
+                this.passwordRepeatedError.showMessage = false;
+            } else {
+                this.passwordRepeatedError.showMessage = true;
+            }
+        },
+    },
     methods: {
         isFormValid() {
             const isSyntaxValid = Object.keys(this.validationRules).every(
@@ -229,15 +238,9 @@ export default {
                 }
             }, 1000);
         },
-        checkPasswordMatch(e) {
-            console.log('pass check initiated');
-            if (e && e.target.type === 'password' && !this.passwordRepeated) {
-                this.passwordRepeatedError.showMessage = false;
-                return;
-            }
+        checkPasswordMatch() {
             if (this.user.password !== this.passwordRepeated) {
                 this.passwordRepeatedError.showMessage = true;
-                // this.passwordRepeated = '';
                 return false;
             } else {
                 this.passwordRepeatedError.showMessage = false;

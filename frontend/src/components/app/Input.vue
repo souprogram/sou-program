@@ -14,6 +14,7 @@
                         !externalMessage.available &&
                         modelValue),
             }"
+            :required="required"
         />
 
         <div v-if="externalMessage.showMessage && modelValue" class="error-msg">
@@ -64,6 +65,10 @@ export default {
                 available: false,
                 statusMessage: '',
             }),
+        },
+        required: {
+            type: Boolean,
+            default: false,
         },
     },
     name: 'Input',
