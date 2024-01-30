@@ -42,6 +42,12 @@ export const useUserStore = defineStore('user', {
                 );
             });
         },
+        getFilteredUsersByType: (state) => (userType) => {
+            if (userType === 'all') {
+                return state.users;
+            }
+            return state.users.filter((user) => user.type === userType);
+        }
     },
     actions: {
         async fetchUsers() {

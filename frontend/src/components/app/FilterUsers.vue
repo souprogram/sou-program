@@ -1,38 +1,38 @@
 <template>
     <div>
         <div class="form-group">
-            <!-- <label for="type">Tip korisnika</label> -->
-            <select class="form-control" id="type" required>
+            <select class="form-control" id="type"  required @change="updateValue" :value="modelValue">
                 <option value="" disabled selected>
                     Odaberi tip korisnika
                 </option>
                 <option value="demonstrator">Demonstrator</option>
                 <option value="student">Student</option>
+                <option value="all">Svi korisnici</option>
             </select>
         </div>
     </div>
 </template>
 
 <script>
-const props = {
-    user: {
-        type: Object,
-        required: true,
-    },
-    onClose: {
-        type: Function,
-        required: true,
-    },
-};
 
 export default {
     name: 'FilterUsers',
-    props,
+    props: {
+        modelValue: {
+            type: String,
+            default: 'all',
+        },
+    },
     components: {},
     data() {
         return {};
     },
 
-    methods: {},
+    methods: {
+        updateValue(event) {
+            const value = event.target.value;
+            this.$emit('update:modelValue', value);
+        },
+    },
 };
 </script>

@@ -5,6 +5,10 @@
                 class="card-body d-flex justify-content-between align-items-center"
             >
                 <h1>Stalkaonica</h1>
+                <div class="d-flex justify-content-center align-items-center ">
+                    <span class="text-danger">Korisnici na čekanju:</span>
+                    <div class="pending-users ms-2 shadow-sm"><span>{{ pendingUsers }}</span></div>
+                </div>
                 <button
                     v-if="isAuthUserDemos"
                     class="btn btn-primary"
@@ -15,16 +19,16 @@
             </div>
         </div>
 
-        <div class="d-flex flex-wrap">
+        <div class="search-bar">
             <Search
                 :onSearch="searchedUsersByUsername"
                 placeholder="Upiši ime || prezime korisnika..."
-                class="col-12 col-md-6 me-md-2"
+                class="search"
             />
-            <FilterUsers class="col-12 col-md-6" />
+            <FilterUsers class="filter" v-model="filterType"/>
         </div>
 
-        <showUser v-for="user in users" :key="user.id" :user="user" />
+        <showUser v-for="user in filteredUsers" :key="user.id" :user="user" />
 
         <div class="card" v-if="!users.length && !isLoading">
             <div class="card-body text-center">
@@ -64,13 +68,16 @@ export default {
         LoadingSpinner,
         FilterUsers,
     },
-    data: () => ({
-        isLoading: false,
-        users: [],
-        isAddingUser: false,
-        userStore: useUserStore(),
-        isAuthUserDemos: isAuthUserDemos(),
-    }),
+    data(){
+        return {
+            isLoading: false,
+            users: [],
+            isAddingUser: false,
+            userStore: useUserStore(),
+            isAuthUserDemos: isAuthUserDemos(),
+            filterType: 'all',
+        }
+    },
     async created() {
         this.isLoading = true;
 
@@ -82,6 +89,17 @@ export default {
         }
 
         this.isLoading = false;
+    },
+    computed: {
+        pendingUsers() {
+            return this.userStore.users.filter((user) => user.status === 'pending').length;
+        },
+        filteredUsers() {
+            if (this.filterType === 'all') {
+                return this.users;
+            }
+            return this.users.filter((user) => user.type === this.filterType);
+        },
     },
     methods: {
         openAddingUser() {
@@ -95,9 +113,35 @@ export default {
             this.users = searchedUser ? [searchedUser] : [];
         },
         searchedUsersByUsername(searchedUsername) {
-            this.users =
-                this.userStore.getSearchedUsersByUsername(searchedUsername);
+            this.users = this.userStore.getSearchedUsersByUsername(searchedUsername);
         },
     },
 };
 </script>
+<style>
+.search-bar {
+    display: flex;
+    gap: 0.5rem;
+}
+@media (max-width: 768px) {
+    .search-bar {
+        flex-direction: column;
+    }
+}
+.filter {
+    width: 100%;
+}
+.search {
+    width: 100%;
+}
+.pending-users {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>
