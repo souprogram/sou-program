@@ -181,4 +181,7 @@ body {
     min-width: 2.5rem;
     min-height: 2.5rem;
 }
+.pointer {
+    cursor: pointer;
+}
 </style>

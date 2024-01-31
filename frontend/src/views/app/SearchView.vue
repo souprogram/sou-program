@@ -5,9 +5,9 @@
                 class="card-body d-flex justify-content-between align-items-center"
             >
                 <h1>Stalkaonica</h1>
-                <div class="d-flex justify-content-center align-items-center ">
+                <div v-if="isAuthUserDemos" @click="showPendingUsers"  class="pointer d-flex justify-content-center align-items-center ">
                     <span class="text-danger">Korisnici na čekanju:</span>
-                    <div class="pending-users ms-2 shadow-sm"><span>{{ pendingUsers }}</span></div>
+                    <div class="pending-users ms-2 shadow-sm"><span>{{ pendingUsersNumber }}</span></div>
                 </div>
                 <button
                     v-if="isAuthUserDemos"
@@ -25,7 +25,8 @@
                 placeholder="Upiši ime || prezime korisnika..."
                 class="search"
             />
-            <FilterUsers class="filter" v-model="filterType"/>
+            <FilterUsers :filter-data="filterTypeOptions" class="filter" v-model="filterType"/>
+            <FilterUsers v-if="isAuthUserDemos" :filter-data="filterStatusOptions" class="filter" v-model="filterStatus"/>
         </div>
 
         <showUser v-for="user in filteredUsers" :key="user.id" :user="user" />
@@ -76,6 +77,19 @@ export default {
             userStore: useUserStore(),
             isAuthUserDemos: isAuthUserDemos(),
             filterType: 'all',
+            filterStatus: 'all',
+            filterTypeOptions: {
+                all: 'Svi korisnici',
+                demonstrator: 'Demonstratori',
+                student: 'Studenti',
+            },
+            filterStatusOptions: {
+                all: 'Svi statusi',
+                pending: 'Na čekanju',
+                active: 'Aktivni',
+                inactive: 'Neaktivni',
+            },
+            searchResults: [],
         }
     },
     async created() {
@@ -91,14 +105,31 @@ export default {
         this.isLoading = false;
     },
     computed: {
-        pendingUsers() {
+        pendingUsersNumber() {
             return this.userStore.users.filter((user) => user.status === 'pending').length;
         },
         filteredUsers() {
-            if (this.filterType === 'all') {
-                return this.users;
-            }
-            return this.users.filter((user) => user.type === this.filterType);
+            return this.searchResults.filter((user) => {
+                const typeCondition = this.filterType === 'all' || user.type === this.filterType;
+                const statusCondition = this.filterStatus === 'all' || user.status === this.filterStatus;
+                return typeCondition && statusCondition;
+            });
+            // let typeFiltered = [];
+            // let statusFiltered = [];
+
+            // if (this.filterType === 'all') {
+            //     typeFiltered = this.users;
+            // } else {
+            //     typeFiltered = this.users.filter((user) => user.type === this.filterType);
+            // }
+            
+            // if (this.filterStatus === 'all') {
+            //     statusFiltered = typeFiltered;
+            // } else {
+            //     statusFiltered = typeFiltered.filter((user) => user.status === this.filterStatus);
+            // }
+
+            // return this.searchResults.filter(user => statusFiltered.includes(user));
         },
     },
     methods: {
@@ -113,8 +144,14 @@ export default {
             this.users = searchedUser ? [searchedUser] : [];
         },
         searchedUsersByUsername(searchedUsername) {
-            this.users = this.userStore.getSearchedUsersByUsername(searchedUsername);
+            this.searchResults = this.userStore.getSearchedUsersByUsername(searchedUsername);
+            
         },
+        showPendingUsers() {
+            this.filterStatus = 'pending';
+            this.filterType = 'all'; 
+            this.searchedUsersByUsername('');
+        }
     },
 };
 </script>

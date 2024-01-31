@@ -2,12 +2,11 @@
     <div>
         <div class="form-group">
             <select class="form-control" id="type"  required @change="updateValue" :value="modelValue">
-                <option value="" disabled selected>
-                    Odaberi tip korisnika
+                <option v-for="(value, key) in filterData"
+                    :key="key" :value="key"
+                >
+                    {{ value }}
                 </option>
-                <option value="demonstrator">Demonstrator</option>
-                <option value="student">Student</option>
-                <option value="all">Svi korisnici</option>
             </select>
         </div>
     </div>
@@ -22,6 +21,10 @@ export default {
             type: String,
             default: 'all',
         },
+        filterData:{
+            type: Object,
+            required: true
+        }
     },
     components: {},
     data() {
