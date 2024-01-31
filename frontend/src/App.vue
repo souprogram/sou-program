@@ -54,4 +54,22 @@ export default {
         transform: rotate(360deg);
     }
 }
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+    opacity: 1;
+}
+.z-100 {
+    z-index: 100;
+}
 </style>

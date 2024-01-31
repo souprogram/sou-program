@@ -29,7 +29,9 @@
             <FilterUsers v-if="isAuthUserDemos" :filter-data="filterStatusOptions" class="filter" v-model="filterStatus"/>
         </div>
 
-        <showUser v-for="user in filteredUsers" :key="user.id" :user="user" />
+        <div v-auto-animate>
+            <showUser v-for="user in filteredUsers" :key="user.id" :user="user" />
+        </div>
 
         <div class="card" v-if="!users.length && !isLoading">
             <div class="card-body text-center">
@@ -44,10 +46,12 @@
             <LoadingSpinner />
         </div>
 
-        <add-user
-            v-if="isAuthUserDemos && isAddingUser"
-            :onClose="closeAddingUser"
-        />
+        <transition class="z-100" name="fade">
+            <add-user
+                v-if="isAuthUserDemos && isAddingUser"
+                :onClose="closeAddingUser"
+            />
+        </transition>
     </div>
 </template>
 
@@ -165,4 +169,8 @@ export default {
     justify-content: center;
     align-items: center;
 }
+
+
+
+
 </style>
