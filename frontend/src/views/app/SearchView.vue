@@ -114,22 +114,6 @@ export default {
                 const statusCondition = this.filterStatus === 'all' || user.status === this.filterStatus;
                 return typeCondition && statusCondition;
             });
-            // let typeFiltered = [];
-            // let statusFiltered = [];
-
-            // if (this.filterType === 'all') {
-            //     typeFiltered = this.users;
-            // } else {
-            //     typeFiltered = this.users.filter((user) => user.type === this.filterType);
-            // }
-            
-            // if (this.filterStatus === 'all') {
-            //     statusFiltered = typeFiltered;
-            // } else {
-            //     statusFiltered = typeFiltered.filter((user) => user.status === this.filterStatus);
-            // }
-
-            // return this.searchResults.filter(user => statusFiltered.includes(user));
         },
     },
     methods: {
