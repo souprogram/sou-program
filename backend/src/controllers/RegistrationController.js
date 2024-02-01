@@ -27,14 +27,8 @@ export const register = async (req, res) => {
         sendMail({ mailTo: email, subject, content });
 
         // slanje emaila useru da potvrdi svoju email adresu
-            
         const user = await Users().where({ email }).first();
-        const accessToken = generateTokenFromUser(user);
-        const link = `${process.env.FRONTEND_URL}/confirm?accessToken=${accessToken}`;
-        const anchorTag = `<a href="${link}">Potvrdi registraciju</a>`;
-        const subject2 = 'Potvrda emaila za Šou program';
-        const html = `Hej ${name} ${surname},<br><br>Klikni na link ispod kako bi potvrdio svoj email!<br>${anchorTag}<br>Vidimo se uskoro,<br>Šou program ekipa`;
-        sendMail({ mailTo: email, subject: subject2, html });
+        await sendEmailConfirmationRequest(user)
     
         // send email adminu
         const subject3 = 'Novi zahtjev za registraciju';
@@ -57,6 +51,15 @@ export const register = async (req, res) => {
         });
     }
 };
+export const sendEmailConfirmationRequest = async (user) => {
+    const accessToken = generateTokenFromUser(user);
+    const link = `${process.env.FRONTEND_URL}/confirm?accessToken=${accessToken}`;
+    const anchorTag = `<a href="${link}">Potvrdi email</a>`;
+    const subject2 = 'Potvrda emaila za Šou program';
+    const html = `Hej ${user.name} ${user.surname},<br><br>Klikni na link ispod kako bi potvrdio svoj email!<br>${anchorTag}<br>Vidimo se uskoro,<br>Šou program ekipa`;
+    sendMail({ mailTo: user.email, subject: subject2, html });
+}
+
 const createUser = async (req) => {
     try {
         await Users().insert({
@@ -115,7 +118,7 @@ export const confirmEmail = async (req, res) => {
         
         // send email to user
         let subject = `Potvrda emaila za Šou program`;
-        let content = `Hej ${name} ${surname},\n\nUspješno si potvrdio svoj email!\nKada demonstrator odobri tvoj zahtjev, dobiti ćeš potvrdu registracije na email!\n\nVidimo se uskoro,\nŠou program ekipa`;
+        let content = `Hej ${name} ${surname},\n\nUspješno si potvrdio svoj email!\n\nŠou program ekipa`;
         sendMail({ mailTo: email, subject, content });
 
         return res.status(200).json({

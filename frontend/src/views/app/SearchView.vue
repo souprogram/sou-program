@@ -5,7 +5,7 @@
                 class="card-body d-flex justify-content-between align-items-center"
             >
                 <h1>Stalkaonica</h1>
-                <div v-if="isAuthUserDemos" @click="showPendingUsers"  class="pointer d-flex justify-content-center align-items-center ">
+                <div v-if="isAuthUserDemos && pendingUsersNumber" @click="showPendingUsers"  class="pointer d-flex justify-content-center align-items-center ">
                     <span class="text-danger">Korisnici na čekanju:</span>
                     <div class="pending-users ms-2 shadow-sm"><span>{{ pendingUsersNumber }}</span></div>
                 </div>
@@ -129,7 +129,7 @@ export default {
         },
         searchUserById(searchedId) {
             const searchedUser = this.userStore.getUserByID(searchedId);
-            this.users = searchedUser ? [searchedUser] : [];
+            this.searchResults = searchedUser ? [searchedUser] : [];
         },
         searchedUsersByUsername(searchedUsername) {
             this.searchResults = this.userStore.getSearchedUsersByUsername(searchedUsername);

@@ -1,5 +1,5 @@
 <template>
-    <div class="form-group">
+    <div v-auto-animate class="form-group">
         <label v-if="label">{{ label }}</label>
         <input
             class="form-control"

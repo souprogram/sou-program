@@ -1,5 +1,7 @@
 import { Users } from '../models/models.js';
 import { hashPassword } from '../services/authService.js';
+import { sendEmailConfirmationRequest } from './RegistrationController.js';
+import { sendMail } from '../services/emailService.js';
 
 export const index = async (req, res) => {
     try {
@@ -45,6 +47,18 @@ export const create = async (req, res) => {
             type: req.body.type,
             status: req.body.status,
         });
+        
+        const user = await Users().where({ email: req.body.email.trim() }).first();
+
+        // send welcome email to user
+        const subject = 'Dobrodošao/la u Šou program!';
+        const anchorTag = `<a href="${process.env.FRONTEND_URL}/login">Login</a>`;
+        const html = `Hej ${user.name} ${user.surname}.Dobrodošao u udrugu Šou Program<br>Klikni na link ispod kako se ulogirao/la na app! Vidimo se tamo!<br>${anchorTag}`;
+        sendMail({ mailTo: user.email, subject, html });
+
+        // send email confirmation request to user
+        await sendEmailConfirmationRequest(user);
+
 
         return res.status(201).json({
             message: 'User created successfully',
