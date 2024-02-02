@@ -49,3 +49,10 @@ export const me = async (req, res) => {
         data: await Users().where({ id: req.authUser.id }),
     });
 };
+
+export const getStatus = async (req, res) => {
+    return res.json({
+        message: 'User status fetched successfully',
+        data: await Users().where({ id: req.params.id }).select('status'),
+    });
+};

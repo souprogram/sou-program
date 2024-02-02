@@ -70,3 +70,20 @@ export const logout = async () => {
 
     return true;
 };
+
+export const userStatus = async (id) => {
+    if (!id) {
+        return false;
+    }
+    const res = await fetch(`${process.env.VUE_APP_API_URL}/auth/status/${id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!res.ok) {
+        return false;
+    }
+
+    const resObj = await res.json();
+    return resObj.data[0].status;
+};

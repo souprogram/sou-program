@@ -53,7 +53,7 @@ export const create = async (req, res) => {
         // send welcome email to user
         const subject = 'Dobrodošao/la u Šou program!';
         const anchorTag = `<a href="${process.env.FRONTEND_URL}/login">Login</a>`;
-        const html = `Hej ${user.name} ${user.surname}.Dobrodošao u udrugu Šou Program<br>Klikni na link ispod kako se ulogirao/la na app! Vidimo se tamo!<br>${anchorTag}`;
+        const html = `Hej ${user.name} ${user.surname}! Dobrodošao u udrugu Šou Program.<br>Klikni na link ispod kako se ulogirao/la na app! Vidimo se online!<br>${anchorTag}`;
         sendMail({ mailTo: user.email, subject, html });
 
         // send email confirmation request to user

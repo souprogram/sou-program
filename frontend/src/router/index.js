@@ -2,6 +2,7 @@ import {
     deleteAuthData,
     fetchAuthData,
     getAuthData,
+    userStatus,
 } from '@/services/authService';
 import { keys, storage } from '@/services/storageService';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -164,8 +165,15 @@ router.beforeEach(async (to, _from, next) => {
             await fetchAuthData();
         }
     }
+    const userStatusValue = await userStatus(user?.id);
 
-    if (!isUserLoggedIn && to.meta.authRequired) {
+    if (isUserLoggedIn && userStatusValue !== 'active') {
+        // Logout user and redirect to login
+        deleteAuthData();
+        return next({ name: 'LoginView' });
+    }
+
+    if (!isUserLoggedIn && to.meta.authRequired ) {
         return next({ name: 'LoginView' });
     } else if (isUserLoggedIn && to.name === 'LoginView') {
         return next({ name: 'NewsfeedView' });
