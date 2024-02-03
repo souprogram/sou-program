@@ -19,7 +19,7 @@
                     {{ user.username }} - {{ user.type }}
                 </p>
                 <p v-auto-animate class="my-1">{{ user.email }}
-                     <button @click="verifyEmail" v-if="!user.email_verified && !confirmationSent" class="btn text-danger">Email nepotvrđen! Klikni ovdje za potvrdu!</button>
+                     <button @click="verifyEmail" v-if="!user.email_verified && !confirmationSent && user.id === currentUserID" class="btn text-danger">Email nepotvrđen! Klikni ovdje za potvrdu!</button>
                      <span class="text-success" v-if="confirmationSent"> Email za potvrdu email adrese poslan je u tvoj sandučić!</span>
                 </p>
                 <p class="my-1">{{ user.bio }}</p>
@@ -30,7 +30,7 @@
 
 <script>
 import { useUserStore } from '@/stores/user.store';
-
+import { getAuthData } from '@/services/authService';
 const props = {
     user: {
         type: Object,
@@ -43,6 +43,7 @@ export default {
     props,
     data() {
         return {
+            currentUserID: getAuthData().id,
             confirmationSent: false,
             userStore: useUserStore(),
         };

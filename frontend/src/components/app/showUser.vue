@@ -30,7 +30,7 @@
                 >
                     <IconButton v-if="isAuthUserAdmin || !isAuthUserAdmin && user.type !== 'demonstrator' || user.id === currentUserID" actionType="edit" :onClick="openEditingUser" />
                     <IconButton
-                        v-if="user.id != currentUserID && user.username !== 'admin'"
+                        v-if="(user.id != currentUserID && user.type !== 'demonstrator') || (isAuthUserAdmin && user.id !== currentUserID)"
                         actionType="delete"
                         :onClick="openDeletingUser"
                     />

@@ -1,8 +1,8 @@
 
-
-1. Mogućnost brisanja vlastitog računa od strane korisnika
-2. Dodati zaboravljenu lozinku i promjena lozinke
-3. Ne dozvoliti demosima da mogu brisati druge demose
+1. Napraviti authorizedMiddleware i dodati ga na rute za patch i delete kako demosi ne bi mogli brisati/editirati druge demose
+2. Mogućnost brisanja vlastitog računa od strane korisnika
+3. Dodati zaboravljenu lozinku i promjena lozinke
+4. Ne dozvoliti demosima da mogu brisati druge demose
 
 FINISHED
 
