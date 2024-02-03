@@ -1,10 +1,8 @@
 
 
-Dodati na korisničkom profilu ponovni zahtjev za potvrdu emaila
-Mogućnost brisanja vlastitog računa od strane korisnika
-Dodati zaboravljenu lozinku i promjena lozinke
-Email validation poruka na mail kad se user kreira od strane demonstratora kroz app - IN PROGRESS
-
+1. Mogućnost brisanja vlastitog računa od strane korisnika
+2. Dodati zaboravljenu lozinku i promjena lozinke
+3. Ne dozvoliti demosima da mogu brisati druge demose
 
 FINISHED
 
@@ -20,3 +18,5 @@ Slanje emaila adminu kada se novi korisnik registrira, sa linkom koji vodi na pr
 Filter za tipove usera na searchu
 Dodati filter za statuse korisnika
 Demonstratoru u stalkaonici notifikacija ako postoji user(i) sa statsom pending
+Email validation poruka na mail kad se user kreira od strane demonstratora kroz app
+Dodati na korisničkom profilu mogućnost ponovnog zahtjeva za potvrdu emaila (ako je email nepotvrđen)

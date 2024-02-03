@@ -18,7 +18,10 @@
                 <p v-if="user.username && user.type" class="my-1">
                     {{ user.username }} - {{ user.type }}
                 </p>
-                <p class="my-1">{{ user.email }}</p>
+                <p v-auto-animate class="my-1">{{ user.email }}
+                     <button @click="verifyEmail" v-if="!user.email_verified && !confirmationSent" class="btn text-danger">Email nepotvrđen! Klikni ovdje za potvrdu!</button>
+                     <span class="text-success" v-if="confirmationSent"> Email za potvrdu email adrese poslan je u tvoj sandučić!</span>
+                </p>
                 <p class="my-1">{{ user.bio }}</p>
             </div>
         </div>
@@ -26,6 +29,8 @@
 </template>
 
 <script>
+import { useUserStore } from '@/stores/user.store';
+
 const props = {
     user: {
         type: Object,
@@ -36,6 +41,22 @@ const props = {
 export default {
     name: 'showProfile',
     props,
+    data() {
+        return {
+            confirmationSent: false,
+            userStore: useUserStore(),
+        };
+    },
+    methods: {
+        async verifyEmail() {
+            
+            const emailSent = await this.userStore.confirmEmail(this.user.email);
+            if (emailSent) {
+                this.confirmationSent = true;
+            }   
+            
+        },
+    },
 };
 </script>
 

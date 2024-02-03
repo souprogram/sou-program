@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { register, confirmEmail, checkUsernameAvailability, checkEmailAvailability  } from '../controllers/RegistrationController.js';
+import { register, confirmEmail, checkUsernameAvailability, checkEmailAvailability, sendConfirmEmail  } from '../controllers/RegistrationController.js';
 import { createUserValidation } from '../validation/models/userValidation.js';
 
 export const registrationRouter = () => {
@@ -7,5 +7,6 @@ export const registrationRouter = () => {
         .get('/registration/confirm', confirmEmail)
         .get('/registration/availability/username', checkUsernameAvailability)
         .get('/registration/availability/email', checkEmailAvailability)
-        .post('/registration', [createUserValidation], register)    
+        .post('/registration', [createUserValidation], register)
+        .post('/registration/email-confirmation', sendConfirmEmail)    
 };

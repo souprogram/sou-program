@@ -92,5 +92,12 @@ export const useUserStore = defineStore('user', {
 
             this.$router.push(res.ok ? '/success' : '/error');
         },
+        async confirmEmail(email) {
+            const res = await backendApiService.post({
+                url: `/registration/email-confirmation?email=${email}`,
+            });
+
+            return res.ok ? true : false;
+        },
     },
 });

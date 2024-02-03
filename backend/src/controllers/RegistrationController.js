@@ -60,6 +60,36 @@ export const sendEmailConfirmationRequest = async (user) => {
     sendMail({ mailTo: user.email, subject: subject2, html });
 }
 
+export const sendConfirmEmail = async (req, res) => {
+    try {
+        const { email } = req.query;
+        const user = await Users().where({ email }).first();
+        if (!user) {
+            return res.status(404).json({
+                message: 'User not found',
+                data: {},
+            });
+        }
+        if (user.email_verified) {
+            return res.status(400).json({
+                message: 'Email already confirmed',
+                data: {},
+            });
+        }
+        await sendEmailConfirmationRequest(user);
+        return res.status(200).json({
+            message: 'Email confirmation request sent',
+            data: {},
+        });
+    } catch (error) {
+        console.error(`[POST] Send email confirmation request error: ${error.message}`);
+        res.status(500).json({
+            message: 'Internal server error',
+            data: {},
+        });
+    }
+};
+
 const createUser = async (req) => {
     try {
         await Users().insert({

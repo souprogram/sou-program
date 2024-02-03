@@ -85,5 +85,5 @@ export const userStatus = async (id) => {
     }
 
     const resObj = await res.json();
-    return resObj.data[0].status;
+    return resObj?.data[0]?.status;
 };
