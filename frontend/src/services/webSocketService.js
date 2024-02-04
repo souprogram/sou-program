@@ -12,7 +12,7 @@ export const sendOnlineStatus = (status) => {
     if (!authData) {
         return;
     }
-    ws.send(JSON.stringify({ type: 'userInformation', data: authData, status}));
+    ws.send(JSON.stringify({ type: 'userInformation', data: {...authData, status}}));
 };
 
 
@@ -20,7 +20,12 @@ ws.addEventListener('open', () => {
     socketState.isConnected = true;
 });
 ws.addEventListener('message', (event) => {
-    console.log('Message from server ', event.data + '\n');
+    console.log('Message from server:');
+    event.data.forEach(e => {
+        console.log(e);
+        
+    });
+    // console.log(event.data);
 });
 
 ws.addEventListener('close', () => {
