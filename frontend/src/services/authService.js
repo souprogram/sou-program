@@ -1,6 +1,7 @@
 import userTypeEnum from '@/enums/userTypeEnum';
 import { keys, storage } from './storageService';
 import backendApiService from './backendApiService';
+import { sendOnlineStatus } from './webSocketService';
 
 const AUTH_USER_KEY = keys.AUTH_USER;
 const EXPIRES_AFTER = 1000 * 60 * 60; // 1 hour
@@ -55,7 +56,6 @@ export const login = async ({ username, password }) => {
 
     const resObj = await res.json();
     saveAuthData(resObj.data);
-
     return true;
 };
 
@@ -65,7 +65,6 @@ export const logout = async () => {
     if (!res.ok) {
         return false;
     }
-
     deleteAuthData();
 
     return true;
