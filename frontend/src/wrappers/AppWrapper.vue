@@ -27,7 +27,6 @@
 
 <script>
 import Navigation from '@/components/app/Navigation.vue';
-import { watch } from 'vue';
 import { useUserStore } from '@/stores/user.store';
 import { onlineUsers, setOnlineStatus, ws } from '@/services/webSocketService';
 import { getAuthData } from '@/services/authService';
@@ -53,10 +52,6 @@ export default {
     },
     mounted() {
         setOnlineStatus(ws,'online', this.user);
-        watch(onlineUsers, (updatedUsersArray) => {
-            
-            this.userStore.setOnlineUsers(updatedUsersArray);
-        });
     },
     unmounted() {
         setOnlineStatus(ws,'offline', this.user);

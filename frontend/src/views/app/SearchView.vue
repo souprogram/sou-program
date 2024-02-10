@@ -87,12 +87,13 @@ export default {
                 all: 'Svi korisnici',
                 demonstrator: 'Demonstratori',
                 student: 'Studenti',
+                online: 'Online',
             },
             filterStatusOptions: {
                 all: 'Svi statusi',
                 pending: 'Na čekanju',
                 active: 'Aktivni',
-                inactive: 'Neaktivni',
+                inactive: 'Neaktivni'
             },
             searchResults: [],
         }
@@ -114,8 +115,8 @@ export default {
         },
         filteredUsers() {
             return this.searchResults.filter((user) => {
-                const typeCondition = this.filterType === 'all' || user.type === this.filterType;
-                const statusCondition = this.filterStatus === 'all' || user.status === this.filterStatus;
+                const typeCondition = this.filterType === 'all' || user.type === this.filterType || (this.filterType === 'online' && user.onlineStatus === 'online');
+                const statusCondition = this.filterStatus === 'all' || user.status === this.filterStatus ;
                 return typeCondition && statusCondition;
             });
         },
@@ -123,7 +124,6 @@ export default {
     mounted() {
         this.updateOnlineStatuses();
         watch(onlineUsers, () => {
-            console.log('online status change detected!!');
             this.updateOnlineStatuses();
         });
     },

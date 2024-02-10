@@ -11,7 +11,6 @@ export const setOnlineStatus = (ws, onlineStatus, userAuthData) => {
     if (!userAuthData) {
         return;
     }
-    console.log('Sending online status to the server: ', onlineStatus);
     ws.send(JSON.stringify({ type: 'userInformation', data: userAuthData, status: onlineStatus}));
 };
 

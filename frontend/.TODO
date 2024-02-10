@@ -20,3 +20,4 @@ Dodati filter za statuse korisnika
 Demonstratoru u stalkaonici notifikacija ako postoji user(i) sa statsom pending
 Email validation poruka na mail kad se user kreira od strane demonstratora kroz app
 Dodati na korisničkom profilu mogućnost ponovnog zahtjeva za potvrdu emaila (ako je email nepotvrđen)
+Dodan feature "Tko je online" koristeći Web socket.

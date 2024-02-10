@@ -22,8 +22,7 @@ const formatUserData = async (user) => {
 
 export const useUserStore = defineStore('user', {
     state: () => ({
-        users: [],
-        onlineUsers: [],
+        users: []
     }),
     getters: {
         getUserByID: (state) => (userID) => {
@@ -31,7 +30,6 @@ export const useUserStore = defineStore('user', {
         },
         getSearchedUsersByUsername: (state) => (searchedUsername) => {
             const searchLowerCase = searchedUsername.toLowerCase();
-            const currentUser = state.getUserByID(getAuthData().id);
 
             return state.users.filter((user) => {
                 const fullNameLowerCase = user.fullName.toLowerCase();
@@ -39,7 +37,6 @@ export const useUserStore = defineStore('user', {
                     `${user.surname} ${user.name}`.toLowerCase();
 
                 return (
-                    (isAuthUserDemos() || user !== currentUser) &&
                     (fullNameLowerCase.includes(searchLowerCase) ||
                         reversedFullNameLowerCase.includes(searchLowerCase))
                 );
@@ -101,9 +98,6 @@ export const useUserStore = defineStore('user', {
             });
 
             return res.ok ? true : false;
-        },
-        setOnlineUsers(onlineUsers) {
-            this.onlineUsers = onlineUsers;
         }
     },
 });
