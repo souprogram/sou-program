@@ -1,34 +1,32 @@
 import { reactive } from 'vue';
 import { getAuthData } from './authService';
 
+
 export const socketState = reactive({
     isConnected: false,
 });
 
-const ws = new WebSocket(process.env.VUE_APP_WS_URL);
+export const onlineUsers = reactive([]);
 
-export const sendOnlineStatus = (status) => {
-    const authData = getAuthData();
+const ws = new WebSocket(process.env.VUE_APP_WS_URL);
+const authData = getAuthData();
+
+// kod uspostave veze posalji svoje podatke
+ws.addEventListener('open', () => {
+    socketState.isConnected = true;
     if (!authData) {
         return;
     }
-    ws.send(JSON.stringify({ type: 'userInformation', data: {...authData, status}}));
-};
-
-
-ws.addEventListener('open', () => {
-    socketState.isConnected = true;
+    ws.send(JSON.stringify({ type: 'userInformation', data: authData}));
 });
+
+// kod promjene statusa nekog korisnika primiti ces poruku sa novom listom online korisnika
 ws.addEventListener('message', (event) => {
-    console.log('Message from server:');
-    event.data.forEach(e => {
-        console.log(e);
-        
-    });
-    // console.log(event.data);
+    onlineUsers.length = 0;
+    onlineUsers.push(...JSON.parse(event.data));    
 });
+    
 
 ws.addEventListener('close', () => {
     socketState.isConnected = false;
-    sendOnlineStatus('offline');
 });

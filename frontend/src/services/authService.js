@@ -1,7 +1,6 @@
 import userTypeEnum from '@/enums/userTypeEnum';
 import { keys, storage } from './storageService';
 import backendApiService from './backendApiService';
-import { sendOnlineStatus } from './webSocketService';
 
 const AUTH_USER_KEY = keys.AUTH_USER;
 const EXPIRES_AFTER = 1000 * 60 * 60; // 1 hour

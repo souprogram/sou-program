@@ -27,7 +27,6 @@
 
 <script>
 import Navigation from '@/components/app/Navigation.vue';
-import { sendOnlineStatus } from '@/services/webSocketService';
 
 export default {
     name: 'AppWrapper',
@@ -37,9 +36,7 @@ export default {
     data: () => ({
         isNavOpened: false,
     }),
-    mounted() {
-        sendOnlineStatus('online')
-    },
+   
     methods: {
         toggleNav() {
             this.isNavOpened = !this.isNavOpened;

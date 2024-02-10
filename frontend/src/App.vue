@@ -9,13 +9,29 @@
 </template>
 
 <script>
-import { socketState } from '@/services/webSocketService';
+import { watch } from 'vue';
+import { socketState, onlineUsers } from '@/services/webSocketService';
+import { useUserStore } from '@/stores/user.store';
+
 
 export default {
     computed: {
         isConnected() {
             return socketState.isConnected;
         },
+    },
+    data() {
+        return {
+            userStore: useUserStore(),
+        };
+    },  
+    mounted() {
+        watch(onlineUsers, (newVal) => {
+            newVal.forEach((user) => {
+                console.log(user[1].name);
+            });
+            this.userStore.setOnlineUsers(newVal);
+        });
     },
 };
 </script>

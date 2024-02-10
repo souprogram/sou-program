@@ -21,6 +21,7 @@ const formatUserData = async (user) => {
 export const useUserStore = defineStore('user', {
     state: () => ({
         users: [],
+        onlineUsers: [],
     }),
     getters: {
         getUserByID: (state) => (userID) => {
@@ -99,5 +100,8 @@ export const useUserStore = defineStore('user', {
 
             return res.ok ? true : false;
         },
+        setOnlineUsers(onlineUsers) {
+            this.onlineUsers = onlineUsers;
+        }
     },
 });
