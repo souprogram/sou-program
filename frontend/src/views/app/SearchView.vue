@@ -29,8 +29,8 @@
             <FilterUsers v-if="isAuthUserDemos" :filter-data="filterStatusOptions" class="filter" v-model="filterStatus"/>
         </div>
 
-        <div v-auto-animate>
-            <showUser v-for="user in filteredUsers" :key="user.id" :user="user" />
+        <div v-auto-animate class="d-flex flex-column">
+            <showUser class="mb-2" v-for="user in filteredUsers" :key="user.id" :user="user" />
         </div>
 
         <div class="card" v-if="!searchResults.length && !isLoading">
