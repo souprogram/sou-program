@@ -9,9 +9,8 @@
 </template>
 
 <script>
-import { watch } from 'vue';
-import { socketState, onlineUsers } from '@/services/webSocketService';
-import { useUserStore } from '@/stores/user.store';
+import { socketState } from '@/services/webSocketService';
+
 
 
 export default {
@@ -19,20 +18,7 @@ export default {
         isConnected() {
             return socketState.isConnected;
         },
-    },
-    data() {
-        return {
-            userStore: useUserStore(),
-        };
-    },  
-    mounted() {
-        watch(onlineUsers, (newVal) => {
-            newVal.forEach((user) => {
-                console.log(user[1].name);
-            });
-            this.userStore.setOnlineUsers(newVal);
-        });
-    },
+    } 
 };
 </script>
 

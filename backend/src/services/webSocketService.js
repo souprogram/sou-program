@@ -8,32 +8,35 @@ export const setupWebSocketServer = (server) => {
     wss.on('connection', (ws) => {
 
         // kad se korisnik spoji šalje svoje podatke i dodaje se u listu online korisnika
-        let userData;
         ws.on('message', async (message) => {
-            const payload = JSON.parse(message);
-            userData = payload.data;
-            if(userData) {
-                onlineUsers.set(userData.id, userData);
+            
+            const { status, data } = await JSON.parse(message);
+
+            if(data && status === 'online') {
+                onlineUsers.set(ws, data);
             }
-        // svim aktivnim korisnicima posalji novi spisak online korisnika
+            else if(data && status === 'offline') {
+                onlineUsers.delete(ws);
+            }
+        // svim aktivnim korisnicima posalji novu listu online korisnika
+            const onlineUserIDsArray = Array.from(onlineUsers).map(([_ws, user]) => user.id);
             wss.clients.forEach((client) => {
                 if (client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify(Array.from(onlineUsers)));
+                    client.send(JSON.stringify(onlineUserIDsArray));
                 }
             });
         });
 
         // kad se veza prekine obrisi usera i svim aktivnim korisnicima posalji novu listu online korisnika
         ws.on('close', () => {
-            console.log(`WebSocket connection closed by ${userData?.username || 'unknown user'}`);
-            if(userData) {
-                onlineUsers.delete(userData.id);
-                wss.clients.forEach((client) => {
-                    if (client.readyState === WebSocket.OPEN) {
-                        client.send(JSON.stringify(Array.from(onlineUsers)));
-                    }
-                });
-            }
+            onlineUsers.delete(ws);
+            const onlineUserIDsArray = Array.from(onlineUsers).map(([_ws, user]) => user.id);
+            wss.clients.forEach((client) => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify(onlineUserIDsArray));
+                }
+            });
+            
         });
     });
 

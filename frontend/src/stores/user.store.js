@@ -1,6 +1,7 @@
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
 import backendApiService from '@/services/backendApiService';
 import imageService from '@/services/imageService';
+import { onlineUsers } from '@/services/webSocketService';
 import { defineStore } from 'pinia';
 
 const formatUserData = async (user) => {
@@ -15,6 +16,7 @@ const formatUserData = async (user) => {
         ...user,
         fullName: `${user.name} ${user.surname}`,
         profilePictureSrc,
+        onlineStatus: onlineUsers.includes(user.id) ? 'online' : 'offline',
     };
 };
 

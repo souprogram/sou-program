@@ -8,7 +8,7 @@
                         class="text-dark d-block icon rounded-circle"
                     >
                         <img
-                            class="icon rounded-circle"
+                            :class="['icon', 'rounded-circle', 'profile-picture', { 'online': user.onlineStatus === 'online'}]"
                             :src="
                                 user.profilePictureSrc ||
                                 require('@/assets/sp-icon.png')
@@ -111,3 +111,12 @@ export default {
     },
 };
 </script>
+
+<style>
+    .profile-picture {
+        box-shadow: 0px 0px 7px 0px var(--gray-color);
+    }
+    .online {
+        box-shadow: 0px 0px 7px 3px var(--green-color);
+    }
+</style>

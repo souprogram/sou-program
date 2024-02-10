@@ -33,7 +33,7 @@
             <showUser v-for="user in filteredUsers" :key="user.id" :user="user" />
         </div>
 
-        <div class="card" v-if="!users.length && !isLoading">
+        <div class="card" v-if="!searchResults.length && !isLoading">
             <div class="card-body text-center">
                 <h4>Korisnik nije pronađen 😢</h4>
             </div>
@@ -63,6 +63,8 @@ import showUser from '@/components/app/showUser.vue';
 import FilterUsers from '@/components/app/FilterUsers.vue';
 import { isAuthUserDemos } from '@/services/authService';
 import { useUserStore } from '@/stores/user.store';
+import { watch } from 'vue';
+import { onlineUsers } from '@/services/webSocketService';
 
 export default {
     name: 'SearchView',
@@ -76,7 +78,6 @@ export default {
     data(){
         return {
             isLoading: false,
-            users: [],
             isAddingUser: false,
             userStore: useUserStore(),
             isAuthUserDemos: isAuthUserDemos(),
@@ -98,8 +99,7 @@ export default {
     },
     async created() {
         this.isLoading = true;
-
-        this.users = await this.userStore.fetchUsers();
+        await this.userStore.fetchUsers();
         this.searchedUsersByUsername('');
         const id = this.$route.query.id;
         if (id) {
@@ -120,7 +120,24 @@ export default {
             });
         },
     },
+    mounted() {
+        this.updateOnlineStatuses();
+        watch(onlineUsers, () => {
+            console.log('online status change detected!!');
+            this.updateOnlineStatuses();
+        });
+    },
     methods: {
+        updateOnlineStatuses(){
+            this.searchResults = this.searchResults.map((user) => {
+                const updatedUser = onlineUsers.find((id) => id === user.id);
+    
+                return {
+                    ...user,
+                    onlineStatus: updatedUser ? 'online' : 'offline',
+                }
+            });
+        },
         openAddingUser() {
             this.isAddingUser = true;
         },
@@ -169,8 +186,5 @@ export default {
     justify-content: center;
     align-items: center;
 }
-
-
-
 
 </style>
