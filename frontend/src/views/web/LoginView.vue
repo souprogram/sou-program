@@ -3,7 +3,7 @@
         <form @submit.prevent="handleLogin">
             <div class="card">
                 <h1>Tko si?</h1>
-                <div class="row">
+                <div class="row w-100">
                     <div class="col-sm">
                         <div class="form-group mt-4">
                             <label for="username">Korisničko ime</label>
@@ -25,11 +25,18 @@
                                 placeholder="Upiši lozinku"
                             />
                         </div>
+                        <button type="submit" class="btn btn-primary mt-3 mb-2 w-100">
+                            Pusti me unutra!
+                        </button>
+                        <a :href="googleUrl" class="btn btn-outline-primary d-flex justify-content-center align-items-center">
+                             <img src="@/assets/google-icon.svg" alt="google icon" id="google-icon">
+                             <span>Google Login</span>
+                        </a>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3">
-                    Pusti me unutra!
-                </button>
+                <div class="row">
+                    
+                </div>
             </div>
         </form>
     </div>
@@ -44,6 +51,7 @@ export default {
         return {
             username: '',
             password: '',
+            googleUrl: process.env.VUE_APP_API_URL + '/google/auth',
         };
     },
     methods: {
@@ -83,5 +91,10 @@ a {
     justify-content: center;
     border: none;
     padding: 2vw;
+}
+#google-icon {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1rem;
 }
 </style>
