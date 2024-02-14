@@ -5,93 +5,62 @@ export const index = async (req, res) => {
     const currentPage = parseInt(req.query.page) || 1;
     const perPage = parseInt(req.query.per_page) || 15;
 
-    try {
-        const profilePostCountObj = await ProfilePosts()
-            .where({ author_id: authorID })
-            .count()
-            .first();
-        const profilePostCount = parseInt(profilePostCountObj['count']);
-        const totalPages = Math.ceil(profilePostCount / perPage);
+    const profilePostCountObj = await ProfilePosts()
+        .where({ author_id: authorID })
+        .count()
+        .first();
+    const profilePostCount = parseInt(profilePostCountObj['count']);
+    const totalPages = Math.ceil(profilePostCount / perPage);
 
-        return res.json({
-            message: 'Profile posts fetched successfully',
-            data: {
-                profilePosts: await ProfilePosts()
-                    .where({ author_id: authorID })
-                    .orderBy('created_at', 'desc')
-                    .offset((currentPage - 1) * perPage)
-                    .limit(perPage),
-                currentPage,
-                totalPages,
-            },
-        });
-    } catch (error) {
-        console.error(`[GET] Profile post error: ${error.message}`);
-        return res.status(500).json({
-            message: 'Internal server error',
-            data: {},
-        });
-    }
+    return res.json({
+        message: 'Profile posts fetched successfully',
+        data: {
+            profilePosts: await ProfilePosts()
+                .where({ author_id: authorID })
+                .orderBy('created_at', 'desc')
+                .offset((currentPage - 1) * perPage)
+                .limit(perPage),
+            currentPage,
+            totalPages,
+        },
+    });
 };
 
 export const create = async (req, res) => {
-    try {
-        await ProfilePosts().insert({
-            text: req.body.text.trim(),
-            author_id: req.authUser.id,
-        });
+    await ProfilePosts().insert({
+        text: req.body.text.trim(),
+        author_id: req.authUser.id,
+    });
 
-        return res.status(201).json({
-            message: 'Profile post created successfully',
-            data: {},
-        });
-    } catch (error) {
-        console.error(`[POST] Profile post error: ${error.message}`);
-        return res.status(500).json({
-            message: 'Internal server error',
-            data: {},
-        });
-    }
+    return res.status(201).json({
+        message: 'Profile post created successfully',
+        data: {},
+    });
 };
 
 export const update = async (req, res) => {
-    try {
-        await ProfilePosts()
-            .where({
-                id: req.params.id,
-                author_id: req.authUser.id,
-            })
-            .update({
-                text: req.body.text.trim(),
-            });
+    await ProfilePosts()
+        .where({
+            id: req.params.id,
+            author_id: req.authUser.id,
+        })
+        .update({
+            text: req.body.text.trim(),
+        });
 
-        return res.json({
-            message: 'Profile post updated successfully',
-            data: {},
-        });
-    } catch (error) {
-        console.error(`[PATCH] Profile post error: ${error.message}`);
-        return res.status(500).json({
-            message: 'Internal server error',
-            data: {},
-        });
-    }
+    return res.json({
+        message: 'Profile post updated successfully',
+        data: {},
+    });
 };
 
 export const destroy = async (req, res) => {
-    try {
-        await ProfilePosts()
-            .where({
-                id: req.params.id,
-                author_id: req.authUser.id,
-            })
-            .del();
-        return res.status(204).end();
-    } catch (error) {
-        console.error(`[DELETE] Profile post error: ${error.message}`);
-        return res.status(500).json({
-            message: 'Internal server error',
-            data: {},
-        });
-    }
+    await ProfilePosts()
+        .where({
+            id: req.params.id,
+            author_id: req.authUser.id,
+        })
+        .del();
+
+    return res.status(204).end();
 };

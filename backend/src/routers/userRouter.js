@@ -13,15 +13,16 @@ import {
     index,
     update,
 } from '../controllers/UserController.js';
+import { tryCatch } from '../utils/tryCatch.js';
 
 export const userRouter = () => {
     return Router()
         .use(authMiddleware)
-        .get('/', index)
-        .get('/ids', [getUsersByIDsValidation], getByIDs)
+        .get('/', tryCatch(index))
+        .get('/ids', [getUsersByIDsValidation], tryCatch(getByIDs))
 
         .use(demosMiddleware)
-        .post('/', [createUserValidation], create)
-        .patch('/:id', [updateUserValidation], update)
-        .delete('/:id', destroy);
+        .post('/', [createUserValidation], tryCatch(create))
+        .patch('/:id', [updateUserValidation], tryCatch(update))
+        .delete('/:id', tryCatch(destroy));
 };
