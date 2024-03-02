@@ -3,7 +3,10 @@
         class="h-full d-flex flex-column justify-content-center align-items-center"
     >
         <h1>NOPE! :(</h1>
-        <button class="btn btn-primary mt-3" @click="goBack">
+        <button v-if="this.$route.query.login" class="btn btn-primary mt-3" @click="goToLogin">
+            Nazad na Login
+        </button>
+        <button v-else class="btn btn-primary mt-3" @click="goBack">
             Vrati me natrag
         </button>
     </div>
@@ -19,7 +22,10 @@ export default {
             storage.set(keys.SHOULD_REFRESH, true);
             window.history.back();
         },
-    },
+        goToLogin() {
+            this.$router.push({ name: 'LoginView' });
+        },
+    }
 };
 </script>
 

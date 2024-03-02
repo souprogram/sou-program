@@ -90,7 +90,7 @@ export const sendConfirmEmail = async (req, res) => {
     }
 };
 
-const createUser = async (req) => {
+export const createUser = async (req) => {
     try {
         await Users().insert({
             name: req.body.name.trim(),
