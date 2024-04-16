@@ -1,23 +1,23 @@
 <template>
     <div>
-        <router-view v-if="isConnected" />
-        <div id="loading-container" v-else>
+        <router-view />
+        <!-- <div id="loading-container" v-else>
             <p>Molim pričekaj minutu da se aplikacija učita!</p>
             <div id="loader"></div>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script>
-import { socketState } from '@/services/webSocketService';
+// import { socketState } from '@/services/webSocketService';
 
-export default {
-    computed: {
-        isConnected() {
-            return socketState.isConnected;
-        },
-    },
-};
+// export default {
+//     computed: {
+//         isConnected() {
+//             return socketState.isConnected;
+//         },
+//     },
+// };
 </script>
 
 <style lang="scss">

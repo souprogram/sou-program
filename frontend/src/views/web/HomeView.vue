@@ -4,19 +4,19 @@
         <div class="row">
             <div class="col">
                 <h1 class="title">
-                    Lorem ipsum dolor sit amet, consect adipiscing elit ased
+              			Šou program
                 </h1>
             </div>
         </div>
 
         <!-- Images-->
         <div class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 py-2">
                 <img
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Aspect-ratio-16x9.svg/2560px-Aspect-ratio-16x9.svg.png"
                 />
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 py-2">
                 <img
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Aspect-ratio-16x9.svg/2560px-Aspect-ratio-16x9.svg.png"
                 />
@@ -24,30 +24,22 @@
         </div>
 
         <!-- Who are we -->
-        <div class="row about-container g-0">
-            <div class="col-12 col-md-2 col-xl-3 text-muted">Tko Smo Mi</div>
+        <div class="row about-container g-0" id="tko-smo-mi">
+            <div class="col-12 col-md-2 col-xl-3 text-muted"><h6>Tko smo mi?</h6></div>
             <div class="col-12 col-md-10 col-xl-9">
                 <div class="row">
                     <div class="col">
                         <h2>
-                            We have completed over 150 projects for digital
-                            companies from all over the world — from Australia
-                            to California, from Sweden to South Africa.
+													Još jedna studentska udruga.
                         </h2>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <h6 class="mobile-justify">
-                            As a fully remote agency of more than 50 creative
-                            professionals, our team consists of: brand, graphic,
-                            web and motion designers, illustrators, copywriters,
-                            webflow-developers, producers and project managers,
-                            branding, web art directors and heads of production.
-                            And we are also proud of our 42 awards from Awwwards
-                            and Behance.
-                        </h6>
-                    </div>
+													Mi smo novi, nabrijani studentski klub što se pojavio 2023. s jednom jednostavnom idejom: razvaliti aktivnosti na faksu! Dolazimo iz Pule, Hrvatske, a naša glavna baza je na Fakultetu informatike u Puli (FIPU), dio Sveučilišta Jurja Dobrile, ali također su i studenti s Tehničkog fakulteta u Puli (TFPU) jako uključeni u našu udrugu. Šta mi radimo? Povezujemo ljude koji žele znati više o kompjuterima, kodiranju i svemu sličnom. Stvaramo tu kul platformu gdje se dijele ideje, iskustva i šanse. Svojom ekipom i fora pristupom, ciljamo dignuti svijest o važnosti tehnologije i potaknuti ekipu da se uključi u faks i šire. Naši eventi? Predavanja, radionice, debate, pa čak i neka chill druženja - sve da zajedno rastemo i napredujemo!
+												</h6>
+										</div>
                 </div>
             </div>
         </div>
@@ -62,28 +54,20 @@
         </div>
 
         <!-- Teams -->
-        <div class="row teams-container g-0">
-            <div class="col-12 col-md-2 col-xl-3 text-muted">Timovi</div>
+        <div class="row teams-container g-0" id="timovi">
+            <div class="col-12 col-md-2 col-xl-3 text-muted"><h6>Timovi</h6></div>
             <div class="col-12 col-md-10 col-xl-9">
                 <div class="row">
                     <div class="col">
                         <h2>
-                            We have completed over 150 projects for digital
-                            companies from all over the world — from Australia
-                            to California, from Sweden to South Africa.
+                            Snaga sinergije u pokretanju inovacija i povezivanju studenata
                         </h2>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <h6 class="mobile-justify">
-                            As a fully remote agency of more than 50 creative
-                            professionals, our team consists of: brand, graphic,
-                            web and motion designers, illustrators, copywriters,
-                            webflow–developers, producers and project managers,
-                            branding, web art directors and heads of production.
-                            And we are also proud of our 42 awards from Awwwards
-                            and Behance.
+                            Ekipa unutar Šou programa je glavna fora koja gura sve ove događaje. Zajedno smo u tome, razvaljujemo suradnjom i zajedničkim trudom. Stvaramo stvari koje su za nas, studente, s platformama za dijeljenje znanja, kreiranjem šljaka, i organiziranjem svih onih događaja gdje se upoznajemo i dižemo cugu. Bez obzira jel' radimo edukaciju, snimamo podcaste, mašemo s marketingom ili se bavimo logistikom, svaki ekipni doprinos je bitan i skup svega toga čini nas tim koji je tu da gazi!
                         </h6>
                     </div>
                 </div>
@@ -96,19 +80,15 @@
                         <div class="row mt-0 mt-lg-4">
                             <div class="col">
                                 <h4>
-                                    <router-link :to="'educators'"
-                                        >Edukatori
-                                    </router-link>
+                                    <!-- <router-link :to="'educators'" -->
+                                        > Edukatori
+                                    <!-- </router-link> -->
                                 </h4>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col mobile-justify">
-                                For starters, we become immersed in your product
-                                in order to realize who you are and what you
-                                offer to your audience. Our team looks for a
-                                deep understanding of your values and clearly
-                                grasps the goals you pursue.
+Edukatori su ekipa stručnjaka u IT-u koja drži radionice gdje se zajedno kopamo u softverskom inženjerstvu, znanosti o podacima, cyber sigurnosti, natjecateljskom kodiranju i full stack developmentu. S njima nema dosadnih predavanja, već samo interaktivna učenja gdje smo svi u istom brodu!
                             </div>
                         </div>
                     </div>
@@ -120,21 +100,15 @@
                         <div class="row mt-0 mt-lg-4">
                             <div class="col">
                                 <h4>
-                                    <router-link :to="'podcast'">
-                                        Podcast
-                                    </router-link>
+                                    <!-- <router-link :to="'podcast'"> -->
+                                        > Podcast
+                                    <!-- </router-link> -->
                                 </h4>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col mobile-justify">
-                                As a fully remote agency of more than 50
-                                creative professionals, our team consists of:
-                                brand, graphic, web and motion designers,
-                                illustrators, copywriters, webflow–developers,
-                                producers and project managers, branding, web
-                                art directors and heads of production.
-                            </div>
+Naš podcast tim je onaj koji pušta audio i video materijale koji su informativni, inspirativni i zabavni za studente. Kroz naše emisije i razgovore s ekspertima iz industrije, češljamo najnovije trendove, tehnološke inovacije i davamo savjete za karijeru, sve na način da ti je sve jasno ko dan.                            </div>
                         </div>
                     </div>
                 </div>
@@ -151,23 +125,27 @@
         </div>
 
         <!-- CTA Join us -->
-        <div class="row join-container g-0">
-            <div class="col-12 col-md-2 col-xl-3 text-muted">Pridruži se</div>
+        <div class="row join-container g-0" id="kontakt">
+            <div class="col-12 col-md-2 col-xl-3 text-muted"><h6>Pridruži se</h6></div>
             <div class="col-12 col-md-10 col-xl-9">
                 <div class="row">
                     <div class="col">
                         <h4>
-                            We have completed over 150 projects for digital
-                            companies from.
-                            <router-link :to="'contact'">
+                            Javi nam se s pitanjima, prijedlozima ili samo da kažeš <i>ćao!</i>
+                            <!-- <router-link :to="'contact'">
                                 Kontakt forma
-                            </router-link>
+                            </router-link> -->
                         </h4>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <h6>As a fully remote agency of more <EmailLink /></h6>
+                        <h6>Naš email: <EmailLink /></h6>
+												<h6>Naši lideri koji se jako trude da udruga napreduje:</h6>
+												<ul class="lead">
+													<li>Marija Ilić</li>
+													<li class="pt-2">Rafael Krstačić</li>
+												</ul>
                     </div>
                 </div>
             </div>
@@ -198,13 +176,13 @@ img {
 }
 
 .about-container {
-    margin: 128px 32px 64px 32px;
+    padding: 128px 32px 64px 32px;
 }
 .join-container {
-    margin: 128px 32px 0px 32px;
+    padding: 128px 32px 0px 32px;
 }
 .teams-container {
-    margin: 128px 32px;
+    padding: 128px 32px;
 }
 
 h1,

@@ -1,19 +1,27 @@
 <template>
     <div>
         <nav id="nav" class="d-flex justify-content-between">
-            <a class="inline-block" href="/">
-                <img
-                    id="logo"
-                    :class="(navOpened ? 'opened' : '') + ' m-2'"
-                    src="@/assets/sp-icon.png"
-                    alt=""
-                />
+					<div class="d-flex flex-row align-items-center gap-4">
+						<a class="inline-block" href="/">
+							<img
+							id="logo"
+							:class="(navOpened ? 'opened' : '') + ' m-2'"
+							src="@/assets/sp-icon.png"
+							alt=""
+							/>
             </a>
-            <div class="d-flex align-items-center">
+						<h3 class="text-white">Šou program</h3>
+					</div>
+					<div class="d-flex gap-4 me-4 align-items-center">
+						<a class="text-white nav-link" href="#tko-smo-mi">Tko smo mi</a>
+						<a class="text-white nav-link" href="#timovi">Timovi</a>
+						<a class="text-white nav-link" href="#kontakt">Kontakt</a>
+					</div>
+            <!-- <div class="d-flex align-items-center">
                 <div @click="navToggle" class="pl-5 menu-icon cursor-pointer">
                     <Hamburger :type="1" class="float-end p-4" />
                 </div>
-            </div>
+            </div> -->
         </nav>
         <div :class="navOpened ? 'opened' : ''" id="nav-content">
             <div class="d-flex h-100 flex-column justify-content-between">

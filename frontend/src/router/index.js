@@ -21,94 +21,94 @@ const routes = [
                 meta: { title: 'Početna' },
                 component: () => import('@/views/web/HomeView.vue'),
             },
-            {
-                path: 'login',
-                name: 'LoginView',
-                meta: { title: 'Prijava' },
-                component: () => import('@/views/web/LoginView.vue'),
-            },
-            {
-                path: 'contact',
-                name: 'ContactView',
-                meta: { title: 'Kontakt' },
-                component: () => import('@/views/web/ContactView'),
-            },
-            {
-                path: 'educators',
-                name: 'EducatorsView',
-                meta: { title: 'Šou lab' },
-                component: () => import('@/views/web/EducatorsView'),
-            },
-            {
-                path: 'podcast',
-                name: 'PodcastView',
-                meta: { title: 'Šou podkast' },
-                component: () => import('@/views/web/PodcastView'),
-            },
+            // {
+            //     path: 'login',
+            //     name: 'LoginView',
+            //     meta: { title: 'Prijava' },
+            //     component: () => import('@/views/web/LoginView.vue'),
+            // },
+            // {
+            //     path: 'contact',
+            //     name: 'ContactView',
+            //     meta: { title: 'Kontakt' },
+            //     component: () => import('@/views/web/ContactView'),
+            // },
+            // {
+            //     path: 'educators',
+            //     name: 'EducatorsView',
+            //     meta: { title: 'Šou lab' },
+            //     component: () => import('@/views/web/EducatorsView'),
+            // },
+            // {
+            //     path: 'podcast',
+            //     name: 'PodcastView',
+            //     meta: { title: 'Šou podkast' },
+            //     component: () => import('@/views/web/PodcastView'),
+            // },
         ],
     },
-    {
-        path: '/',
-        name: 'AppWrapper',
-        component: () => import('@/wrappers/AppWrapper.vue'),
-        meta: {
-            authRequired: true,
-        },
-        children: [
-            {
-                path: 'newsfeed',
-                name: 'NewsfeedView',
-                component: () => import('@/views/app/NewsfeedView.vue'),
-            },
-            {
-                path: 'search',
-                name: 'SearchView',
-                component: () => import('@/views/app/SearchView.vue'),
-            },
-            {
-                path: 'my-profile',
-                name: 'MyProfileView',
-                component: () => import('@/views/app/MyProfileView.vue'),
-            },
-            {
-                path: 'user-profile/:id',
-                name: 'UserProfileView',
-                component: () => import('@/views/app/UserProfileView.vue'),
-            },
-            {
-                path: 'gallery',
-                name: 'GalleryView',
-                component: () => import('@/views/app/GalleryView.vue'),
-            },
-            {
-                path: 'competitions',
-                name: 'CompetitionView',
-                component: () => import('@/views/app/CompetitionView.vue'),
-            },
-            {
-                path: 'resources',
-                name: 'ResourcesView',
-                component: () => import('@/views/app/ResourcesView.vue'),
-            },
-        ],
-    },
-    {
-        path: '/',
-        name: 'MsgWrapper',
-        component: () => import('@/wrappers/MsgWrapper.vue'),
-        children: [
-            {
-                path: 'error',
-                name: 'Error',
-                component: () => import('@/views/app/Error.vue'),
-            },
-            {
-                path: 'success',
-                name: 'Success',
-                component: () => import('@/views/app/Success.vue'),
-            },
-        ],
-    },
+    // {
+    //     path: '/',
+    //     name: 'AppWrapper',
+    //     component: () => import('@/wrappers/AppWrapper.vue'),
+    //     meta: {
+    //         authRequired: true,
+    //     },
+    //     children: [
+    //         {
+    //             path: 'newsfeed',
+    //             name: 'NewsfeedView',
+    //             component: () => import('@/views/app/NewsfeedView.vue'),
+    //         },
+    //         {
+    //             path: 'search',
+    //             name: 'SearchView',
+    //             component: () => import('@/views/app/SearchView.vue'),
+    //         },
+    //         {
+    //             path: 'my-profile',
+    //             name: 'MyProfileView',
+    //             component: () => import('@/views/app/MyProfileView.vue'),
+    //         },
+    //         {
+    //             path: 'user-profile/:id',
+    //             name: 'UserProfileView',
+    //             component: () => import('@/views/app/UserProfileView.vue'),
+    //         },
+    //         {
+    //             path: 'gallery',
+    //             name: 'GalleryView',
+    //             component: () => import('@/views/app/GalleryView.vue'),
+    //         },
+    //         {
+    //             path: 'competitions',
+    //             name: 'CompetitionView',
+    //             component: () => import('@/views/app/CompetitionView.vue'),
+    //         },
+    //         {
+    //             path: 'resources',
+    //             name: 'ResourcesView',
+    //             component: () => import('@/views/app/ResourcesView.vue'),
+    //         },
+    //     ],
+    // },
+    // {
+    //     path: '/',
+    //     name: 'MsgWrapper',
+    //     component: () => import('@/wrappers/MsgWrapper.vue'),
+    //     children: [
+    //         {
+    //             path: 'error',
+    //             name: 'Error',
+    //             component: () => import('@/views/app/Error.vue'),
+    //         },
+    //         {
+    //             path: 'success',
+    //             name: 'Success',
+    //             component: () => import('@/views/app/Success.vue'),
+    //         },
+    //     ],
+    // },
     {
         path: '/:catchAll(.*)',
         name: 'WebWrapper all routes',
