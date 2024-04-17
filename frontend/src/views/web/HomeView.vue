@@ -150,17 +150,19 @@ Naš podcast tim je onaj koji pušta audio i video materijale koji su informativ
 									<div class="image-wrapper">
 										<img src="@/assets/sp-icon.png" alt="Šou program" />
 									</div>
-									<h1>Šou <br /> program</h1>
+										<h1>Šou <br /> program</h1>
 							</div>
 					</div>
 					<div class="white part">
 						<div class="white-wrapper">
 							<div>
-								<h1>Još jedna studenstka udruga.</h1>
+								<h1>Još jedna studentska udruga.</h1>
 							</div>
 							<div class="contact">
-								<h2>Kontakt:</h2>	
-								<a href="mailto:info@souprogram.hr">info@souprogram.hr</a>
+								<h2>Kontakt:</h2>
+								<div>
+									<a href="mailto:info@souprogram.hr">info@souprogram.hr</a>
+								</div>
 							</div>
 							<div>
 								<SouFooter />
@@ -202,14 +204,18 @@ export default {
 		display: flex;
 		flex-direction: column;
 		/*justify-content: center;
-		align-items: center;
-		gap: 32px; */
+		align-items: center;*/
+		gap: 32px; 
 		height: 100%;
 }
+/* 
+.sou-program * {
+	flex: 1;
+} */
 
 .white-wrapper h1 {
 	margin-top: 32px;
-	font-size: 32px;
+	font-size: 36px;
 }
 
 .contact {
@@ -220,17 +226,25 @@ export default {
 }
 
 .contact h2 {
-	font-size: 24px;
+	font-size: 28px;
 }
 
 .part {
-	width: 100dvw;
+	width: 50dvw;
 	height: 100dvh;
 }
 
 .image-wrapper {
-	width: 214px;
-	height: 214px;
+	width: 156px;
+	height: 156px;
+	display: flex;
+}
+
+.image-wrapper img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
 }
 
 .black {
@@ -244,6 +258,7 @@ export default {
 }
 
 .sou-program {
+	padding: 32px;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -252,8 +267,13 @@ export default {
 		height: 100%;
 }
 
+/* .sou-program img,
 .sou-program h1 {
-		font-size: 64px;
+    width: 100%;
+} */
+
+.sou-program h1 {
+		font-size: 44px;
 }
 
 @media (max-width: 768px) {
@@ -263,6 +283,14 @@ export default {
 
 	.sou-program {
 			flex-direction: column;
+	}
+
+	.part {
+		width: 100dvw;
+	}
+
+	.sou-program br {
+		display: none;
 	}
 }
 
