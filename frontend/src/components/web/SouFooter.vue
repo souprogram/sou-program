@@ -60,9 +60,9 @@ body {
 a {
     color: black;
 }
-footer {
-    background-color: var(--web-primary-color);
-}
+// footer {
+//    background-color: var(--web-primary-color);
+// }
 .footer-item {
     padding: 0.5em;
     font-size: 1.5em;
@@ -70,6 +70,6 @@ footer {
 
 .footer-item a {
     text-decoration: none;
-    color: white;
+    color: black;
 }
 </style>

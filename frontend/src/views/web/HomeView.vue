@@ -1,7 +1,6 @@
 <template>
-    <div>
-        <!-- Title -->
-        <div class="row">
+    <div><!--  Title
+			<div class="row">
             <div class="col">
                 <h1 class="title">
               			Šou program
@@ -9,7 +8,6 @@
             </div>
         </div>
 
-        <!-- Images-->
         <div class="row">
             <div class="col-12 col-md-6 py-2">
                 <img
@@ -23,7 +21,6 @@
             </div>
         </div>
 
-        <!-- Who are we -->
         <div class="row about-container g-0" id="tko-smo-mi">
             <div class="col-12 col-md-2 col-xl-3 text-muted"><h6>Tko smo mi?</h6></div>
             <div class="col-12 col-md-10 col-xl-9">
@@ -44,7 +41,6 @@
             </div>
         </div>
 
-        <!-- Image -->
         <div class="row">
             <div class="col">
                 <img
@@ -53,7 +49,6 @@
             </div>
         </div>
 
-        <!-- Teams -->
         <div class="row teams-container g-0" id="timovi">
             <div class="col-12 col-md-2 col-xl-3 text-muted"><h6>Timovi</h6></div>
             <div class="col-12 col-md-10 col-xl-9">
@@ -80,9 +75,9 @@
                         <div class="row mt-0 mt-lg-4">
                             <div class="col">
                                 <h4>
-                                    <!-- <router-link :to="'educators'" -->
+                                     <router-link :to="'educators'" 
                                         > Edukatori
-                                    <!-- </router-link> -->
+                                    </router-link> 
                                 </h4>
                             </div>
                         </div>
@@ -100,9 +95,9 @@ Edukatori su ekipa stručnjaka u IT-u koja drži radionice gdje se zajedno kopam
                         <div class="row mt-0 mt-lg-4">
                             <div class="col">
                                 <h4>
-                                    <!-- <router-link :to="'podcast'"> -->
+                                    <router-link :to="'podcast'">
                                         > Podcast
-                                    <!-- </router-link> -->
+                                    </router-link>
                                 </h4>
                             </div>
                         </div>
@@ -115,7 +110,6 @@ Naš podcast tim je onaj koji pušta audio i video materijale koji su informativ
             </div>
         </div>
 
-        <!-- Image -->
         <div class="row">
             <div class="col">
                 <img
@@ -124,7 +118,6 @@ Naš podcast tim je onaj koji pušta audio i video materijale koji su informativ
             </div>
         </div>
 
-        <!-- CTA Join us -->
         <div class="row join-container g-0" id="kontakt">
             <div class="col-12 col-md-2 col-xl-3 text-muted"><h6>Pridruži se</h6></div>
             <div class="col-12 col-md-10 col-xl-9">
@@ -132,9 +125,9 @@ Naš podcast tim je onaj koji pušta audio i video materijale koji su informativ
                     <div class="col">
                         <h4>
                             Javi nam se s pitanjima, prijedlozima ili samo da kažeš <i>ćao!</i>
-                            <!-- <router-link :to="'contact'">
+                            <router-link :to="'contact'">
                                 Kontakt forma
-                            </router-link> -->
+                            </router-link>
                         </h4>
                     </div>
                 </div>
@@ -150,21 +143,129 @@ Naš podcast tim je onaj koji pušta audio i video materijale koji su informativ
                 </div>
             </div>
         </div>
+			-->
+				<div class="wrapper">
+					<div class="black part">
+							<div class="sou-program">
+									<div class="image-wrapper">
+										<img src="@/assets/sp-icon.png" alt="Šou program" />
+									</div>
+									<h1>Šou <br /> program</h1>
+							</div>
+					</div>
+					<div class="white part">
+						<div class="white-wrapper">
+							<div>
+								<h1>Još jedna studenstka udruga.</h1>
+							</div>
+							<div class="contact">
+								<h2>Kontakt:</h2>	
+								<a href="mailto:info@souprogram.hr">info@souprogram.hr</a>
+							</div>
+							<div>
+								<SouFooter />
+							</div>
+						</div>
+					</div>
+				</div>
+
     </div>
 </template>
 
 <script>
 import EmailLink from '@/components/web/EmailLink.vue';
+import SouFooter from '@/components/web/SouFooter.vue';
 
 export default {
     name: 'Home',
     components: {
         EmailLink,
+				SouFooter
     },
 };
 </script>
 
 <style scoped>
+* {
+	font-family: Poppins, sans-serif !important;
+}
+
+.wrapper {
+		display: flex;
+		flex-direction: row;
+		min-height: 100dvh;
+		max-height: 200dvh;
+}
+
+.white-wrapper {
+	padding: 32px;
+		display: flex;
+		flex-direction: column;
+		/*justify-content: center;
+		align-items: center;
+		gap: 32px; */
+		height: 100%;
+}
+
+.white-wrapper h1 {
+	margin-top: 32px;
+	font-size: 32px;
+}
+
+.contact {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	margin-top: 132px;
+}
+
+.contact h2 {
+	font-size: 24px;
+}
+
+.part {
+	width: 100dvw;
+	height: 100dvh;
+}
+
+.image-wrapper {
+	width: 214px;
+	height: 214px;
+}
+
+.black {
+		background-color: black;
+		color: white;
+}
+
+.white {
+		background-color: white;
+		color: black
+}
+
+.sou-program {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 32px;
+		height: 100%;
+}
+
+.sou-program h1 {
+		font-size: 64px;
+}
+
+@media (max-width: 768px) {
+	.wrapper {
+			flex-direction: column;
+	}
+
+	.sou-program {
+			flex-direction: column;
+	}
+}
+
 body {
     background-color: black;
 }
