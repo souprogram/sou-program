@@ -44,6 +44,7 @@
 
 <script>
 import { login } from '@/services/authService';
+import { useMainStore } from '@/stores/mainStore.store';
 
 export default {
     name: 'LoginView',
@@ -56,14 +57,18 @@ export default {
     },
     methods: {
         async handleLogin() {
-            const loggedIn = await login({
-                username: this.username,
-                password: this.password,
-            });
-
-            if (!loggedIn) {
+            try {
+                await login({
+                    username: this.username,
+                    password: this.password,
+                });
+                
+            } catch (error) {
+                const mainStore = useMainStore();
+                mainStore.setErrorMessage(error.message);
                 this.$router.push('/error');
                 return;
+                
             }
 
             this.$router.push('/newsfeed');

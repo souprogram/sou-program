@@ -49,11 +49,11 @@ export const login = async ({ username, password }) => {
         credentials: 'include',
     });
 
+    const resObj = await res.json();
     if (!res.ok) {
-        return false;
+        throw new Error(resObj.message);
     }
 
-    const resObj = await res.json();
     saveAuthData(resObj.data);
     return true;
 };

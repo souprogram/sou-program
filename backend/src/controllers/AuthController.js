@@ -20,7 +20,7 @@ export const login = async (req, res) => {
         const token = generateTokenFromUser(authUser);
         addAuthCookieToRes(res, token);
 
-        if(authUser.status !== 'active') throw new Error('User is not active');
+        if(authUser.status !== 'active') throw new Error('User account is not active');
 
         return res.json({
             message: 'Login successful',
@@ -29,7 +29,7 @@ export const login = async (req, res) => {
     } catch (error) {
         console.error(`[POST] Login error: ${error.message}`);
         res.status(500).json({
-            message: 'Internal server error',
+            message: `[POST] Login error: ${error.message}`,
             data: {},
         });
     }

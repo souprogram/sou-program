@@ -89,7 +89,7 @@ export default {
         },
         async getAnnouncementsWithAuthor(announcements) {
             return await Promise.all(
-                announcements.map(async (announcement) => ({
+                announcements?.map(async (announcement) => ({
                     ...announcement,
                     author: await this.userStore.getUserByID(
                         announcement.author_id

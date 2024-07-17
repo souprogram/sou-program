@@ -3,6 +3,7 @@
         class="h-full d-flex flex-column justify-content-center align-items-center"
     >
         <h1>NOPE! :(</h1>
+        <p v-if="mainStore.errorMessage">{{ mainStore.errorMessage }}</p>
         <button v-if="this.$route.query.login" class="btn btn-primary mt-3" @click="goToLogin">
             Nazad na Login
         </button>
@@ -14,6 +15,7 @@
 
 <script>
 import { keys, storage } from '@/services/storageService';
+import { useMainStore } from '@/stores/mainStore.store';
 
 export default {
     name: 'Error',
@@ -25,7 +27,15 @@ export default {
         goToLogin() {
             this.$router.push({ name: 'LoginView' });
         },
-    }
+    },
+    data() {
+        return {
+            mainStore: useMainStore(),
+        };
+    },
+    beforeUnmount() {
+        this.mainStore.clearErrorMessage();
+    },
 };
 </script>
 
