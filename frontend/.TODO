@@ -1,11 +1,14 @@
 
-1. Napraviti authorizedMiddleware i dodati ga na rute za patch i delete kako demosi ne bi mogli brisati/editirati druge demose
-2. Mogućnost brisanja vlastitog računa od strane korisnika
-3. Dodati zaboravljenu lozinku i promjena lozinke
-4. Ne dozvoliti demosima da mogu brisati druge demose
+1. Dodati zaboravljenu lozinku i promjena lozinke
+2. Login sa Google računom
 
 FINISHED
 
+Mogućnost brisanja vlastitog računa od strane korisnika - dodana i validacija na frontu i backu
+Dodana mogućnost upravljanja računom na stranicu "Profil"
+Napraviti authorizedMiddleware i zamjeniti ga sa demosMiddleware za poboljšanu autorizaciju
+Ne dozvoliti demosima da mogu brisati/editirati druge demose ili admina
+Ne dozvoliti studentima da mogu brisati/editirati nikoga osim sebe
 Feedback za korisnika - live provjera jedinstvenosti korisničkog imena i emaila prilikom dodavanja
 Validacija podataka na frontendu
 Ograničiti da demonstratori ne mogu editirati druge demonstratore ili admina, samo admin to moze
@@ -16,8 +19,9 @@ Prikaz statusa korisnika (active/pending/inactive) na profilu demonstratora/admi
 Izmjene u bazi podataka na tablici users (dodan status i email_verified)
 Slanje emaila adminu kada se novi korisnik registrira, sa linkom koji vodi na promjenu statusa tog usera
 Filter za tipove usera na searchu
-Dodati filter za statuse korisnika
+Dodan filter za statuse korisnika
 Demonstratoru u stalkaonici notifikacija ako postoji user(i) sa statsom pending
 Email validation poruka na mail kad se user kreira od strane demonstratora kroz app
 Dodati na korisničkom profilu mogućnost ponovnog zahtjeva za potvrdu emaila (ako je email nepotvrđen)
 Dodan feature "Tko je online" koristeći Web socket.
+Poboljšan error handling kod logina

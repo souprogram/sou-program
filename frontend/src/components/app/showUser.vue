@@ -8,7 +8,12 @@
                         class="text-dark d-block icon rounded-circle"
                     >
                         <img
-                            :class="['icon', 'rounded-circle', 'profile-picture', { 'online': user.onlineStatus === 'online'}]"
+                            :class="[
+                                'icon',
+                                'rounded-circle',
+                                'profile-picture',
+                                { online: user.onlineStatus === 'online' },
+                            ]"
                             :src="
                                 user.profilePictureSrc ||
                                 require('@/assets/sp-icon.png')
@@ -26,11 +31,15 @@
                 </div>
                 <div
                     v-if="user.id == currentUserID || isAuthUserDemos"
-                    class=" d-flex justify-content-end gap-1"
+                    class="d-flex justify-content-end gap-1"
                 >
-                    <IconButton v-if="isAuthUserAdmin || !isAuthUserAdmin && user.type !== 'demonstrator' || user.id === currentUserID" actionType="edit" :onClick="openEditingUser" />
                     <IconButton
-                        v-if="(user.id != currentUserID && user.type !== 'demonstrator') || (isAuthUserAdmin && user.id !== currentUserID)"
+                        v-if="viewProfileEdit"
+                        actionType="edit"
+                        :onClick="openEditingUser"
+                    />
+                    <IconButton
+                        v-if="viewProfileDelete"
                         actionType="delete"
                         :onClick="openDeletingUser"
                     />
@@ -54,10 +63,15 @@
 <script>
 import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
 import editUser from '@/components/app/editUser.vue';
-import { getAuthData, isAuthUserDemos, isAuthUserAdmin } from '@/services/authService';
+import {
+    getAuthData,
+    isAuthUserDemos,
+    isAuthUserAdmin,
+} from '@/services/authService';
 import { useUserStore } from '@/stores/user.store';
 import IconButton from '@/components/app/IconButton.vue';
 import UserStatusIndicator from '@/components/app/userStatusIndicator.vue';
+import userTypeEnum from '@/enums/userTypeEnum';
 
 const props = {
     user: {
@@ -83,11 +97,37 @@ export default {
             isEditing: false,
             isAuthUserDemos: isAuthUserDemos(),
             isAuthUserAdmin: isAuthUserAdmin(),
+            userTypeEnum,
         };
     },
     computed: {
         userProfilePath() {
             return `/user-profile/${this.user.id}`;
+        },
+        viewProfileDelete() {
+            const selfAccount = this.user.id === this.currentUserID;
+            // Admins can delete all users except themselves
+            if (this.isAuthUserAdmin) {
+                return !selfAccount; 
+            }
+            // Demonstrators can delete students and themselves, but not other demonstrators
+            if (this.isAuthUserDemos) {
+                return this.user.type !== userTypeEnum.DEMOS || selfAccount; 
+            } 
+            // Students can only delete themselves
+            return selfAccount; 
+        },
+        viewProfileEdit() {
+            const selfAccount = this.user.id === this.currentUserID;
+            // Admins can edit all profiles
+            if (this.isAuthUserAdmin) return true;
+
+            // Demonstrators can edit students and themselves, but not other demonstrators
+            if (this.isAuthUserDemos) {
+                return this.user.type !== userTypeEnum.DEMOS || selfAccount;
+            }
+            // Students can only edit themselves
+            return selfAccount;
         },
     },
     methods: {
@@ -113,10 +153,10 @@ export default {
 </script>
 
 <style>
-    .profile-picture {
-        box-shadow: 0px 0px 7px 0px var(--gray-color);
-    }
-    .online {
-        box-shadow: 0px 0px 7px 3px var(--green-color);
-    }
+.profile-picture {
+    box-shadow: 0px 0px 7px 0px var(--gray-color);
+}
+.online {
+    box-shadow: 0px 0px 7px 3px var(--green-color);
+}
 </style>

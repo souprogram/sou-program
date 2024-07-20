@@ -47,7 +47,7 @@ export default {
         showProfilePost,
         LoadingSpinner,
     },
-    data: function () {
+    data() {
         return {
             pageCount: 0,
             isLoading: false,

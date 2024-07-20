@@ -51,8 +51,15 @@ export const me = async (req, res) => {
 };
 
 export const getStatus = async (req, res) => {
+    if (!req.params.id) {
+        return res.status(400).json({
+            message: 'User id not provided',
+            data: {},
+        });
+    }
+    const userStatus = await Users().where({ id: req.params.id }).select('status');
     return res.json({
         message: 'User status fetched successfully',
-        data: await Users().where({ id: req.params.id }).select('status'),
+        data: userStatus
     });
 };
