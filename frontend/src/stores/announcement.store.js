@@ -20,7 +20,7 @@ export const useAnnouncementStore = defineStore('announcement', {
 
             const resObj = await res.json();
 
-            this.announcements = resObj.data.announcements.map(
+            this.announcements = resObj?.data?.announcements?.map(
                 (announcement) => ({
                     ...announcement,
                     posted_at: dateService.getRelativeTime(
@@ -28,7 +28,7 @@ export const useAnnouncementStore = defineStore('announcement', {
                     ),
                     text_line_breaks: announcement.text.replace(/\n/g, '<br>'),
                 })
-            );
+            ) || [];
 
             this.totalPages = resObj.data.totalPages;
 

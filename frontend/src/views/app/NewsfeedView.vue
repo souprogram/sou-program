@@ -88,6 +88,8 @@ export default {
             };
         },
         async getAnnouncementsWithAuthor(announcements) {
+            if (announcements?.length === 0) return [];
+            
             return await Promise.all(
                 announcements?.map(async (announcement) => ({
                     ...announcement,

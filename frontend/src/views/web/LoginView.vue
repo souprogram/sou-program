@@ -25,26 +25,35 @@
                                 placeholder="Upiši lozinku"
                             />
                         </div>
-                        <button type="submit" class="btn btn-primary mt-3 mb-2 w-100">
+                        <button
+                            type="submit"
+                            class="btn btn-primary mt-3 mb-2 w-100"
+                        >
                             Pusti me unutra!
                         </button>
-                        <a :href="googleUrl" class="btn btn-outline-primary d-flex justify-content-center align-items-center">
-                             <img src="@/assets/google-icon.svg" alt="google icon" id="google-icon">
-                             <span>Google Login</span>
-                        </a>
+                        <button
+                            @click.prevent="googleLogin"
+                            class="btn btn-outline-primary d-flex justify-content-center align-items-center w-100"
+                        >
+                            <img
+                                src="@/assets/google-icon.svg"
+                                alt="google icon"
+                                id="google-icon"
+                            />
+                            <span>Google Login</span>
+                        </button>
                     </div>
                 </div>
-                <div class="row">
-                    
-                </div>
+                <div class="row"></div>
             </div>
         </form>
     </div>
 </template>
 
 <script>
-import { login } from '@/services/authService';
+import { login, loginWithGoogle } from '@/services/authService';
 import { useMainStore } from '@/stores/mainStore.store';
+import { googleSdkLoaded } from 'vue3-google-login';
 
 export default {
     name: 'LoginView',
@@ -53,6 +62,8 @@ export default {
             username: '',
             password: '',
             googleUrl: process.env.VUE_APP_API_URL + '/google/auth',
+            clientId: process.env.VUE_APP_GOOGLE_CLIENT_ID,
+            redirectURL: process.env.VUE_APP_GOOGLE_REDIRECT_URI,
         };
     },
     methods: {
@@ -62,17 +73,41 @@ export default {
                     username: this.username,
                     password: this.password,
                 });
-                
             } catch (error) {
                 const mainStore = useMainStore();
                 mainStore.setErrorMessage(error.message);
                 this.$router.push('/error');
                 return;
-                
             }
 
             this.$router.push('/newsfeed');
         },
+        googleLogin() {
+            googleSdkLoaded((google) => {
+                google.accounts.oauth2
+                    .initCodeClient({
+                        client_id: this.clientId,
+                        scope: 'email profile openid',
+                        redirect_uri: this.redirectURL,
+                        callback: async (response) => {
+                            if (response.code) {
+                                await this.loginWithCode(response.code);
+                            }
+                        },
+                    })
+                    .requestCode();
+            });
+        },
+        async loginWithCode(code) {
+            try {
+                await loginWithGoogle(code);
+                this.$router.push("/newsfeed");
+            } catch (error) {
+                const { setErrorMessage } = useMainStore();
+                setErrorMessage(error.message);
+                this.$router.push('/error');
+            }
+        }
     },
 };
 </script>

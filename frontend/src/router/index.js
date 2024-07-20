@@ -159,7 +159,6 @@ router.beforeEach(async (to, _from, next) => {
 
     const user = getAuthData();
     const isUserLoggedIn = user !== null;
-
     if (isUserLoggedIn) {
         if (Date.now() > user.expires) {
             await fetchAuthData();

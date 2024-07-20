@@ -1,9 +1,10 @@
 
 1. Dodati zaboravljenu lozinku i promjena lozinke
-2. Login sa Google računom
+2. Registracija sa Google računom
 
 FINISHED
 
+Login sa Google računom omogućen
 Mogućnost brisanja vlastitog računa od strane korisnika - dodana i validacija na frontu i backu
 Dodana mogućnost upravljanja računom na stranicu "Profil"
 Napraviti authorizedMiddleware i zamjeniti ga sa demosMiddleware za poboljšanu autorizaciju

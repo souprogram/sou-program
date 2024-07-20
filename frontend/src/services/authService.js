@@ -1,6 +1,7 @@
 import userTypeEnum from '@/enums/userTypeEnum';
 import { keys, storage } from './storageService';
 import backendApiService from './backendApiService';
+import axios from 'axios';
 
 const AUTH_USER_KEY = keys.AUTH_USER;
 const EXPIRES_AFTER = 1000 * 60 * 60; // 1 hour
@@ -41,6 +42,26 @@ export const fetchAuthData = async () =>
  * @param {string} credentials.username
  * @param {string} credentials.password
  */
+
+
+export const loginWithGoogle = async (code) => {
+    try {
+        const response = await axios.post(
+            process.env.VUE_APP_API_URL + '/google/auth',
+            null,
+            {
+                headers: {
+                    Authorization: code,
+                },
+                withCredentials: true,
+            }
+        );
+        saveAuthData(response.data.data);
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
 export const login = async ({ username, password }) => {
     const res = await fetch(`${process.env.VUE_APP_API_URL}/auth/login`, {
         method: 'POST',
