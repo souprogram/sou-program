@@ -31,6 +31,15 @@
                         >
                             Pusti me unutra!
                         </button>
+                        <div class="mb-4">
+                            <router-link
+                                to="/forgot-password"
+                                data-text="Forgot password"
+                                class="fs-6"
+                            >
+                                Zaboravio/la sam lozinku
+                            </router-link>
+                        </div>
                         <button
                             @click.prevent="googleLogin"
                             class="btn btn-outline-primary d-flex justify-content-center align-items-center w-100"

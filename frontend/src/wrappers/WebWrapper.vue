@@ -32,6 +32,76 @@ export default {
 
 <style lang="scss">
 :root {
+    --primary-color: #66ccff;
+    --primary-color-light: #88ddff;
+    --primary-bg-color: #f5f5f5;
+    --white-color: #ffffff;
+    --black-color: #212529;
+    --black-outline-color: #515a66;
+    --red-color: #dc3545;
+    --menu-bg: #22729a;
+    --dark-gray: #32292f;
+    --green-color: #28a745;
+    --gray-color: #6c757d;
+}
+.btn-primary {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    color: var(--white-color);
+
+    &:focus,
+    &:hover {
+        background-color: var(--primary-color-light);
+        border-color: var(--primary-color-light);
+    }
+
+    &:active {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+}
+
+.btn-secondary {
+    background-color: var(--black-color);
+    border: 1px solid var(--black-color);
+    color: var(--white-color);
+
+    &:focus,
+    &:hover,
+    &:active {
+        background-color: var(--black-color);
+        border-color: var(--black-color);
+    }
+}
+
+.btn-delete {
+    color: var(--red-color);
+
+    &:focus {
+        border: 1px solid var(--red-color);
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.btn-edit {
+    &:focus {
+        border: 1px solid var(--black-color);
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+}
+:root {
     --web-primary-color: black;
 }
 #web-wrapper {

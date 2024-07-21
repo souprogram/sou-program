@@ -43,4 +43,5 @@ export const up = function (knex) {
 export const down = async function (knex) {
     await knex.schema.dropTable('user');
     await knex.schema.raw(`DROP TYPE user_type;`);
+    await knex.schema.raw(`DROP TYPE status;`);
 };

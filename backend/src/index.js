@@ -17,6 +17,7 @@ import { registrationRouter } from './routers/registrationRouter.js';
 // import { galleryRoutes } from './routes/galleryRoute';
 import { googleCredsRoutes } from './routers/googleCredsRouter.js';
 import { googleDriveRoutes } from './routers/googleDriveRouter.js';
+import { passwordRouter } from './routers/passwordRouter.js';
 import session from 'express-session';
 import passport from 'passport';
 
@@ -53,7 +54,7 @@ app.use('/', profilePostRouter());
 // app.use('/', competitionRoutes());
 app.use('/', googleDriveRoutes());
 app.use('/', googleCredsRoutes());
-
+app.use('/', passwordRouter());
 
 const server = http.createServer(app);
 

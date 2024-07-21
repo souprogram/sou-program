@@ -42,6 +42,13 @@ const routes = [
                 component: () => import('@/views/web/PendingRegistration.vue'),
             },
             {
+                path: 'forgot-password',
+                name: 'ForgotPassword',
+                meta: { title: 'Zaboravljena lozinka' },
+
+                component: () => import('@/views/web/ForgotPasswordView.vue'),
+            },
+            {
                 path: 'confirm',
                 name: 'EmailConfirmed',
                 meta: { title: 'Email potvrđen' },
@@ -172,7 +179,7 @@ router.beforeEach(async (to, _from, next) => {
         return next({ name: 'LoginView' });
     }
 
-    if (!isUserLoggedIn && to.meta.authRequired ) {
+    if (!isUserLoggedIn && to.meta.authRequired) {
         return next({ name: 'LoginView' });
     } else if (isUserLoggedIn && to.name === 'LoginView') {
         return next({ name: 'NewsfeedView' });
