@@ -1,6 +1,11 @@
 import { Router } from 'express';
-import { initiatePasswordReset } from '../controllers/PasswordController.js';
+import {
+    initiatePasswordReset,
+    resetPassword,
+} from '../controllers/PasswordController.js';
 
 export const passwordRouter = () => {
-    return Router().post('/password/reset', initiatePasswordReset);
+    return Router()
+        .post('/password/initiate-reset', initiatePasswordReset)
+        .post('/password/reset', resetPassword);
 };

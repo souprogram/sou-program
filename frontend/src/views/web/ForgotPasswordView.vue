@@ -9,7 +9,10 @@
                             Link za resetiranje lozinke uspješno je poslan na
                             tvoju email adresu!
                         </p>
-                        <button class="btn btn-primary mt-3" @click="goToLogin">
+                        <button
+                            class="btn btn-primary mt-3"
+                            @click.prevent="goToLogin"
+                        >
                             Nazad na Login
                         </button>
                     </div>
@@ -48,7 +51,7 @@ import { useMainStore } from '@/stores/mainStore.store';
 import axios from 'axios';
 
 export default {
-    name: 'LoginView',
+    name: 'ForgotPasswordView',
     data: function () {
         return {
             email: '',
@@ -65,8 +68,11 @@ export default {
             };
             try {
                 await axios.post(
-                    process.env.VUE_APP_API_URL + '/password/reset',
-                    data
+                    process.env.VUE_APP_API_URL + '/password/initiate-reset',
+                    data,
+                    {
+                        withCredentials: true,
+                    }
                 );
                 this.showSuccess = true;
             } catch (error) {

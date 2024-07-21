@@ -45,8 +45,35 @@ const routes = [
                 path: 'forgot-password',
                 name: 'ForgotPassword',
                 meta: { title: 'Zaboravljena lozinka' },
+                beforeEnter: (to, from, next) => {
+                    // If user is logged in, redirect to NewsfeedView
+                    const user = getAuthData();
+                    const isUserLoggedIn = user !== null;
+                    if (isUserLoggedIn) {
+                        return next({ name: 'NewsfeedView' });
+                    } else {
+                        return next();
+                    }
+                },
 
                 component: () => import('@/views/web/ForgotPasswordView.vue'),
+            },
+            {
+                path: 'reset-password',
+                name: 'ResetPassword',
+                meta: { title: 'Reset lozinke' },
+                beforeEnter: (to, from, next) => {
+                    // If user is logged in, redirect to NewsfeedView
+                    const user = getAuthData();
+                    const isUserLoggedIn = user !== null;
+                    if (isUserLoggedIn) {
+                        return next({ name: 'NewsfeedView' });
+                    } else {
+                        return next();
+                    }
+                },
+
+                component: () => import('@/views/web/ResetPasswordView.vue'),
             },
             {
                 path: 'confirm',

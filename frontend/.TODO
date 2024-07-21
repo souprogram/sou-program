@@ -1,8 +1,9 @@
 
-1. Dodati zaboravljenu lozinku i promjena lozinke
+
 
 FINISHED
 
+Dodana mogućnost promjene lozinke ( pagevi forgot-password, reset-password, implementacija na backendu i frontedu )
 Obavijest korisniku na email kada se promjeni status njegovog računa
 Registracija sa Google računom omogućena
 Login sa Google računom omogućen
