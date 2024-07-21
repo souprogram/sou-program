@@ -7,8 +7,10 @@ export const email = (value) =>
 export const minLength = (min) => (value) =>
     value.length >= min || `Tekst mora biti duži od ${min} znakova.`;
 
-export const maxLength = (max) => (value) =>
-    value.length <= max || `Tekst ne može biti duži od ${max} znakova.`;
+export const maxLength = (max) => (value) => {
+    if (!value) return true;
+    return value.length <= max || `Tekst ne može biti duži od ${max} znakova.`;
+};
 
 export const noWhitespace = (value) =>
     !/\s/.test(value) || 'Tekst ne smije imati razmak.';

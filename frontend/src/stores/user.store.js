@@ -14,7 +14,7 @@ const formatUserData = async (user) => {
 
     return {
         ...user,
-        fullName: `${user.name} ${user.surname}`,
+        fullName: `${user.name} ${user?.surname ?? ''}`,
         profilePictureSrc,
         onlineStatus: onlineUsers.includes(user.id) ? 'online' : 'offline',
     };
@@ -22,7 +22,7 @@ const formatUserData = async (user) => {
 
 export const useUserStore = defineStore('user', {
     state: () => ({
-        users: []
+        users: [],
     }),
     getters: {
         getUserByID: (state) => (userID) => {
@@ -37,8 +37,8 @@ export const useUserStore = defineStore('user', {
                     `${user.surname} ${user.name}`.toLowerCase();
 
                 return (
-                    (fullNameLowerCase.includes(searchLowerCase) ||
-                        reversedFullNameLowerCase.includes(searchLowerCase))
+                    fullNameLowerCase.includes(searchLowerCase) ||
+                    reversedFullNameLowerCase.includes(searchLowerCase)
                 );
             });
         },
@@ -47,7 +47,7 @@ export const useUserStore = defineStore('user', {
                 return state.users;
             }
             return state.users.filter((user) => user.type === userType);
-        }
+        },
     },
     actions: {
         async fetchUsers() {
@@ -98,6 +98,6 @@ export const useUserStore = defineStore('user', {
             });
 
             return res.ok ? true : false;
-        }
+        },
     },
 });

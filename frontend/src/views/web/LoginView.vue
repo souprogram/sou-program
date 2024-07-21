@@ -100,14 +100,18 @@ export default {
         },
         async loginWithCode(code) {
             try {
-                await loginWithGoogle(code);
-                this.$router.push("/newsfeed");
+                const loginUser = await loginWithGoogle(code);
+                if (loginUser) {
+                    this.$router.push('/newsfeed');
+                } else {
+                    this.$router.push('/pending-registration');
+                }
             } catch (error) {
                 const { setErrorMessage } = useMainStore();
                 setErrorMessage(error.message);
                 this.$router.push('/error');
             }
-        }
+        },
     },
 };
 </script>

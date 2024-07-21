@@ -1,9 +1,11 @@
 
 1. Dodati zaboravljenu lozinku i promjena lozinke
-2. Registracija sa Google računom
+2. Promjena username-a passworda i emaila
 
 FINISHED
 
+Obavijest korisniku na email kada se promjeni status njegovog računa
+Registracija sa Google računom omogućena
 Login sa Google računom omogućen
 Mogućnost brisanja vlastitog računa od strane korisnika - dodana i validacija na frontu i backu
 Dodana mogućnost upravljanja računom na stranicu "Profil"

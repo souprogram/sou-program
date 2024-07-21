@@ -25,7 +25,7 @@
                     <router-link :to="userProfilePath" class="text-dark">
                         {{ user.fullName }}
                     </router-link>
-                    <div class="text-muted">
+                    <div v-if="user.username" class="text-muted">
                         {{ user.username }}
                     </div>
                 </div>
@@ -108,14 +108,14 @@ export default {
             const selfAccount = this.user.id === this.currentUserID;
             // Admins can delete all users except themselves
             if (this.isAuthUserAdmin) {
-                return !selfAccount; 
+                return !selfAccount;
             }
             // Demonstrators can delete students and themselves, but not other demonstrators
             if (this.isAuthUserDemos) {
-                return this.user.type !== userTypeEnum.DEMOS || selfAccount; 
-            } 
+                return this.user.type !== userTypeEnum.DEMOS || selfAccount;
+            }
             // Students can only delete themselves
-            return selfAccount; 
+            return selfAccount;
         },
         viewProfileEdit() {
             const selfAccount = this.user.id === this.currentUserID;

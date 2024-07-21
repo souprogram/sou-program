@@ -16,10 +16,21 @@ import { authorizationMiddleware } from '../middlewares/authorizationMiddleware.
 
 export const userRouter = () => {
     return Router()
-        .get('/users',[authMiddleware], index)
+        .get('/users', [authMiddleware], index)
         .get('/users/ids', [authMiddleware, getUsersByIDsValidation], getByIDs)
-
-        .post('/users', [authMiddleware, authorizationMiddleware, createUserValidation], create)
-        .patch('/users/:id', [authMiddleware, authorizationMiddleware, updateUserValidation], update)
-        .delete('/users/:id', [authMiddleware, authorizationMiddleware], destroy);
+        .post(
+            '/users',
+            [authMiddleware, authorizationMiddleware, createUserValidation],
+            create
+        )
+        .patch(
+            '/users/:id',
+            [authMiddleware, authorizationMiddleware, updateUserValidation],
+            update
+        )
+        .delete(
+            '/users/:id',
+            [authMiddleware, authorizationMiddleware],
+            destroy
+        );
 };

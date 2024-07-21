@@ -1,15 +1,13 @@
-
 import { sendMail } from '../services/emailService.js';
 import { Users } from '../models/models.js';
-import { generateTokenFromUser } from "../services/authService.js";
+import { generateTokenFromUser } from '../services/authService.js';
 import { verifyToken, hashPassword } from '../services/authService.js';
 import { userStatusEnum } from '../enums/userStatusEnum.js';
 
 export const register = async (req, res) => {
-   
     try {
         // // create user in db
-        const { email, name, surname, status, username } = req.body;
+        const { email, name, surname, status } = req.body;
 
         // initial status must be pending!
         if (status !== userStatusEnum.PENDING) {
@@ -20,7 +18,7 @@ export const register = async (req, res) => {
         }
 
         await createUser(req);
-       
+
         // send email to user
         const subject = 'Poslan zahtjev za registraciju na Šou program';
         const content = `Hej ${name} ${surname},\n\nUspješno si započeo proces registracije!\nKada demonstrator odobri tvoj zahtjev, dobiti ćeš potvrdu registracije na email!\n\nVidimo se uskoro,\nŠou program ekipa`;
@@ -28,21 +26,22 @@ export const register = async (req, res) => {
 
         // slanje emaila useru da potvrdi svoju email adresu
         const user = await Users().where({ email }).first();
-        await sendEmailConfirmationRequest(user)
-    
+        await sendEmailConfirmationRequest(user);
+
         // send email adminu
         const subject3 = 'Novi zahtjev za registraciju';
         const anchorTag2 = `<a href="${process.env.FRONTEND_URL}/search?id=${user.id}">Pregledaj zahtjev</a>`;
         const html2 = `Zaprimljen je novi zahtjev za registraciju korisnika ${name} ${surname}.<br>Klikni na link ispod kako bi odobrio/la zahtjev!<br>${anchorTag2}`;
-        sendMail({ mailTo: process.env.ADMIN_EMAIL, subject: subject3, html: html2 });
-        
-        
+        sendMail({
+            mailTo: process.env.ADMIN_EMAIL,
+            subject: subject3,
+            html: html2,
+        });
+
         return res.status(201).json({
             message: 'Registration successful',
             data: {},
         });
-
-
     } catch (error) {
         console.error(`[POST] Registration error: ${error.message}`);
         res.status(500).json({
@@ -58,7 +57,7 @@ export const sendEmailConfirmationRequest = async (user) => {
     const subject2 = 'Potvrda emaila za Šou program';
     const html = `Hej ${user.name} ${user.surname},<br><br>Klikni na link ispod kako bi potvrdio svoj email!<br>${anchorTag}<br>Vidimo se uskoro,<br>Šou program ekipa`;
     sendMail({ mailTo: user.email, subject: subject2, html });
-}
+};
 
 export const sendConfirmEmail = async (req, res) => {
     try {
@@ -82,7 +81,9 @@ export const sendConfirmEmail = async (req, res) => {
             data: {},
         });
     } catch (error) {
-        console.error(`[POST] Send email confirmation request error: ${error.message}`);
+        console.error(
+            `[POST] Send email confirmation request error: ${error.message}`
+        );
         res.status(500).json({
             message: 'Internal server error',
             data: {},
@@ -104,7 +105,6 @@ export const createUser = async (req) => {
             type: req.body.type,
             status: req.body.status,
         });
-    
     } catch (error) {
         throw error;
     }
@@ -117,7 +117,7 @@ export const confirmEmail = async (req, res) => {
         if (!accessToken) {
             return res.status(401).json({ error: 'Missing token' });
         }
-         // check if token is valid
+        // check if token is valid
         const tokenPayload = verifyToken(accessToken);
         if (!tokenPayload) {
             return res.status(401).json({ error: 'Invalid token' });
@@ -140,12 +140,12 @@ export const confirmEmail = async (req, res) => {
         if (email_verified) {
             return res.status(400).json({
                 message: 'Email already confirmed',
-                data: { name, username, email},
+                data: { name, username, email },
             });
         }
-        
+
         await Users().where({ id }).update({ email_verified: true });
-        
+
         // send email to user
         let subject = `Potvrda emaila za Šou program`;
         let content = `Hej ${name} ${surname},\n\nUspješno si potvrdio svoj email!\n\nŠou program ekipa`;
@@ -155,7 +155,6 @@ export const confirmEmail = async (req, res) => {
             message: 'Email successfully confirmed',
             data: { name, username, status, email },
         });
-
     } catch (error) {
         console.error(`[POST] Confirm email error: ${error.message}`);
         res.status(500).json({
@@ -164,28 +163,29 @@ export const confirmEmail = async (req, res) => {
         });
     }
 };
-    
+
 export const checkUsernameAvailability = async (req, res) => {
     try {
         const { username } = req.query;
         const user = await Users().where({ username }).first();
-   
+
         return res.json({
             message: 'Username check complete',
-            data: { 
+            data: {
                 available: user === undefined ? true : false,
-                statusMessage: user === undefined ? 'Korisničko ime je dostupno' : 'Korisničko ime je zauzeto'
+                statusMessage:
+                    user === undefined
+                        ? 'Korisničko ime je dostupno'
+                        : 'Korisničko ime je zauzeto',
             },
         });
-    
-        
     } catch (error) {
         console.error(`[POST] Username check error: ${error.message}`);
         res.status(500).json({
             message: 'Internal server error',
             data: {},
         });
-    } 
+    }
 };
 
 export const checkEmailAvailability = async (req, res) => {
@@ -193,21 +193,19 @@ export const checkEmailAvailability = async (req, res) => {
         const { email } = req.query;
         const user = await Users().where({ email }).first();
 
-   
         return res.json({
             message: 'Email check complete',
-            data: { 
+            data: {
                 available: user === undefined ? true : false,
-                statusMessage: user === undefined ? '' : 'Email se već koristi.'
+                statusMessage:
+                    user === undefined ? '' : 'Email se već koristi.',
             },
         });
-    
-        
     } catch (error) {
         console.error(`[POST] Email check error: ${error.message}`);
         res.status(500).json({
             message: 'Internal server error',
             data: {},
         });
-    } 
-}
+    }
+};

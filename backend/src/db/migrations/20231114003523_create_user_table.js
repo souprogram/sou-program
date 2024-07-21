@@ -11,16 +11,19 @@ export const up = function (knex) {
         table.uuid('id', { primaryKey: true }).defaultTo(knex.fn.uuid());
 
         table.string('name').notNullable();
-        table.string('surname').notNullable();
+        table.string('surname');
         table.string('email').notNullable().unique();
         table.string('username').notNullable().unique();
-        table.string('password').notNullable();
+        table.string('password');
         table.string('profile_picture_key');
         table.text('bio');
-        table.enu('status', Object.values(userStatusEnum), {
-            useNative: true,
-            enumName: 'status',
-        }).notNullable().defaultTo('pending');
+        table
+            .enu('status', Object.values(userStatusEnum), {
+                useNative: true,
+                enumName: 'status',
+            })
+            .notNullable()
+            .defaultTo('pending');
         table.boolean('email_verified').notNullable().defaultTo(false);
         table
             .enu('type', Object.values(userTypeEnum), {

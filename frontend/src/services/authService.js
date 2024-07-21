@@ -7,7 +7,8 @@ const AUTH_USER_KEY = keys.AUTH_USER;
 const EXPIRES_AFTER = 1000 * 60 * 60; // 1 hour
 
 const saveAuthData = ({ authUser }) => {
-    const { id, name, surname, username, type, profile_picture_key, status } = authUser;
+    const { id, name, surname, username, type, profile_picture_key, status } =
+        authUser;
 
     storage.set(
         AUTH_USER_KEY,
@@ -43,7 +44,6 @@ export const fetchAuthData = async () =>
  * @param {string} credentials.password
  */
 
-
 export const loginWithGoogle = async (code) => {
     try {
         const response = await axios.post(
@@ -56,9 +56,16 @@ export const loginWithGoogle = async (code) => {
                 withCredentials: true,
             }
         );
-        saveAuthData(response.data.data);
+        const authUser = response.data.data.authUser;
+
+        if (authUser.status === 'active') {
+            saveAuthData(response.data.data);
+            return true;
+        } else {
+            return false;
+        }
     } catch (error) {
-        throw new Error(error.message);
+        throw new Error(error?.response?.data?.message ?? error.message);
     }
 };
 
@@ -94,10 +101,13 @@ export const userStatus = async (id) => {
     if (!id) {
         return false;
     }
-    const res = await fetch(`${process.env.VUE_APP_API_URL}/auth/status/${id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-    });
+    const res = await fetch(
+        `${process.env.VUE_APP_API_URL}/auth/status/${id}`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        }
+    );
 
     if (!res.ok) {
         return false;

@@ -53,7 +53,6 @@
                     <option value="pending">Pending</option>
                 </select>
             </div>
-
         </FormModal>
     </div>
 </template>
@@ -102,7 +101,7 @@ export default {
             },
             validationRules: {
                 name: [required, maxLength(30)],
-                surname: [required, maxLength(30)],
+                surname: [maxLength(30)],
                 email: [required, email],
                 // bio: [maxLength(250)],
             },
