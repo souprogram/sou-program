@@ -76,6 +76,6 @@ const server = http.createServer(app);
 
 const wss = setupWebSocketServer(server);
 
-server.listen(process.env.NODE_PORT, () => {
-    console.log(`Server is running on port ${process.env.NODE_PORT}`);
+server.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
 });
