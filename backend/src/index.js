@@ -1,5 +1,6 @@
 import { config } from 'dotenv';
 config();
+import { Users } from './models/Users.js';
 
 import cors from 'cors';
 import express from 'express';
@@ -56,8 +57,12 @@ app.use('/', googleDriveRoutes());
 app.use('/', googleCredsRoutes());
 app.use('/', passwordRouter());
 // TODO remove this
-app.get('/test', (req, res) => {
-    res.send('Hello World!');
+app.get('/test', async (req, res) => {
+    const users = await Users();
+    return res.json({
+        message: 'User fetched successfully',
+        data: { users },
+    });
 });
 
 const server = http.createServer(app);
