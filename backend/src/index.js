@@ -55,6 +55,10 @@ app.use('/', profilePostRouter());
 app.use('/', googleDriveRoutes());
 app.use('/', googleCredsRoutes());
 app.use('/', passwordRouter());
+// TODO remove this
+app.get('/test', (req, res) => {
+    res.send('Hello World!');
+});
 
 const server = http.createServer(app);
 
