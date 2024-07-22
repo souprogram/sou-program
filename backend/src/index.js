@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 config();
-import { Users } from './models/Users.js';
+import { Users } from './models/models.js';
 
 import cors from 'cors';
 import express from 'express';
