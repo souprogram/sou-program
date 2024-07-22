@@ -64,6 +64,13 @@ app.get('/test', async (req, res) => {
         data: { users },
     });
 });
+// TODO test Helloworld
+app.get('/helloworld', (req, res) => {
+    return res.json({
+        message: 'Hello World',
+        data: {},
+    });
+});
 
 const server = http.createServer(app);
 
