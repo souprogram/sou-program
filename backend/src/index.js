@@ -1,6 +1,5 @@
 import { config } from 'dotenv';
 config();
-import { Users } from './models/models.js';
 
 import cors from 'cors';
 import express from 'express';
@@ -36,7 +35,11 @@ app.use(cookieParser());
 app.use(
     cors({
         credentials: true,
-        origin: [process.env.FRONTEND_URL, 'http://localhost:8080'],
+        origin: [
+            'https://sou-program-tin.vercel.app',
+            'https://sou-program-app-preview-tin-front.onrender.com',
+            'http://localhost:8080',
+        ],
         transports: ['websocket'],
     })
 );
@@ -56,18 +59,11 @@ app.use('/', profilePostRouter());
 app.use('/', googleDriveRoutes());
 app.use('/', googleCredsRoutes());
 app.use('/', passwordRouter());
-// TODO remove this
-app.get('/test', async (req, res) => {
-    const users = await Users();
+
+// TODO test route
+app.get('/test', (req, res) => {
     return res.json({
-        message: 'User fetched successfully',
-        data: { users },
-    });
-});
-// TODO test Helloworld
-app.get('/helloworld', (req, res) => {
-    return res.json({
-        message: 'Hello World',
+        message: 'Hello World! This is test!',
         data: {},
     });
 });
