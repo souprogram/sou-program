@@ -36,8 +36,8 @@ app.use(
     cors({
         credentials: true,
         origin: [
-            'https://sou-program-tin.vercel.app',
             'https://sou-program-app-preview-tin-front.onrender.com',
+            'https://sou-program-app-tin.vercel.app',
             'http://localhost:8080',
         ],
         transports: ['websocket'],
