@@ -14,11 +14,9 @@ import {
 
 export const announcementRouter = () => {
     return Router()
-        .use(authMiddleware)
-        .get('/announcements', index)
+        .get('/announcements',[authMiddleware], index)
 
-        .use(demosMiddleware)
-        .post('/announcements', [createValidation], create)
-        .patch('/announcements/:id', [updateValidation], update)
-        .delete('/announcements/:id', destroy);
+        .post('/announcements', [authMiddleware, demosMiddleware, createValidation], create)
+        .patch('/announcements/:id', [authMiddleware, demosMiddleware, updateValidation], update)
+        .delete('/announcements/:id', [authMiddleware, demosMiddleware], destroy);
 };

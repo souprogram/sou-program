@@ -1,6 +1,7 @@
 import { getAuthData, isAuthUserDemos } from '@/services/authService';
 import backendApiService from '@/services/backendApiService';
 import imageService from '@/services/imageService';
+import { onlineUsers } from '@/services/webSocketService';
 import { defineStore } from 'pinia';
 
 const formatUserData = async (user) => {
@@ -13,8 +14,9 @@ const formatUserData = async (user) => {
 
     return {
         ...user,
-        fullName: `${user.name} ${user.surname}`,
+        fullName: `${user.name} ${user?.surname ?? ''}`,
         profilePictureSrc,
+        onlineStatus: onlineUsers.includes(user.id) ? 'online' : 'offline',
     };
 };
 
@@ -28,7 +30,6 @@ export const useUserStore = defineStore('user', {
         },
         getSearchedUsersByUsername: (state) => (searchedUsername) => {
             const searchLowerCase = searchedUsername.toLowerCase();
-            const currentUser = state.getUserByID(getAuthData().id);
 
             return state.users.filter((user) => {
                 const fullNameLowerCase = user.fullName.toLowerCase();
@@ -36,11 +37,16 @@ export const useUserStore = defineStore('user', {
                     `${user.surname} ${user.name}`.toLowerCase();
 
                 return (
-                    (isAuthUserDemos() || user !== currentUser) &&
-                    (fullNameLowerCase.includes(searchLowerCase) ||
-                        reversedFullNameLowerCase.includes(searchLowerCase))
+                    fullNameLowerCase.includes(searchLowerCase) ||
+                    reversedFullNameLowerCase.includes(searchLowerCase)
                 );
             });
+        },
+        getFilteredUsersByType: (state) => (userType) => {
+            if (userType === 'all') {
+                return state.users;
+            }
+            return state.users.filter((user) => user.type === userType);
         },
     },
     actions: {
@@ -85,6 +91,13 @@ export const useUserStore = defineStore('user', {
             });
 
             this.$router.push(res.ok ? '/success' : '/error');
+        },
+        async confirmEmail(email) {
+            const res = await backendApiService.post({
+                url: `/registration/email-confirmation?email=${email}`,
+            });
+
+            return res.ok ? true : false;
         },
     },
 });

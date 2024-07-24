@@ -1,30 +1,51 @@
 import { Router } from 'express';
-import fs from 'fs';
-import { googleAuth } from '../services/googleAuthService.js';
+import axios from 'axios';
+
+import { handleGoogleUser } from '../controllers/UserController.js';
 
 export const googleCredsRoutes = () => {
     const router = Router();
 
-    router.get('/google/auth', async (req, res) => {
-        const oauth2Client = googleAuth();
-        const url = oauth2Client.generateAuthUrl({
-            access_type: 'offline',
-            scope: [
-                'https://www.googleapis.com/auth/userinfo.profile',
-                'https://www.googleapis.com/auth/drive',
-            ],
-        });
-        return res.redirect(url);
-    });
+    router.post('/google/auth', async (req, res) => {
+        try {
+            const code = req.headers?.authorization;
+            // Exchange the authorization code for an access token
+            const response = await axios.post(
+                'https://oauth2.googleapis.com/token',
+                {
+                    code,
+                    client_id: process.env.GOOGLE_CLIENT_ID,
+                    client_secret: process.env.GOOGLE_CLIENT_SECRET,
+                    redirect_uri: 'postmessage',
+                    grant_type: 'authorization_code',
+                }
+            );
+            const accessToken = response.data.access_token;
 
-    router.get('/google/redirect', async (req, res) => {
-        const oauth2Client = googleAuth();
-        const { code } = req.query;
-        const { tokens } = await oauth2Client.getToken(code);
-        oauth2Client.setCredentials(tokens);
-        fs.writeFileSync('creds.json', JSON.stringify(tokens));
+            // Fetch user details using the access token
+            const userResponse = await axios.get(
+                'https://www.googleapis.com/oauth2/v3/userinfo',
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+            const googleUserData = userResponse.data;
 
-        return res.send('Success');
+            const authUser = await handleGoogleUser(res, googleUserData);
+
+            return res.status(200).json({
+                message: `User sucessfully logged in!`,
+                data: { authUser },
+            });
+        } catch (error) {
+            console.error(`[POST] Google Auth error: ${error.message}`);
+            return res.status(500).json({
+                message: `[POST] Google Auth error: ${error.message}`,
+                data: {},
+            });
+        }
     });
 
     return router;

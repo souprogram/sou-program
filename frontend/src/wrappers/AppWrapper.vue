@@ -27,6 +27,9 @@
 
 <script>
 import Navigation from '@/components/app/Navigation.vue';
+import { useUserStore } from '@/stores/user.store';
+import { onlineUsers, setOnlineStatus, ws } from '@/services/webSocketService';
+import { getAuthData } from '@/services/authService';
 
 export default {
     name: 'AppWrapper',
@@ -35,7 +38,10 @@ export default {
     },
     data: () => ({
         isNavOpened: false,
+        userStore: useUserStore(),
+        user: getAuthData(),
     }),
+   
     methods: {
         toggleNav() {
             this.isNavOpened = !this.isNavOpened;
@@ -43,6 +49,12 @@ export default {
         closeNav() {
             this.isNavOpened = false;
         },
+    },
+    mounted() {
+        setOnlineStatus(ws,'online', this.user);
+    },
+    unmounted() {
+        setOnlineStatus(ws,'offline', this.user);
     },
 };
 </script>
@@ -58,6 +70,8 @@ export default {
     --red-color: #dc3545;
     --menu-bg: #22729a;
     --dark-gray: #32292f;
+    --green-color: #28a745;
+    --gray-color: #6c757d;
 }
 
 html,
@@ -180,5 +194,8 @@ body {
     height: 2.5rem;
     min-width: 2.5rem;
     min-height: 2.5rem;
+}
+.pointer {
+    cursor: pointer;
 }
 </style>

@@ -11,12 +11,14 @@
 <script>
 import { socketState } from '@/services/webSocketService';
 
+
+
 export default {
     computed: {
         isConnected() {
             return socketState.isConnected;
         },
-    },
+    } 
 };
 </script>
 
@@ -53,5 +55,23 @@ export default {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+    opacity: 1;
+}
+.z-100 {
+    z-index: 100;
 }
 </style>

@@ -30,7 +30,7 @@
                     id="bio"
                 ></textarea>
             </div>
-            <div class="form-group" v-if="!isAuthUserDemos">
+            <div class="form-group" v-if="isAuthUserAdmin">
                 <label for="type">Tip korisnika</label>
                 <select
                     v-model="updatedUser.type"
@@ -39,6 +39,18 @@
                 >
                     <option value="demonstrator">Demonstrator</option>
                     <option value="student">Student</option>
+                </select>
+            </div>
+            <div class="form-group" v-if="user.id !== currentUserID">
+                <label for="status">Status korisnika</label>
+                <select
+                    v-model="updatedUser.status"
+                    class="form-control"
+                    id="status"
+                >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="pending">Pending</option>
                 </select>
             </div>
         </FormModal>
@@ -51,7 +63,7 @@ import { useUserStore } from '@/stores/user.store';
 import FormModal from '@/components/app/FormModal.vue';
 import Input from '@/components/app/Input.vue';
 
-import { isAuthUserDemos } from '@/services/authService';
+import { isAuthUserAdmin, getAuthData } from '@/services/authService';
 
 import { required, email, maxLength } from '@/utils/validations.js';
 
@@ -76,6 +88,7 @@ export default {
     data() {
         return {
             userStore: useUserStore(),
+            currentUserID: getAuthData().id,
             updatedUser: {
                 id: this.user.id,
                 name: this.user.name,
@@ -84,18 +97,19 @@ export default {
                 bio: this.user.bio,
                 type: this.user.type,
                 profile_picture_key: this.user.profile_picture_key,
+                status: this.user.status,
             },
             validationRules: {
                 name: [required, maxLength(30)],
-                surname: [required, maxLength(30)],
+                surname: [maxLength(30)],
                 email: [required, email],
                 // bio: [maxLength(250)],
             },
         };
     },
     computed: {
-        isAuthUserDemos() {
-            return isAuthUserDemos();
+        isAuthUserAdmin() {
+            return isAuthUserAdmin();
         },
         isFormValid() {
             return Object.keys(this.validationRules).every((key) =>

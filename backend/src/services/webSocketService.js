@@ -1,20 +1,44 @@
-import { WebSocketServer } from 'ws';
+import WebSocket, { WebSocketServer } from 'ws';
+
+let onlineUsers = new Map();
 
 export const setupWebSocketServer = (server) => {
     const wss = new WebSocketServer({ server });
 
-    // * For debugging purposes
-    // wss.on('connection', (ws) => {
-    //     console.log('WebSocket connection established');
+    wss.on('connection', (ws) => {
 
-    //     ws.on('message', (message) => {
-    //         console.log(`Received message: ${message}`);
-    //     });
+        // kad se korisnik spoji šalje svoje podatke i dodaje se u listu online korisnika
+        ws.on('message', async (message) => {
+            
+            const { status, data } = await JSON.parse(message);
 
-    //     ws.on('close', () => {
-    //         console.log('WebSocket connection closed');
-    //     });
-    // });
+            if(data && status === 'online') {
+                onlineUsers.set(ws, data);
+            }
+            else if(data && status === 'offline') {
+                onlineUsers.delete(ws);
+            }
+        // svim aktivnim korisnicima posalji novu listu online korisnika
+            const onlineUserIDsArray = Array.from(onlineUsers).map(([_ws, user]) => user.id);
+            wss.clients.forEach((client) => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify(onlineUserIDsArray));
+                }
+            });
+        });
+
+        // kad se veza prekine obrisi usera i svim aktivnim korisnicima posalji novu listu online korisnika
+        ws.on('close', () => {
+            onlineUsers.delete(ws);
+            const onlineUserIDsArray = Array.from(onlineUsers).map(([_ws, user]) => user.id);
+            wss.clients.forEach((client) => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify(onlineUserIDsArray));
+                }
+            });
+            
+        });
+    });
 
     return wss;
 };

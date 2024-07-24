@@ -8,7 +8,12 @@
                         class="text-dark d-block icon rounded-circle"
                     >
                         <img
-                            class="icon rounded-circle"
+                            :class="[
+                                'icon',
+                                'rounded-circle',
+                                'profile-picture',
+                                { online: user.onlineStatus === 'online' },
+                            ]"
                             :src="
                                 user.profilePictureSrc ||
                                 require('@/assets/sp-icon.png')
@@ -20,20 +25,25 @@
                     <router-link :to="userProfilePath" class="text-dark">
                         {{ user.fullName }}
                     </router-link>
-                    <div class="text-muted">
+                    <div v-if="user.username" class="text-muted">
                         {{ user.username }}
                     </div>
                 </div>
                 <div
                     v-if="user.id == currentUserID || isAuthUserDemos"
-                    class="h-fit d-flex justify-content-end gap-1"
+                    class="d-flex justify-content-end gap-1"
                 >
-                    <IconButton actionType="edit" :onClick="openEditingUser" />
                     <IconButton
-                        v-if="user.id != currentUserID"
+                        v-if="viewProfileEdit"
+                        actionType="edit"
+                        :onClick="openEditingUser"
+                    />
+                    <IconButton
+                        v-if="viewProfileDelete"
                         actionType="delete"
                         :onClick="openDeletingUser"
                     />
+                    <UserStatusIndicator :status="user.status" />
                 </div>
             </div>
         </div>
@@ -53,9 +63,15 @@
 <script>
 import ConfirmationModal from '@/components/app/ConfirmationModal.vue';
 import editUser from '@/components/app/editUser.vue';
-import { getAuthData, isAuthUserDemos } from '@/services/authService';
+import {
+    getAuthData,
+    isAuthUserDemos,
+    isAuthUserAdmin,
+} from '@/services/authService';
 import { useUserStore } from '@/stores/user.store';
 import IconButton from '@/components/app/IconButton.vue';
+import UserStatusIndicator from '@/components/app/userStatusIndicator.vue';
+import userTypeEnum from '@/enums/userTypeEnum';
 
 const props = {
     user: {
@@ -71,6 +87,7 @@ export default {
         ConfirmationModal,
         editUser,
         IconButton,
+        UserStatusIndicator,
     },
     data() {
         return {
@@ -79,11 +96,38 @@ export default {
             isConfirming: false,
             isEditing: false,
             isAuthUserDemos: isAuthUserDemos(),
+            isAuthUserAdmin: isAuthUserAdmin(),
+            userTypeEnum,
         };
     },
     computed: {
         userProfilePath() {
             return `/user-profile/${this.user.id}`;
+        },
+        viewProfileDelete() {
+            const selfAccount = this.user.id === this.currentUserID;
+            // Admins can delete all users except themselves
+            if (this.isAuthUserAdmin) {
+                return !selfAccount;
+            }
+            // Demonstrators can delete students and themselves, but not other demonstrators
+            if (this.isAuthUserDemos) {
+                return this.user.type !== userTypeEnum.DEMOS || selfAccount;
+            }
+            // Students can only delete themselves
+            return selfAccount;
+        },
+        viewProfileEdit() {
+            const selfAccount = this.user.id === this.currentUserID;
+            // Admins can edit all profiles
+            if (this.isAuthUserAdmin) return true;
+
+            // Demonstrators can edit students and themselves, but not other demonstrators
+            if (this.isAuthUserDemos) {
+                return this.user.type !== userTypeEnum.DEMOS || selfAccount;
+            }
+            // Students can only edit themselves
+            return selfAccount;
         },
     },
     methods: {
@@ -107,3 +151,12 @@ export default {
     },
 };
 </script>
+
+<style>
+.profile-picture {
+    box-shadow: 0px 0px 7px 0px var(--gray-color);
+}
+.online {
+    box-shadow: 0px 0px 7px 3px var(--green-color);
+}
+</style>

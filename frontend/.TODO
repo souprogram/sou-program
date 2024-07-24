@@ -1,4 +1,32 @@
-Prijevodi
 
-Rješiti da nisu crne ikonice u footeru na produkciji
-Sredit Login
+Bugfixes:
+Screens on mobile
+DB production not setting id
+
+FINISHED
+
+Dodana mogućnost promjene lozinke ( pagevi forgot-password, reset-password, implementacija na backendu i frontedu )
+Obavijest korisniku na email kada se promjeni status njegovog računa
+Registracija sa Google računom omogućena
+Login sa Google računom omogućen
+Mogućnost brisanja vlastitog računa od strane korisnika - dodana i validacija na frontu i backu
+Dodana mogućnost upravljanja računom na stranicu "Profil"
+Napraviti authorizedMiddleware i zamjeniti ga sa demosMiddleware za poboljšanu autorizaciju
+Ne dozvoliti demosima da mogu brisati/editirati druge demose ili admina
+Ne dozvoliti studentima da mogu brisati/editirati nikoga osim sebe
+Feedback za korisnika - live provjera jedinstvenosti korisničkog imena i emaila prilikom dodavanja
+Validacija podataka na frontendu
+Ograničiti da demonstratori ne mogu editirati druge demonstratore ili admina, samo admin to moze
+Ograničavanje login-a usera ako mu status nije active
+Izrada pageva za registraciju, pending registration, i email confirmed/not confirmed
+Proces registracije i potvrđivanja emaila putem JWT tokena
+Prikaz statusa korisnika (active/pending/inactive) na profilu demonstratora/admina
+Izmjene u bazi podataka na tablici users (dodan status i email_verified)
+Slanje emaila adminu kada se novi korisnik registrira, sa linkom koji vodi na promjenu statusa tog usera
+Filter za tipove usera na searchu
+Dodan filter za statuse korisnika
+Demonstratoru u stalkaonici notifikacija ako postoji user(i) sa statsom pending
+Email validation poruka na mail kad se user kreira od strane demonstratora kroz app
+Dodati na korisničkom profilu mogućnost ponovnog zahtjeva za potvrdu emaila (ako je email nepotvrđen)
+Dodan feature "Tko je online" koristeći Web socket.
+Poboljšan error handling kod logina

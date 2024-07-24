@@ -14,67 +14,67 @@ export const seed = async function (knex) {
 
     await knex('announcement').insert([
         {
-            text: 'Announcement 1',
+            text: 'Dobrodošli u našu zajednicu! Ostanite s nama za nadolazeće novosti.',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 2',
+            text: 'Podsjetnik: Naša godišnja skupština zakazana je za sljedeći ponedjeljak.',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 3',
+            text: 'Obavijest o novoj značajci: Pogledajte naše najnovije ažuriranje na nadzornoj ploči.',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 4',
+            text: 'Tražimo volontere za naš nadolazeći dobrotvorni događaj. Jeste li zainteresirani?',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 5',
+            text: 'Obavijest o održavanju: Platforma će biti privremeno nedostupna ovu subotu.',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 6',
+            text: 'Čestitamo našim članovima koji su nedavno postigli nove prekretnice!',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 7',
+            text: 'Sigurnost na prvom mjestu! Molimo vas da osigurate da su vaši podaci o računu ažurirani.',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 8',
+            text: 'Cijenimo vaše mišljenje! Molimo vas da nam javite svoje misli o našim najnovijim značajkama.',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 9',
+            text: 'Sretne blagdane od našeg tima! Želimo vam radostanu sezonu.',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 10',
+            text: 'Važno: Molimo pregledajte našu ažuriranu politiku privatnosti do kraja ovog mjeseca.',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 11',
+            text: 'Pridružite nam se na sesiji uživo pitanja i odgovora sljedeći tjedan. Detalji će uslijediti.',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 12',
+            text: 'Uzbuđeni smo što možemo najaviti novo partnerstvo koje će donijeti velike koristi našim članovima.',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 13',
+            text: 'Savjeti i trikovi: Maksimalno iskoristite našu platformu s ovim korisnim savjetima.',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 14',
+            text: 'Veliko hvala svima koji su sudjelovali u našoj nedavnoj anketi!',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 15',
+            text: 'U fokusu: Pogledajte priču ovomjesečnog istaknutog člana na našem blogu.',
             author_id: getRandomUserId(userIDs),
         },
         {
-            text: 'Announcement 16',
+            text: 'Podsjetnik: Naknade za pretplatu uskoro dospijevaju. Molimo vas da osigurate da su vaši podaci za plaćanje ažurirani.',
             author_id: getRandomUserId(userIDs),
         },
     ]);

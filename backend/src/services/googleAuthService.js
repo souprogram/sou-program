@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { google } from 'googleapis';
 
+
 function googleAuth() {
     const oauth2Client = new google.auth.OAuth2(
         process.env.GOOGLE_CLIENT_ID,
@@ -13,5 +14,6 @@ function googleAuth() {
 
     return oauth2Client;
 }
+
 
 export { googleAuth };

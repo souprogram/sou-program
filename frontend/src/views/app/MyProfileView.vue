@@ -1,20 +1,22 @@
 <template>
     <div class="d-flex flex-column gap-2 h-100">
-        <show-profile :user="currentUser" />
-        <add-profile-post :profilePictureSrc="currentUser.profilePictureSrc" />
-
-        <div class="card" v-if="!profilePosts.length && !isLoading">
-            <div class="card-body text-center">
-                <h4>Nema objava 😢</h4>
+        <div v-if="currentUser">
+            <show-profile :user="currentUser" />
+            <add-profile-post :profilePictureSrc="currentUser.profilePictureSrc" />
+    
+            <div class="card" v-if="!profilePosts.length && !isLoading">
+                <div class="card-body text-center">
+                    <h4>Nema objava 😢</h4>
+                </div>
             </div>
+    
+            <show-profile-post
+                v-for="profilePost in profilePosts"
+                :key="profilePost.id"
+                :user="currentUser"
+                :profilePost="profilePost"
+            />
         </div>
-
-        <show-profile-post
-            v-for="profilePost in profilePosts"
-            :key="profilePost.id"
-            :user="currentUser"
-            :profilePost="profilePost"
-        />
 
         <div
             class="d-flex align-items-center justify-content-center flex-grow-1"
@@ -45,7 +47,7 @@ export default {
         showProfilePost,
         LoadingSpinner,
     },
-    data: function () {
+    data() {
         return {
             pageCount: 0,
             isLoading: false,
@@ -61,6 +63,9 @@ export default {
         await this.userStore.fetchUsers();
         this.currentUser = this.userStore.getUserByID(getAuthData().id);
 
+        if (!this.currentUser) {
+            return
+        }
         await this.loadMoreProfilePosts();
 
         this.isLoading = false;
@@ -91,10 +96,10 @@ export default {
 
             const moreProfilePosts =
                 await this.profilePostStore.fetchProfilePosts(
-                    this.currentUser.id,
+                    this.currentUser?.id,
                     this.pageCount
                 );
-
+            if (!moreProfilePosts) return;
             this.profilePosts.push(...moreProfilePosts);
         },
     },

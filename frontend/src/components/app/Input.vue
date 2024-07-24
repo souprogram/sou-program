@@ -1,14 +1,33 @@
 <template>
-    <div class="form-group">
+    <div v-auto-animate class="form-group">
         <label v-if="label">{{ label }}</label>
         <input
             class="form-control"
             :type="type"
             :value="modelValue"
+            :placeholder="placeholder"
             @input="updateValue"
+            :class="{
+                'border border-danger':
+                    errorMessages.length > 0 ||
+                    (externalMessage.showMessage &&
+                        !externalMessage.available &&
+                        modelValue),
+            }"
+            :required="required"
         />
 
-        <div class="error-msg" v-if="errorMessages.length > 0">
+        <div v-if="externalMessage.showMessage && modelValue" class="error-msg">
+            <span
+                :class="{
+                    'text-success': externalMessage.available,
+                    'text-danger': !externalMessage.available,
+                }"
+            >
+                {{ externalMessage.statusMessage }}
+            </span>
+        </div>
+        <div class="error-msg text-danger" v-if="errorMessages.length > 0">
             <span v-for="(error, index) in errorMessages" :key="index">
                 {{ error }}
             </span>
@@ -34,6 +53,22 @@ export default {
         type: {
             type: String,
             default: 'text',
+        },
+        placeholder: {
+            type: String,
+            default: '',
+        },
+        externalMessage: {
+            type: Object,
+            default: () => ({
+                showMessage: false,
+                available: false,
+                statusMessage: '',
+            }),
+        },
+        required: {
+            type: Boolean,
+            default: false,
         },
     },
     name: 'Input',
@@ -68,7 +103,6 @@ export default {
 .error-msg {
     margin-top: 0.25rem;
     font-size: 0.875rem;
-    color: var(--red-color);
     transition: opacity 0.3s;
 }
 

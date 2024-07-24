@@ -20,6 +20,8 @@ export const login = async (req, res) => {
         const token = generateTokenFromUser(authUser);
         addAuthCookieToRes(res, token);
 
+        if(authUser.status !== 'active') throw new Error('User account is not active');
+
         return res.json({
             message: 'Login successful',
             data: { authUser },
@@ -27,7 +29,7 @@ export const login = async (req, res) => {
     } catch (error) {
         console.error(`[POST] Login error: ${error.message}`);
         res.status(500).json({
-            message: 'Internal server error',
+            message: `[POST] Login error: ${error.message}`,
             data: {},
         });
     }
@@ -45,5 +47,19 @@ export const me = async (req, res) => {
     return res.json({
         message: 'Logout successful',
         data: await Users().where({ id: req.authUser.id }),
+    });
+};
+
+export const getStatus = async (req, res) => {
+    if (!req.params.id) {
+        return res.status(400).json({
+            message: 'User id not provided',
+            data: {},
+        });
+    }
+    const userStatus = await Users().where({ id: req.params.id }).select('status');
+    return res.json({
+        message: 'User status fetched successfully',
+        data: userStatus
     });
 };

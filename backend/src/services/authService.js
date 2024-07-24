@@ -7,12 +7,15 @@ export const hashPassword = async (passwordInput) => {
     return hashedPassword;
 };
 
-export const getAuthUserData = async (username, password) => {
+export const getAuthUserData = async (username, password, {googleLogin}={googleLogin: false}) => {
     const user = await Users().where({ username }).first();
     if (!user) {
         throw new Error(`No user found for username ${username}`);
     }
 
+    if (googleLogin) {
+        return user;
+    }
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
         throw new Error('Password failed to match');

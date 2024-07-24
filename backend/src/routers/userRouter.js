@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { authMiddleware } from '../middlewares/authMiddleware.js';
-import { demosMiddleware } from '../middlewares/demosMiddleware.js';
 import {
     getUsersByIDsValidation,
     updateUserValidation,
@@ -13,15 +12,25 @@ import {
     index,
     update,
 } from '../controllers/UserController.js';
+import { authorizationMiddleware } from '../middlewares/authorizationMiddleware.js';
 
 export const userRouter = () => {
     return Router()
-        .use(authMiddleware)
-        .get('/users', index)
-        .get('/users/ids', [getUsersByIDsValidation], getByIDs)
-
-        .use(demosMiddleware)
-        .post('/users', [createUserValidation], create)
-        .patch('/users/:id', [updateUserValidation], update)
-        .delete('/users/:id', destroy);
+        .get('/users', [authMiddleware], index)
+        .get('/users/ids', [authMiddleware, getUsersByIDsValidation], getByIDs)
+        .post(
+            '/users',
+            [authMiddleware, authorizationMiddleware, createUserValidation],
+            create
+        )
+        .patch(
+            '/users/:id',
+            [authMiddleware, authorizationMiddleware, updateUserValidation],
+            update
+        )
+        .delete(
+            '/users/:id',
+            [authMiddleware, authorizationMiddleware],
+            destroy
+        );
 };

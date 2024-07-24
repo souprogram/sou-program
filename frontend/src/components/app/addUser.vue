@@ -4,7 +4,6 @@
             title="Dodaj korisnika"
             :onClose="onClose"
             :onConfirm="createUser"
-            :disabled="!isFormValid"
         >
             <Input
                 label="Ime"
@@ -20,18 +19,35 @@
                 label="Email"
                 v-model="user.email"
                 :validations="validationRules.email"
+                placeholder="Upiši svoj email"
+                @input="checkEmailAvailability"
+                :externalMessage="emailAvailability"
             />
             <Input
                 label="Korisničko ime"
                 v-model="user.username"
                 :validations="validationRules.username"
+                placeholder="Upiši korisničko ime"
+                @input="checkUsernameAvailability"
+                :externalMessage="usernameAvailability"
             />
-            <Input
-                label="Lozinka"
-                v-model="user.password"
-                :type="'password'"
-                :validations="validationRules.password"
-            />
+            <div class="row gx-4">
+                <Input
+                    label="Lozinka"
+                    v-model="user.password"
+                    :type="'password'"
+                    :validations="validationRules.password"
+                    class="col"
+                />
+                <Input
+                    label="Potvrda lozinke"
+                    v-model="passwordRepeated"
+                    :type="'password'"
+                    :validations="validationRules.password"
+                    class="col"
+                    :externalMessage="passwordRepeatedError"
+                />
+            </div>
             <div class="form-group">
                 <label for="profilePicture">Slika profila</label>
                 <input
@@ -76,6 +92,7 @@ import { useUserStore } from '@/stores/user.store';
 
 import FormModal from '@/components/app/FormModal.vue';
 import Input from '@/components/app/Input.vue';
+import backendApiService from '@/services/backendApiService';
 
 import {
     required,
@@ -107,12 +124,32 @@ export default {
                 name: '',
                 surname: '',
                 email: '',
+                email_verified: false,
                 username: '',
                 password: '',
                 bio: '',
                 type: 'student',
+                status: 'active',
+            },
+            passwordRepeated: '',
+            passwordRepeatedError: {
+                showMessage: false,
+                available: false,
+                statusMessage: 'Lozinke se ne podudaraju!',
             },
             selectedImage: null,
+            timeoutUsername: null,
+            timeoutMail: null,
+            usernameAvailability: {
+                showMessage: false,
+                available: false,
+                statusMessage: '',
+            },
+            emailAvailability: {
+                showMessage: false,
+                available: false,
+                statusMessage: '',
+            },
             validationRules: {
                 name: [required, maxLength(30)],
                 surname: [required, maxLength(30)],
@@ -123,21 +160,99 @@ export default {
             },
         };
     },
-    computed: {
-        isFormValid() {
-            return Object.keys(this.validationRules).every((key) =>
-                this.validationRules[key].every(
-                    (validation) => validation(this.user[key]) === true
-                )
-            );
+    watch: {
+        passwordRepeated(val) {
+            if (this.user.password.includes(val)) {
+                this.passwordRepeatedError.showMessage = false;
+            } else {
+                this.passwordRepeatedError.showMessage = true;
+            }
         },
     },
     methods: {
+        isFormValid() {
+            const isSyntaxValid = Object.keys(this.validationRules).every(
+                (key) =>
+                    this.validationRules[key].every(
+                        (validation) => validation(this.user[key]) === true
+                    ) && this.checkPasswordMatch()
+            );
+            const isUsernameAvailable = this.usernameAvailability.available;
+            const isEmailAvailable = this.emailAvailability.available;
+            const passwordsMatch = this.checkPasswordMatch();
+
+            return (
+                isSyntaxValid &&
+                isUsernameAvailable &&
+                isEmailAvailable &&
+                passwordsMatch
+            );
+        },
+        async checkUsernameAvailability() {
+            if (this.timeoutUsername) {
+                clearTimeout(this.timeoutUsername);
+            }
+            this.timeoutUsername = setTimeout(async () => {
+                const response = await backendApiService.get({
+                    url: `/registration/availability/username?username=${this.user.username}`,
+                });
+                if (!response.ok) {
+                    this.usernameAvailability = {
+                        showMessage: true,
+                        available: false,
+                        statusMessage:
+                            'Greška prilikom provjere dostupnosti korisničkog imena.',
+                    };
+                } else {
+                    const { data } = await response.json();
+                    this.usernameAvailability = {
+                        showMessage: true,
+                        available: data.available,
+                        statusMessage: data.statusMessage,
+                    };
+                }
+            }, 1000);
+        },
+        async checkEmailAvailability() {
+            if (this.timeoutMail) {
+                clearTimeout(this.timeoutMail);
+            }
+            this.timeoutMail = setTimeout(async () => {
+                const response = await backendApiService.get({
+                    url: `/registration/availability/email?email=${this.user.email}`,
+                });
+                if (!response.ok) {
+                    this.emailAvailability = {
+                        showMessage: true,
+                        available: false,
+                        statusMessage:
+                            'Greška prilikom provjere dostupnosti emaila.',
+                    };
+                } else {
+                    const { data } = await response.json();
+                    this.emailAvailability = {
+                        showMessage: true,
+                        available: data.available,
+                        statusMessage: data.statusMessage,
+                    };
+                }
+            }, 1000);
+        },
+        checkPasswordMatch() {
+            if (this.user.password !== this.passwordRepeated) {
+                this.passwordRepeatedError.showMessage = true;
+                return false;
+            } else {
+                this.passwordRepeatedError.showMessage = false;
+                return true;
+            }
+        },
         addFile(event) {
             this.selectedImage = event.target.files[0];
         },
         async createUser() {
-            if (!this.isFormValid) {
+            if (!this.isFormValid()) {
+                console.error('Forma nije validna!');
                 return;
             }
 
@@ -157,3 +272,15 @@ export default {
     },
 };
 </script>
+<style scoped>
+.error-msg {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--red-color);
+    transition: opacity 0.3s;
+}
+
+.error-msg span {
+    display: block;
+}
+</style>

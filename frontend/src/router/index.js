@@ -2,6 +2,7 @@ import {
     deleteAuthData,
     fetchAuthData,
     getAuthData,
+    userStatus,
 } from '@/services/authService';
 import { keys, storage } from '@/services/storageService';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -26,6 +27,60 @@ const routes = [
                 name: 'LoginView',
                 meta: { title: 'Prijava' },
                 component: () => import('@/views/web/LoginView.vue'),
+            },
+            {
+                path: 'registration',
+                name: 'RegisterView',
+                meta: { title: 'Registracija' },
+                component: () => import('@/views/web/RegisterView.vue'),
+            },
+            {
+                path: 'pending-registration',
+                name: 'PendingRegistration',
+                meta: { title: 'Odobrenje registracije' },
+
+                component: () => import('@/views/web/PendingRegistration.vue'),
+            },
+            {
+                path: 'forgot-password',
+                name: 'ForgotPassword',
+                meta: { title: 'Zaboravljena lozinka' },
+                beforeEnter: (to, from, next) => {
+                    // If user is logged in, redirect to NewsfeedView
+                    const user = getAuthData();
+                    const isUserLoggedIn = user !== null;
+                    if (isUserLoggedIn) {
+                        return next({ name: 'NewsfeedView' });
+                    } else {
+                        return next();
+                    }
+                },
+
+                component: () => import('@/views/web/ForgotPasswordView.vue'),
+            },
+            {
+                path: 'reset-password',
+                name: 'ResetPassword',
+                meta: { title: 'Reset lozinke' },
+                beforeEnter: (to, from, next) => {
+                    // If user is logged in, redirect to NewsfeedView
+                    const user = getAuthData();
+                    const isUserLoggedIn = user !== null;
+                    if (isUserLoggedIn) {
+                        return next({ name: 'NewsfeedView' });
+                    } else {
+                        return next();
+                    }
+                },
+
+                component: () => import('@/views/web/ResetPasswordView.vue'),
+            },
+            {
+                path: 'confirm',
+                name: 'EmailConfirmed',
+                meta: { title: 'Email potvrđen' },
+
+                component: () => import('@/views/web/EmailConfirmed.vue'),
             },
             {
                 path: 'contact',
@@ -138,11 +193,17 @@ router.beforeEach(async (to, _from, next) => {
 
     const user = getAuthData();
     const isUserLoggedIn = user !== null;
-
     if (isUserLoggedIn) {
         if (Date.now() > user.expires) {
             await fetchAuthData();
         }
+    }
+    const userStatusValue = await userStatus(user?.id);
+
+    if (isUserLoggedIn && userStatusValue !== 'active') {
+        // Logout user and redirect to login
+        deleteAuthData();
+        return next({ name: 'LoginView' });
     }
 
     if (!isUserLoggedIn && to.meta.authRequired) {

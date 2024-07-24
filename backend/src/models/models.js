@@ -11,3 +11,4 @@ export const Galleries = () => db('gallery');
 export const GalleryItems = () => db('gallery_item');
 export const ProfilePosts = () => db('profile_post');
 export const Comments = () => db('comment');
+export const PasswordTokens = () => db('password_reset');
