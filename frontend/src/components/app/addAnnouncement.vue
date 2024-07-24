@@ -1,7 +1,7 @@
 <template>
     <div>
         <form @submit.prevent="postAnnouncement" class="card">
-            <div class="card-body d-flex gap-3">
+            <div class="card-body d-flex flex-column flex-md-row gap-3">
                 <div>
                     <img
                         class="icon rounded-circle"

@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div
-            class="card-body d-flex flex-column flex-sm-row justify-content-center justify-content-sm-start align-items-center gap-5"
+            class="card-body d-flex flex-wrap flex-column flex-sm-row justify-content-center justify-content-sm-start align-items-center gap-5"
         >
             <div>
                 <img

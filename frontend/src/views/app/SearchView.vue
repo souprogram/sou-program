@@ -2,7 +2,7 @@
     <div class="d-flex flex-column gap-2 h-100">
         <div class="card">
             <div
-                class="card-body d-flex justify-content-between align-items-center"
+                class="card-body d-flex flex-wrap gap-3 justify-content-between align-items-center"
             >
                 <h1>Stalkaonica</h1>
                 <div v-if="isAuthUserDemos && pendingUsersNumber" @click="showPendingUsers"  class="pointer d-flex justify-content-center align-items-center ">

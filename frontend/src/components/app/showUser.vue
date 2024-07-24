@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card">
-            <div class="card-body d-flex gap-3">
+            <div class="card-body d-flex flex-wrap gap-3">
                 <div>
                     <router-link
                         :to="userProfilePath"

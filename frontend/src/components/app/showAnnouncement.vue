@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="card-body d-flex gap-3">
+        <div class="card-body d-flex flex-column flex-md-row gap-3">
             <div>
                 <router-link
                     v-if="announcement.author"
