@@ -13,6 +13,7 @@ import {
     update,
 } from '../controllers/UserController.js';
 import { authorizationMiddleware } from '../middlewares/authorizationMiddleware.js';
+import { demosMiddleware } from '../middlewares/demosMiddleware.js';
 
 export const userRouter = () => {
     return Router()
@@ -20,7 +21,7 @@ export const userRouter = () => {
         .get('/users/ids', [authMiddleware, getUsersByIDsValidation], getByIDs)
         .post(
             '/users',
-            [authMiddleware, authorizationMiddleware, createUserValidation],
+            [authMiddleware, demosMiddleware, createUserValidation],
             create
         )
         .patch(
