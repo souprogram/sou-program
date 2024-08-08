@@ -55,7 +55,12 @@ export default {
         await this.userStore.fetchUsers();
 
         this.userID = this.$route.params.id;
+        
         this.user = this.userStore.getUserByID(this.userID);
+        if (!this.user) {
+            this.$router.push('/login');
+            return;
+        }
 
         await this.loadMoreProfilePosts();
 
