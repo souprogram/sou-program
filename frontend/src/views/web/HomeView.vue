@@ -4,8 +4,12 @@
         <div class="row">
             <div class="col">
                 <h1 class="title">
-                    Lorem ipsum dolor sit amet, consect adipiscing elit ased
+                    Work in progress | Work in progress | Work in progress
                 </h1>
+                <div class="fs-5 pb-5 d-flex gap-4 ">
+                    <router-link class="text-primary" to="/login">Login</router-link>
+                    <router-link class="text-primary" to="/registration">Register</router-link>
+                </div>
             </div>
         </div>
 
@@ -177,6 +181,7 @@
 
 <script>
 import EmailLink from '@/components/web/EmailLink.vue';
+import router from '@/router';
 
 export default {
     name: 'Home',

@@ -44,6 +44,9 @@ export default {
     --green-color: #28a745;
     --gray-color: #6c757d;
 }
+.text-primary {
+    color: var(--primary-color);
+}
 .btn-primary {
     background-color: var(--primary-color);
     border: 1px solid var(--primary-color);
